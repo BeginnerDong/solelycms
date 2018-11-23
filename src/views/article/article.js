@@ -73,6 +73,7 @@ export default {
           defaultProps: {
             label: 'title',
             value: 'id',
+            children: 'child',
           },
         },
         {

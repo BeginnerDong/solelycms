@@ -239,7 +239,7 @@ export default {
           func:{
 
             apiName:function(data){
-              return "api_product_update"
+              return "api_sku_update"
             },
             postData:function(data,self){
               var postData = {
