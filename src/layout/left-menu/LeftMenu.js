@@ -26,7 +26,8 @@ export default {
       console.log(route)
       if (route.matched.length) {
         var rootPath = route.matched[0].path
-        var fullPath = route.path
+        var fullPath = route.fullPath
+        console.log('fullPath',route)
         self.$store.dispatch('set_cur_route', {
           rootPath,
           fullPath
@@ -37,7 +38,8 @@ export default {
             self.menu_list = routes[i];
           }
         };
-        this.active_path = this.$route.path;
+        this.active_path = this.$route.fullPath;
+
         console.log(self.nbPath)
         this.nb_array = [route.matched[1].path]
 

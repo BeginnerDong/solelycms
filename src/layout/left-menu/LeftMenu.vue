@@ -63,6 +63,12 @@
     background-color: white!important;
     color:#324057!important;
   }
+
+
+  .is-active{
+    background-color: white!important;
+    color: #324057!important;
+  }
 </style>
 
 <style scoped lang='less'>

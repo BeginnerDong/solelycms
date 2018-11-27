@@ -14,7 +14,7 @@ export default {
       var hasOne = false;
       for(var j = 0,len = state.list.length; j < len; j++){
 
-          if(_.isMatch(state.list[j], {name: route.name,path: route.path})){
+          if(_.isMatch(state.list[j], {name: route.name,path: route.fullPath})){
             hasOne = true
           };
           
@@ -24,7 +24,7 @@ export default {
         
         state.list.push({
           name: route.name,
-          path: route.path,
+          path: route.fullPath,
           params: route.params,
           query: route.query,
           hash: route.hash
@@ -59,7 +59,7 @@ export default {
 
       state.list = [{
           name: route.name,
-          path: route.path,
+          path: route.fullPath,
           params: route.params,
           query: route.query,
           hash: route.hash

@@ -5,14 +5,14 @@
     <div class='clear' @click="clearTab"  >clear</div>
       <div>
         <el-tabs
-          :value="$route.path"
+          :value="$route.fullPath"
           type="card"
           closable
           @tab-click="onTabClick"
           @tab-remove="onRemoveTab">
           <el-tab-pane
             v-for="(route, index) in $store.state.tabs.list"
-            :key="route.path"
+            :key="route.fullPath"
             :label="route.name"
             :name="route.path">
           </el-tab-pane>
@@ -36,10 +36,9 @@
       },
 
       onTabClick(tab) {
-        
-        
+
         for(var j = 0,len = this.$store.state.tabs.list.length; j < len; j++){
-        console.log(this.$$lib__.isMatch(this.$store.state.tabs.list[j], {path:tab.name}))
+        console.log('tabtest',this.$$lib__.isMatch(this.$store.state.tabs.list[j], {path:tab.name}))
           if(this.$$lib__.isMatch(this.$store.state.tabs.list[j], {path:tab.name})){
             var path = this.$store.state.tabs.list[j].path
           };
@@ -64,7 +63,7 @@
           if (this.$route.path === targetName) {
             if (this.$store.state.tabs.list.length) {
               this.$router.push({
-                path: this.$store.state.tabs.list[0].path,
+                path: this.$store.state.tabs.list[0].fullPath,
                 params: this.$store.state.tabs.list[0].params,
                 query: this.$store.state.tabs.list[0].query
               });
