@@ -232,7 +232,7 @@ export default {
               formData:function(data,self,func){
                 
                 var data = {
-                  
+                  content:''
                 }; 
                 return data
               },
