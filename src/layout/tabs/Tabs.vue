@@ -12,9 +12,10 @@
           @tab-remove="onRemoveTab">
           <el-tab-pane
             v-for="(route, index) in $store.state.tabs.list"
-            :key="route.fullPath"
+            :key="route.path"
             :label="route.name"
             :name="route.path">
+
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -36,7 +37,7 @@
       },
 
       onTabClick(tab) {
-
+        console.log('this.$store.state.tabs.list',this.$store.state.tabs.list);
         for(var j = 0,len = this.$store.state.tabs.list.length; j < len; j++){
         console.log('tabtest',this.$$lib__.isMatch(this.$store.state.tabs.list[j], {path:tab.name}))
           if(this.$$lib__.isMatch(this.$store.state.tabs.list[j], {path:tab.name})){
@@ -107,5 +108,10 @@
     color: #8391a5;
     position: relative;
     border:1px solid #d1dbe5;
+  }
+
+  
+  .el-tabs__item.is-active {
+    color: #409EFF!important;
   }
 </style>

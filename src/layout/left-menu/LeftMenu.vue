@@ -50,7 +50,8 @@
 </script>
 <style>
   .el-submenu__title{
-    color:white!important
+    color:white!important;
+    background-color: #324057!important;
   }
   .el-submenu__title:hover {
     background-color: #324057!important;
@@ -65,7 +66,7 @@
   }
 
 
-  .is-active{
+  .el-menu-item.is-active{
     background-color: white!important;
     color: #324057!important;
   }
