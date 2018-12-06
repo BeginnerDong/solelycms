@@ -43,6 +43,13 @@ export default {
           listType:'normal'
         },
         {
+          key: 'sale_count',
+          label: '销量',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
           key: 'listorder',
           label: '排序',
           application:['编辑','添加'],
@@ -110,16 +117,52 @@ export default {
             self.initMainData();
           },
         }, 
-
         {
-          key: 'deadline',
-          label: '截止时间',
-          type:'datetime',
+          key: 'start_time',
+          label: '开启时间',
           application:['编辑','添加'],
+          type:'datetime',
+          listType:'custom',
           width:150,
-          placeholder:'请选择创建时间',
+          formatter:function(val,tests){
+            return val.start_time?new Date(parseInt(val.start_time)):'';
+          },
+          custom:function(val,func){
+            return val.start_time?func.formatDate(new Date(parseInt(val.start_time)),'yyyy/M/d hh:mm'):''
+          }
         },
-
+        {
+          key: 'end_time',
+          label: '结束时间',
+          application:['编辑','添加'],
+          type:'datetime',
+          listType:'custom',
+          width:150,
+          formatter:function(val,tests){
+            return val.end_time?new Date(parseInt(val.end_time)):'';
+          },
+          custom:function(val,func){
+            return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
+          }
+        },
+        {
+          key: 'limit',
+          label: '购买数量限制',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key: 'use_limit',
+          label: '使用数量限制',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key:'duration',
+          label:'有效期',
+          application:['编辑','添加'],
+          type:'input',
+        },
         {
           key: "is_group",
           label: '是否团购',

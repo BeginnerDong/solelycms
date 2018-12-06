@@ -80,7 +80,6 @@ export default {
             label: 'text',
             value: 'value',
           },
-          
           formatter:function(val,tests){
             var arr = ['未发货','配送中','已收货'];
             return arr[val.transport_status]?arr[val.transport_status]:'';
@@ -115,7 +114,6 @@ export default {
             label: 'text',
             value: 'value',
           },
-          
           formatter:function(val,tests){
             var arr = ['正常下单','申请撤单','已撤单','完结'];
             return arr[val.order_step]?arr[val.order_step]:'';
@@ -123,16 +121,13 @@ export default {
           filter_multiple: false,
           listType:'normal',
         }, 
-
-
-
-
-
-
-
-
-
-
+        {
+          key:'limit',
+          label:'使用数量限制',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal',
+        },
         {
           key: 'user_no',
           label: '用户NO',
@@ -196,7 +191,6 @@ export default {
             self.beforeSearch('UserInfo');
           },
         },
-   
         {
           key: "status",
           label: '状态',
@@ -217,7 +211,6 @@ export default {
             label: 'text',
             value: 'value',
           },
-          
           formatter:function(val,tests){
             if(val.status==1){
               return '启用';
@@ -249,9 +242,7 @@ export default {
           listType:'deal',
           width:300
         },
-       
       ],
-
 
 
       // 按钮配置
@@ -318,7 +309,7 @@ export default {
           type:'info',
           icon:'edit',
           size:'normal',
-          position:'header',
+          position:'',
           text:function(data){
             return '添加'
           },

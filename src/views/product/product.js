@@ -42,6 +42,13 @@ export default {
           listType:'normal'
         },
         {
+          key: 'sale_count',
+          label: '销量',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
           key: 'group_stock',
           label: '团购库存',
           application:['编辑','添加'],
@@ -102,7 +109,7 @@ export default {
           options:'labelOptions',
           limit:10,
         },
-                {
+        {
           key: 'start_time',
           label: '开启时间',
           application:['编辑','添加'],
@@ -129,6 +136,24 @@ export default {
           custom:function(val,func){
             return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
           }
+        },
+        {
+          key: 'limit',
+          label: '购买数量限制',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key: 'use_limit',
+          label: '使用数量限制',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key:'duration',
+          label:'有效期',
+          application:['编辑','添加'],
+          type:'input',
         },
         {
           key: "content",

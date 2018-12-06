@@ -27,7 +27,6 @@ export default {
           type:'input',
           listType:'normal'
         },
-        
         {
           key: 'stock',
           label: '优惠券库存',
@@ -35,7 +34,13 @@ export default {
           type:'input',
           listType:'normal'
         },
-        
+        {
+          key: 'sale_count',
+          label: '销量',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
         {
           key: "type",
           label: '优惠券类型',
@@ -83,6 +88,24 @@ export default {
           }
         },
         {
+          key: 'limit',
+          label: '购买数量限制',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key: 'use_limit',
+          label: '使用数量限制',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key:'duration',
+          label:'有效期',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
           key: 'listorder',
           label: '排序',
           application:['编辑','添加'],
@@ -92,6 +115,13 @@ export default {
           key: 'discount',
           label: '折抵份额',
           listType:'normal',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key: 'standard',
+          label: '使用标准',
+          listType:'',
           application:['编辑','添加'],
           type:'input',
         },
@@ -108,7 +138,6 @@ export default {
           label: '内容',
           application:['编辑','添加'],
           type:'vueEditor',
-          
         },
         {
           key: "status",
@@ -157,8 +186,6 @@ export default {
           width:300
         },
       ],
-
-
 
 
       // 按钮配置
