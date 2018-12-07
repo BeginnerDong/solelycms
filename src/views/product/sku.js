@@ -36,6 +36,13 @@ export default {
           listType:'normal'
         },
         {
+          key: 'o_price',
+          label: '原价价格',
+          application:['编辑','添加'],
+          type:'input',
+          listType:''
+        },
+        {
           key: 'stock',
           label: 'sku库存',
           application:['编辑','添加'],
@@ -185,28 +192,29 @@ export default {
           filter_multiple: false,
           listType:'normal',
         },
-
-        //13
         {
           key: 'group_stock',
           label: '团购库存',
           application:['编辑','添加'],
           type:'input',
         },
-
+        {
+          key: 'group_price',
+          label: '团购价格',
+          application:['编辑','添加'],
+          type:'input',
+        },
         {
           key: 'standard',
           label: '成团标准',
           application:['编辑','添加'],
           type:'input',
         },
-
         {
-          label: '操作',
+          label: '操作', 
           listType:'deal',
           width:300
         },
-       
       ],
 
 

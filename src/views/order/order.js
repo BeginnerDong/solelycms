@@ -107,7 +107,7 @@ export default {
             },
             {
               text: '完结',
-              value: 2
+              value: 3
             },
           ],
           defaultProps: {

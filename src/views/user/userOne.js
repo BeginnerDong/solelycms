@@ -99,11 +99,11 @@ export default {
         },
         {
           key: "mainImg",
-          label: '主图',
-          application:[],
+          label: '头像',
+          application:['编辑账号'],
           type:'upload',
           options:'labelOptions',
-          limit:10,
+          limit:1,
         },
         {
           key: "name",
@@ -193,13 +193,13 @@ export default {
                     },
                     data:data
                   }
+                  postData.data.user_no=self.btnData.user_no;
                 }else if(self.btnName=='添加信息'){
                   var postData={
                     data:data
                   };
                   postData.data.user_no=self.btnData.user_no;
                 };
-                
                 return postData;
               }
             },
@@ -226,6 +226,7 @@ export default {
                   },
                   data:data
                 }
+                postData.data.user_no=self.btnData.user_no;
                 return postData;
               }
             },
