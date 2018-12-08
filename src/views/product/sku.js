@@ -704,8 +704,18 @@ export default {
       console.log('product_fieldChange',val);
       const self = this;
       if (val[0][0]=="is_group"&&val[0][1]==1) {
-        self.fields[13]['application'].push('编辑');
-        console.log('changeaFater',self.fields[13]);
+        self.fields[13]['application'] = ['编辑','添加'];
+        self.$set(self.fields,13,self.fields[13]);
+        self.fields[14]['application'] = ['编辑','添加'];
+        self.$set(self.fields,14,self.fields[14]);
+        console.log('changeaAfter',self.fields);
+        val[1].computeFields();
+      }else if(val[0][0]=="is_group"&&val[0][1]==0){
+        self.fields[13]['application'] = [];
+        self.$set(self.fields,13,self.fields[13]);
+        self.fields[14]['application'] = [];
+        self.$set(self.fields,14,self.fields[14]);
+        val[1].computeFields();
       }
     },
 
