@@ -170,6 +170,8 @@ export default {
           application:['编辑','添加'],
           type:'input',
         },
+
+        //index:18
         {
           key: "is_group",
           label: '是否团购',
@@ -195,19 +197,19 @@ export default {
         {
           key: 'group_stock',
           label: '团购库存',
-          application:['编辑','添加'],
+          application:[],
           type:'input',
         },
         {
           key: 'group_price',
           label: '团购价格',
-          application:['编辑','添加'],
+          application:[],
           type:'input',
         },
         {
           key: 'standard',
           label: '成团标准',
-          application:['编辑','添加'],
+          application:[],
           type:'input',
         },
         {
@@ -248,6 +250,28 @@ export default {
                 };
               };
 
+              //团购字段控制
+              if(data.is_group==1) {
+                self.fields[19]['application'] = ['编辑','添加'];
+                self.$set(self.fields,19,self.fields[19]);
+                self.fields[20]['application'] = ['编辑','添加'];
+                self.$set(self.fields,20,self.fields[20]);
+                self.fields[21]['application'] = ['编辑','添加'];
+                self.$set(self.fields,21,self.fields[21]);
+                console.log('changeaAfter',self.fields);
+                self.computeFields();
+              }else if(data.is_group==0){
+                self.fields[19]['application'] = [];
+                self.$set(self.fields,19,self.fields[19]);
+                self.fields[20]['application'] = [];
+                self.$set(self.fields,20,self.fields[20]);
+                self.fields[21]['application'] = [];
+                self.$set(self.fields,21,self.fields[21]);
+                console.log('changeaAfter',self.fields);
+                self.computeFields();
+              }
+
+
               return data;
 
             },
@@ -265,7 +289,7 @@ export default {
                   delete data[self.optionData.sku_item[i].title];
                 };
               };
-
+              
               var postData={
                 searchItem:{
                   id:self.btnData.id
@@ -307,94 +331,93 @@ export default {
 
           },
         },
+
         {
-            type:'info',
-            icon:'edit',
-            size:'normal',
-            position:'header',
-            text:function(data){
-              return '添加'
+          type:'info',
+          icon:'edit',
+          size:'normal',
+          position:'header',
+          text:function(data){
+            return '添加'
+          },
+          func:{
+            apiName:function(data){
+              return "api_sku_add"
             },
-            func:{
-              apiName:function(data){
-                return "api_sku_add"
-              },
-              
-              formData:function(data,self,func){
-                
-                var data = {};
-                if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
-                  for(var i=0;i<self.optionData.sku_item.length;i++){
-                    data[self.optionData.sku_item[i].title] = '';
-                  };
-                };
-                
             
-                return data;
-
-              },
+            formData:function(data,self,func){
               
-              postData:function(data,self){
-                
-                data.sku_item = [];
-                if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
-                  for(var i=0;i<self.optionData.sku_item.length;i++){
-                    if(data[self.optionData.sku_item[i].title]){
-                      data.sku_item.push(data[self.optionData.sku_item[i].title])
-                    };
-                    delete data[self.optionData.sku_item[i].title]
-                  };
+              var data = {};
+              if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
+                for(var i=0;i<self.optionData.sku_item.length;i++){
+                  data[self.optionData.sku_item[i].title] = '';
                 };
-                var postData={
-                  data:data
-                };
-                if(self.otherData.product_no){
-                  postData.data.product_no = self.otherData.product_no;
-                  return postData;
-                }else{
-                  return false;
-                };
-              }
+              };
+              
+          
+              return data;
+
             },
+            
+            postData:function(data,self){
+              
+              data.sku_item = [];
+              if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
+                for(var i=0;i<self.optionData.sku_item.length;i++){
+                  if(data[self.optionData.sku_item[i].title]){
+                    data.sku_item.push(data[self.optionData.sku_item[i].title])
+                  };
+                  delete data[self.optionData.sku_item[i].title]
+                };
+              };
+              var postData={
+                data:data
+              };
+              if(self.otherData.product_no){
+                postData.data.product_no = self.otherData.product_no;
+                return postData;
+              }else{
+                return false;
+              };
+            }
           },
+        },
 
         {
-            type:'info',
-            icon:'edit',
-            size:'normal',
-            position:'header',
-            text:function(data){
-              return '返回'
-            },
-            funcType:'func',
-            func:{
-              apiName:function(data){
-                return "api_user_add"
-              },
-              formData:function(data,self,func){
-                var data = {
-                  login_name:'',
-                  password:'',
-                }; 
-                return data
-              },
-              func:function(data,self,func){
-                self.$router.push('/product/product/product');
-              },
-              postData:function(data,self){
-                var postData={
-                  data:data
-                };
-                postData.data.user_type=0;
-                return postData;
-              }
-            },
+          type:'info',
+          icon:'edit',
+          size:'normal',
+          position:'header',
+          text:function(data){
+            return '返回'
           },
+          funcType:'func',
+          func:{
+            apiName:function(data){
+              return "api_user_add"
+            },
+            formData:function(data,self,func){
+              var data = {
+                login_name:'',
+                password:'',
+              }; 
+              return data
+            },
+            func:function(data,self,func){
+              self.$router.push('/product/product/product');
+            },
+            postData:function(data,self){
+              var postData={
+                data:data
+              };
+              postData.data.user_type=0;
+              return postData;
+            }
+          },
+        },
       ],
         
 
-
-      
 
       paginate: {
           count: 0,
@@ -451,7 +474,6 @@ export default {
   },
   methods: {
 
-
     /**
      * 初始化
      */
@@ -463,8 +485,6 @@ export default {
       this.initMainData()
      
     },
-
-    
 
     async initProductData(product_no){
       const self = this;
@@ -535,9 +555,6 @@ export default {
 
     },
 
-   
-
-
     /**
      * 获取文章列表
      */
@@ -592,8 +609,6 @@ export default {
       self.initMainData();
     },
 
-
-
     filtersChange(params){
       const self = this;
       console.log(params);
@@ -610,8 +625,6 @@ export default {
       self.paginate[val[0]] = val[1];
       self.initMainData();
     },
-
- 
 
     async onClickBtn(val){
       const self = this;
@@ -704,24 +717,25 @@ export default {
       console.log('product_fieldChange',val);
       const self = this;
       if (val[0][0]=="is_group"&&val[0][1]==1) {
-        self.fields[13]['application'] = ['编辑','添加'];
-        self.$set(self.fields,13,self.fields[13]);
-        self.fields[14]['application'] = ['编辑','添加'];
-        self.$set(self.fields,14,self.fields[14]);
+        self.fields[19]['application'] = ['编辑','添加'];
+        self.$set(self.fields,19,self.fields[19]);
+        self.fields[20]['application'] = ['编辑','添加'];
+        self.$set(self.fields,20,self.fields[20]);
+        self.fields[21]['application'] = ['编辑','添加'];
+        self.$set(self.fields,21,self.fields[21]);
         console.log('changeaAfter',self.fields);
         val[1].computeFields();
       }else if(val[0][0]=="is_group"&&val[0][1]==0){
-        self.fields[13]['application'] = [];
-        self.$set(self.fields,13,self.fields[13]);
-        self.fields[14]['application'] = [];
-        self.$set(self.fields,14,self.fields[14]);
+        self.fields[19]['application'] = [];
+        self.$set(self.fields,19,self.fields[19]);
+        self.fields[20]['application'] = [];
+        self.$set(self.fields,20,self.fields[20]);
+        self.fields[21]['application'] = [];
+        self.$set(self.fields,21,self.fields[21]);
         val[1].computeFields();
       }
     },
 
-    
   },
-  
 
 }
-

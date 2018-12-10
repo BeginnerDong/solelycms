@@ -156,12 +156,7 @@ export default {
         return ;
       };
 
-      this.form_fields = [];
-      for (var i = 0; i < this.fields.length; i++) {
-        if(_.indexOf(this.fields[i].application,this.btnName)>=0){
-          this.form_fields.push(this.fields[i])
-        };
-      };
+      this.computeFields();
       
       if (opts.btn.fn) {
         opts.btn.fn(opts)
@@ -257,6 +252,16 @@ export default {
         func.notify('请选择选项','warning');
       }
       
+    },
+
+    computeFields(){
+      const self = this;
+      self.form_fields = [];
+      for (var i = 0; i < self.fields.length; i++) {
+        if(_.indexOf(self.fields[i].application,self.btnName)>=0){
+          self.form_fields.push(self.fields[i])
+        };
+      };
     }
     
   },

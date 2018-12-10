@@ -25,7 +25,7 @@ export default {
           label: '快递信息',
           application:['编辑','添加'],
           type:'input',
-          listType:'normal'
+          listType:''
         },
         {
           key: "pay_status",
@@ -109,25 +109,26 @@ export default {
               text: '完结',
               value: 3
             },
+            {
+              text: '未成团',
+              value: 4
+            },
+            {
+              text: '成团',
+              value: 5
+            },
           ],
           defaultProps: {
             label: 'text',
             value: 'value',
           },
           formatter:function(val,tests){
-            var arr = ['正常下单','申请撤单','已撤单','完结'];
+            var arr = ['正常下单','申请撤单','已撤单','完结','未成团','成团'];
             return arr[val.order_step]?arr[val.order_step]:'';
           },
           filter_multiple: false,
           listType:'normal',
         }, 
-        {
-          key:'limit',
-          label:'使用数量限制',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal',
-        },
         {
           key: 'user_no',
           label: '用户NO',
