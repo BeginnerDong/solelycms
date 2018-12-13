@@ -336,11 +336,19 @@ export default {
             }
           },
         },
+        {
+          type:'info',
+          icon:'edit',
+          size:'normal',
+          position:'header',
+          text:function(data){
+            return '导出excel'
+          },
+          funcType:'emit',
+        }
       ],
         
 
-
-      
       paginate: {
           count: 0,
           currentPage: 1,
@@ -490,15 +498,50 @@ export default {
       self.initMainData();
     },
 
-    onClickBtn(val){
+    async onClickBtn(val){
+
+      const self = this;
       console.log(val)
+      if(val[0]=='导出excel'){
+        const postData  = {}; 
+        postData.token = self.$store.getters.getToken; 
+        if (self.searchItem) {
+          postData.searchItem = self.$$cloneForm(self.searchItem)
+        };
+        if(JSON.stringify(self.getBefore) != "{}"){
+          postData.getBefore = self.$$cloneForm(self.getBefore);
+        };
+        postData.order = {create_time:'desc'}; 
+        postData.getAfter = {
+          UserInfo:{
+            tableName:'userInfo',
+            middleKey:'user_no',
+            key:'user_no',
+            condition:'=',
+            searchItem:{
+              status:1
+            },
+          },
+        };
+        postData.excelOutput = {
+          expTitle:'test',
+          expCellName:[
+            ['订单号','order_no'],
+            ['金额','price'],
+            ['下单时间','create_time'],
+            ['下单人','snap_address','name'],
+          ],
+          fileName:'test'
+        };
+        var res =  await self.$$api_order_get({data: postData});
+
+        var a = document.createElement("a");
+        a.href = res.info;
+        a.download ="订单.xls";
+        a.click();
+      }
+
     },
-
-
-
-
     
   },
-  
-
 }
