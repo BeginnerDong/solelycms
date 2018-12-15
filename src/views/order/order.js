@@ -523,13 +523,35 @@ export default {
             },
           },
         };
+
         postData.excelOutput = {
           expTitle:'test',
+          height:100,
           expCellName:[
-            ['订单号','order_no'],
-            ['金额','price'],
-            ['下单时间','create_time'],
-            ['下单人','snap_address','name'],
+            {
+              title:'订单号',
+              key:['order_no'],
+              type:'string',
+            },
+            {
+              title:'金额',
+              key:['price'],
+              type:'string',
+
+            },
+            {
+              title:'下单人',
+              key:['UserInfo',0,'name'],
+              type:'string',
+            },
+            {
+              title:'测试图片',
+              key:['products',0,'snap_product','mainImg',0,'url'],
+              type:'image',
+              image_width:80,
+              image_height:80,
+              url_intercepte_start:32
+            },
           ],
           fileName:'test'
         };
