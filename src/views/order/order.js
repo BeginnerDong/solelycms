@@ -555,12 +555,19 @@ export default {
           ],
           fileName:'test'
         };
-        var res =  await self.$$api_order_get({data: postData});
+
+        window.open('https://api.solelycloud.com/api/public/index.php/api/v1/Common/Order/get?token='
+        +postData.token
+        +'&searchItem='
+        +JSON.stringify(postData.searchItem)
+        +'&excelOutput='
+        +JSON.stringify(postData.excelOutput))
+        /*var res =  await self.$$api_order_get({data: postData});
 
         var a = document.createElement("a");
         a.href = res.info;
         a.download ="订单.xls";
-        a.click();
+        a.click();*/
       }
 
     },
