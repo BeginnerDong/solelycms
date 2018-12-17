@@ -416,6 +416,7 @@ export default {
               },
               
               postData:function(data,self){
+                data.user_type = 0;
                 var postData={
                   data:data
                 };

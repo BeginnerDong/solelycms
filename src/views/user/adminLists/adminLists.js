@@ -283,6 +283,7 @@ export default {
               },
               
               postData:function(data,self){
+                data.user_type = 2;
                 var postData={
                   data:data
                 };

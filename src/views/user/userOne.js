@@ -284,10 +284,10 @@ export default {
               },
               
               postData:function(data,self){
+                data.user_type = 1;
                 var postData={
                   data:data
                 };
-                postData.data.user_type = 1;
                 return postData;
               }
             },
