@@ -36,6 +36,13 @@ export default {
           listType:'normal'
         },
         {
+          key: 'score',
+          label: '可使用积分',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
           key: 'o_price',
           label: '原价价格',
           application:['编辑','添加'],
@@ -65,13 +72,6 @@ export default {
         {
           key: "mainImg",
           label: '主图',
-          application:['编辑','添加'],
-          type:'upload',
-          limit:10,
-        },
-        {
-          key: "bannerImg",
-          label: '轮播图',
           application:['编辑','添加'],
           type:'upload',
           limit:10,
@@ -171,7 +171,7 @@ export default {
           type:'input',
         },
 
-        //index:18
+        //index:19
         {
           key: "is_group",
           label: '是否团购',
@@ -252,21 +252,21 @@ export default {
 
               //团购字段控制
               if(data.is_group==1) {
-                self.fields[19]['application'] = ['编辑','添加'];
-                self.$set(self.fields,19,self.fields[19]);
                 self.fields[20]['application'] = ['编辑','添加'];
                 self.$set(self.fields,20,self.fields[20]);
                 self.fields[21]['application'] = ['编辑','添加'];
                 self.$set(self.fields,21,self.fields[21]);
+                self.fields[22]['application'] = ['编辑','添加'];
+                self.$set(self.fields,22,self.fields[22]);
                 console.log('changeaAfter',self.fields);
                 self.computeFields();
               }else if(data.is_group==0){
-                self.fields[19]['application'] = [];
-                self.$set(self.fields,19,self.fields[19]);
                 self.fields[20]['application'] = [];
                 self.$set(self.fields,20,self.fields[20]);
                 self.fields[21]['application'] = [];
                 self.$set(self.fields,21,self.fields[21]);
+                self.fields[22]['application'] = [];
+                self.$set(self.fields,22,self.fields[22]);
                 console.log('changeaAfter',self.fields);
                 self.computeFields();
               }
@@ -717,21 +717,21 @@ export default {
       console.log('product_fieldChange',val);
       const self = this;
       if (val[0][0]=="is_group"&&val[0][1]==1) {
-        self.fields[19]['application'] = ['编辑','添加'];
-        self.$set(self.fields,19,self.fields[19]);
         self.fields[20]['application'] = ['编辑','添加'];
         self.$set(self.fields,20,self.fields[20]);
         self.fields[21]['application'] = ['编辑','添加'];
         self.$set(self.fields,21,self.fields[21]);
+        self.fields[22]['application'] = ['编辑','添加'];
+        self.$set(self.fields,22,self.fields[22]);
         console.log('changeaAfter',self.fields);
         val[1].computeFields();
       }else if(val[0][0]=="is_group"&&val[0][1]==0){
-        self.fields[19]['application'] = [];
-        self.$set(self.fields,19,self.fields[19]);
         self.fields[20]['application'] = [];
         self.$set(self.fields,20,self.fields[20]);
         self.fields[21]['application'] = [];
         self.$set(self.fields,21,self.fields[21]);
+        self.fields[22]['application'] = [];
+        self.$set(self.fields,22,self.fields[22]);
         val[1].computeFields();
       }
     },

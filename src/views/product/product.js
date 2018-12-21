@@ -35,6 +35,13 @@ export default {
           listType:'normal'
         },
         {
+          key: 'score',
+          label: '可使用积分',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
           key: 'stock',
           label: '商品库存',
           application:['编辑','添加'],
@@ -106,7 +113,13 @@ export default {
           label: '主图',
           application:['编辑','添加'],
           type:'upload',
-          options:'labelOptions',
+          limit:10,
+        },
+        {
+          key: "bannerImg",
+          label: '轮播图',
+          application:['编辑','添加'],
+          type:'upload',
           limit:10,
         },
         {
