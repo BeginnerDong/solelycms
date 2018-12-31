@@ -71,13 +71,23 @@ router.beforeEach((to, from, next) => {
     
     var routes = router.options.routes;
     console.log('router.beforeEach_array',routes);
-    /*for (var i = 0; i < routes.length; i++) {
-      if (routes[i].path === rootPath && !routes[i].hidden) {
-        self.menu_list = routes[i];
-      }
-    };*/
     
-    if(to.fullPath!='/login'&&!(auth.indexOf(checkAuth)>=0)){
+
+    if(to.meta.children){
+      for (var i = 0; i < to.meta.children.length; i++) {
+        var index = auth.indexOf(to.meta.children[i]);
+        if(index>=0){
+          var path = auth[index].split("-")[1];
+          next({
+              path:path,
+          });
+          return;
+        }
+      };
+      func.notify('无权限','error');
+      from();
+      return;
+    }else if(to.fullPath!='/login'&&!(auth.indexOf(checkAuth)>=0)){
       func.notify('无权限','error');
       from();
       return;
