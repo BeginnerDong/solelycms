@@ -64,11 +64,18 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  
+    console.log('router.beforeEach',to)
     var length = to.matched.length;
     var checkAuth = length+'-'+to.fullPath;
     var auth = store.getters.getUserinfo.passage_array;
     
+    var routes = router.options.routes;
+    console.log('router.beforeEach_array',routes);
+    /*for (var i = 0; i < routes.length; i++) {
+      if (routes[i].path === rootPath && !routes[i].hidden) {
+        self.menu_list = routes[i];
+      }
+    };*/
     
     if(to.fullPath!='/login'&&!(auth.indexOf(checkAuth)>=0)){
       func.notify('无权限','error');
