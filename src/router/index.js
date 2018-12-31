@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
     var auth = store.getters.getUserinfo.passage_array;
     
     
-    if(!(auth.indexOf(checkAuth)>=0)){
+    if(to.fullPath!='/login'&&!(auth.indexOf(checkAuth)>=0)){
       func.notify('无权限','error');
       from();
       return;
