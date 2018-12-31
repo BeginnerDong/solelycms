@@ -159,7 +159,6 @@ export default {
               },
               formData:function(data,self,func){
                   var res = self.getCheckedNodes();
-                  
                   if(res){
                     var data = {
                       parentid: res.parentid,
@@ -178,8 +177,10 @@ export default {
               },
               postData:function(data,self){
                 var res = self.getCheckedNodes();
+                if (res.id==data.parentid) {
+                  return false;
+                };
                 if(res){
-                  console.log(data);
                   var postData={
                     searchItem:{
                       id:res.id

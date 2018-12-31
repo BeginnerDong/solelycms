@@ -14,7 +14,7 @@ import {
 
 // 动态设置本地和线上接口域名
 Vue.axios.defaults.baseURL = gbs.host
-Vue.axios.defaults.timeout = 5000;
+Vue.axios.defaults.timeout = 300000;
 
 
 

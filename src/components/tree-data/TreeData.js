@@ -262,7 +262,7 @@ export default {
       console.log(val);
       const postData = func.cloneForm(self.btn.func.postData(val,self));
       if(!postData){
-        func.notify('数据故障','fail');
+        func.notify('数据错误','fail');
         return;
       };
       var res = await plugins[this.apiName]({data: postData});

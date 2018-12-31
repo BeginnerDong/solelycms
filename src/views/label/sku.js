@@ -212,8 +212,10 @@ export default {
             },
             postData:function(data,self){
               var res = self.getCheckedNodes();
+              if (res.id==data.parentid) {
+                return false;
+              };
               if(res){
-                console.log(data);
                 var postData={
                   searchItem:{
                     id:res.id

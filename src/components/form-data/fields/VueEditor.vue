@@ -134,7 +134,7 @@
             <span class="ql-formats"><button type="button" class="ql-link"></button></span>                
             <span class="ql-formats"><button type="button" class="ql-video"></button></span>
             <!--图片按钮点击事件-->  
-            <button type="button" @click="customButtonClick">img</button>
+            <button type="button" @click="customButtonClick">upload</button>
             <input type="file"  class="custom-input" @change='upload' style='display: none !important;'>
           </div>
         </quill-editor>
@@ -249,32 +249,22 @@
 
           self.contentImg = res.info.url ;    //获取到了图片的URL
                    
-          self.editor.insertEmbed(self.length, 'image', self.contentImg); // ★这里才是重点★
+          //判断文件类型渲染(H5 video标签只支持H264编码的MP4)
+          var videoArray = ['mp4'];
+          var url = res.info.url;
+          var obj = url.lastIndexOf(".");
+          var ext = url.substr(obj+1);
+          if(videoArray.indexOf(ext)!=-1){
+            self.editor.insertEmbed(self.length, 'video', self.contentImg);
+          }else{
+            self.editor.insertEmbed(self.length, 'image', self.contentImg);
+          }
 
           var jqObj=self.$el.querySelector('.custom-input');  
           jqObj.value = "";
           
-          
-
         }
       },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

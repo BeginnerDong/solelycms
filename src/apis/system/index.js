@@ -19,7 +19,7 @@ export default [
     type: 'post'
   },
   {
-    name: '上传图片',
+    name: '上传文件',
     method: 'uploadImg',
     path: '/Base/FtpFile/upload',
     type: 'post'
