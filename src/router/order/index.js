@@ -11,6 +11,7 @@ export default {
   path: '/order',
   name: '订单管理',
   icon: 'inbox',
+  id:'1-/order',
   component: Home,
   redirect: '/order/order',
   children: [

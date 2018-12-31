@@ -6,19 +6,19 @@
       :default-openeds="nb_array"
       >
             <template v-for="item in menu_list['children']">
-                <template v-if="item.children">
+                <template v-if="item.children&&checkInAuth(item.id)">
                     <el-submenu
                      :index="menu_list.path+'/'+item.path"
                     >
                         <template slot="title"><i :class="item.icon"></i>{{ item.name }}</template>
-                        <el-menu-item  v-for="(subItem,i) in item.children" v-if="!subItem.hide" :key="i" :index="menu_list.path+'/'+item.path+'/'+subItem.path" :style="{'padding-left':$store.state.leftmenu.menu_flag? '40px' : '23px'}"
+                        <el-menu-item  v-for="(subItem,i) in item.children" v-if="!subItem.hide&&checkInAuth(subItem.id)" :key="i" :index="menu_list.path+'/'+item.path+'/'+subItem.path" :style="{'padding-left':$store.state.leftmenu.menu_flag? '40px' : '23px'}"
                         :class="$route.path==(menu_list.path+'/'+item.path+'/'+subItem.path)?'is-active':''" 
                         >{{ subItem.name }}
                         </el-menu-item>
                     </el-submenu>
                 </template>
                 <template v-else>
-                    <el-menu-item v-if="!item.hide" :index="menu_list.path+'/'+item.path" :style="{'padding-left':$store.state.leftmenu.menu_flag? '40px' : '23px'}" >
+                    <el-menu-item v-if="!item.hide&&checkInAuth(item.id)" :index="menu_list.path+'/'+item.path" :style="{'padding-left':$store.state.leftmenu.menu_flag? '40px' : '23px'}" >
                         <i :class="item.icon"></i>
                         <span v-if="$store.state.leftmenu.menu_flag">
                           {{item.name}}

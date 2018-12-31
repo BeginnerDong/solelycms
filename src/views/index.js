@@ -15,6 +15,7 @@ import Flowlog from './flowLog/'
 import ThirdApp from './thirdApp/'
 import Order from './order/'
 import Message from './message/'
+import Dashboard from './dashboard/'
 
 export {
   Login,
@@ -29,5 +30,6 @@ export {
   Flowlog,
   ThirdApp,
   Order,
-  Message
+  Message,
+  Dashboard
 }

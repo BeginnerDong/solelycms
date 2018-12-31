@@ -8,9 +8,9 @@ import * as types from './mutations_types'
 export default {
   [types.UPDATE_TABS](state, {route}) {
     console.log(route)
-    console.log(route.path)
-    state.tabs_cur = route.path
-    if (route.path !== '/login') {
+    console.log('UPDATE_TABS',route)
+    state.tabs_cur = route.path;
+    if (route.path!='/login'&& route.path != '/user/adminLists/access'){
       var hasOne = false;
       for(var j = 0,len = state.list.length; j < len; j++){
 

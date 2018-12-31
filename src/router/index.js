@@ -21,6 +21,7 @@ import FlowLog from './flowLog/'
 import ThirdApp from './thirdApp/'
 import Order from './order/'
 import Message from './message/'
+import Dashboard from './dashboard/'
 
 const router = new Router({
 
@@ -37,6 +38,8 @@ const router = new Router({
         return 'login'
       }
     }, 
+   
+
     {
       path: '/login',
       name: '登录',
@@ -47,7 +50,7 @@ const router = new Router({
       },
       component: Login
     },
-
+    Dashboard,
     User,
     Label,
     Article,

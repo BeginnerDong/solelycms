@@ -231,6 +231,39 @@ export default {
             },
           },
           {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              return '管理权限'
+            },
+            funcType:'func',
+            func:{
+              func:function(data,self){
+                self.$router.push({
+                  path:'/user/adminLists/access',
+                  name:'权限管理',
+                  
+                  params:{
+                    defaultChecked:data.passage_array,
+                    user_no:data.user_no,
+                  }
+                });
+
+              },
+              postData:function(data,self){
+                var postData={
+                  searchItem:{
+                    id:self.btnData.id,
+                  },
+                  data:data
+                };
+                return postData;
+              },
+            },
+          },
+          {
             type:'danger',
             icon:'delete',
             size:'normal',

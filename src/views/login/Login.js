@@ -124,7 +124,17 @@ export default {
                 console.log('nb'+res.info.default_web_routers);
                 //this.$router.push(res.info.default_web_routers)
               } else {
-                this.$router.push('/user');
+
+                var routes = this.$router.options.routes
+                for (var i = 0; i < routes.length; i++) {
+                  if (this.$store.state.user.userinfo.passage_array.indexOf(routes[i].id)>=0) {
+                    this.$router.push(routes[i].path);
+                    console.log(99809)
+                    return;
+                  };
+                };
+                this.$$notify('无权限','error');
+                
               }
             });
           };

@@ -10,6 +10,7 @@ export default {
   path: 'order',
   name: '订单管理',
   icon: 'inbox',
+  id:'2-/order/order',
   component: Content,
   redirect: '/order/order/order',
   children: [
@@ -17,6 +18,7 @@ export default {
       path: 'order',
       name: '订单列表',
       icon: 'reorder',
+      id:'3-/order/order/order',
       component: Order.order
     },
   ]

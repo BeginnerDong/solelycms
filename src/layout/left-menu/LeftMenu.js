@@ -11,6 +11,26 @@ export default {
     }
   },
   methods: {
+
+    checkInAuth(item){
+      
+      console.log(item);
+      //console.log(this.$store.state.user.userinfo.passage_array);
+      
+      var index = this.$store.state.user.userinfo.passage_array.indexOf(item)
+      console.log(index);
+
+      if(index>=0){
+        return true;
+      }else{
+        return false;
+      };
+      
+    },
+
+
+
+
     setSize () {
       this.win_size.height = (this.$$lib_$(window).height() - 50) + 'px'
     },

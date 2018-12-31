@@ -25,15 +25,18 @@
   <el-main style="border-bottom: 1px solid #e4e7ed;height:500px">
     <el-tree
       class="filter-tree"
+      :node-key="treeData_defaultProps.value"
       :data="treeData_mainData"
       :props="treeData_defaultProps"
-      node-key="id"
+      :default-checked-keys="treeData_defaultChecked"
+      
       show-checkbox
       accordion
       check-strictly
       :filter-node-method="filterNode"
       ref="tree">
     </el-tree>
+    
   </el-main>
   <el-footer style="padding-top:10px;border-bottom: 1px solid #e4e7ed;height:50px">
     <el-button

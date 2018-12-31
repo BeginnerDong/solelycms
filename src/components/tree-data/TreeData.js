@@ -32,6 +32,7 @@ export default {
       search: this.Search,// 搜索
       optiondata: this.optionData,// 搜索
       treeData_defaultProps: this.defaultProps,// 搜索
+      treeData_defaultChecked: this.defaultChecked,// 搜索
       formData:{},
       submitData:{},
       btn:{},
@@ -40,7 +41,8 @@ export default {
       apiName:'',
       form_fields:[],
       filterText: '',
-      token:0
+      token:0,
+
       
     }
   },
@@ -66,6 +68,12 @@ export default {
         notify('请选择一个菜单','warning');
         this.resetChecked();
       }
+    },
+
+    //获取menu tree点击事件
+    getCheckedNodesAlone() {
+      const data = this.$refs.tree.getCheckedNodes();
+      return data;
     },
     //清空选中上传状态
     resetChecked() {
@@ -167,7 +175,7 @@ export default {
         return ;
       };
       if(opts.btn.funcType=='emit'){
-        this.$emit('onClickBtn', [this.btnName,this.btnData]);
+        this.$emit('onClickBtn', [this.btnName,this.btnData,this]);
         return ;
       };
       this.apiName = opts.btn.func.apiName(opts.data);
@@ -262,7 +270,7 @@ export default {
       console.log(val);
       const postData = func.cloneForm(self.btn.func.postData(val,self));
       if(!postData){
-        func.notify('数据错误','fail');
+        func.notify('数据故障','fail');
         return;
       };
       var res = await plugins[this.apiName]({data: postData});
@@ -286,6 +294,7 @@ export default {
   mounted () {
     // console.log(this.list);
     //this.store = store;
+
   },
 
   /**
@@ -301,6 +310,12 @@ export default {
       type: Object,
       default () {
         return {}
+      }
+    },
+    defaultChecked: {
+      type: Array,
+      default () {
+        return []
       }
     },
     FieldList: {
@@ -365,6 +380,12 @@ export default {
     FieldList (v) {
       if (v) {
         this.fields = v
+      }
+    },
+    defaultChecked (v) {
+      console.log('defaultChecked',v)
+      if (v) {
+        this.$refs.tree.setCheckedKeys(v)
       }
     },
     Selection (v) {

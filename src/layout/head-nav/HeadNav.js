@@ -57,18 +57,40 @@ export default {
             }
           }]
         }
-      }
+      },
+      mainData:[]
     }
   },
   mounted () {
+    this.mainData = this.$router.options.routes;
+    console.log('mounted',this.mainData);
+    
     // this.setDialogInfo('access');
 
     // this.onGetSetting();
   },
   methods: {
+
     /**
      * 退出登录
      */
+
+    checkInAuth(item){
+      console.log(this.mainData);
+      console.log(item);
+      //console.log(this.$store.state.user.userinfo.passage_array);
+      
+      var index = this.$store.state.user.userinfo.passage_array.indexOf(item)
+      console.log(index);
+
+      if(index>=0){
+        return true;
+      }else{
+        return false;
+      };
+      
+    },
+
     logout () {
       this.$confirm('你确定退出登录么?', '确认退出', {
         confirmButtonText: '确定',

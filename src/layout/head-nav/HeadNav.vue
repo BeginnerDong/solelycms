@@ -7,16 +7,22 @@
           <img src="../../assets/logo-sm.png" class='logo' alt="">
         </el-col>
         <el-col :span="16">
-          <el-menu style="background:#324057;color:white!important" theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
-                   mode="horizontal" unique-opened router>
-            <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)' -->
+          <el-menu 
+            style="background:#324057;color:white!important" 
+            theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
+            mode="horizontal" 
+            unique-opened 
+            router
+          >
+            
             <el-menu-item
-              v-for='(item,index) in $router.options.routes'
+              v-for='(item,index) in mainData'
               :index="item.path"
               :key='item.path'
-              v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
-              {{item.name}}<!-- {{item.path}} -->
+              v-if='!item.hidden&&checkInAuth(item.id)'>
+              {{item.name}}
             </el-menu-item>
+
           </el-menu>
         </el-col>
         <el-col :span="4" class="userinfo">
