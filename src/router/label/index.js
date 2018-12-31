@@ -11,6 +11,7 @@ export default {
   path: '/label',
   name: '类别管理',
   icon: 'inbox',
+  id:'1-/label',
   component: Home,
   redirect: '/label/articleMenu',
   children: [

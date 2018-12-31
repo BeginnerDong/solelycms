@@ -10,6 +10,7 @@ export default {
   path: '/thirdApp',
   name: '项目管理',
   icon: 'inbox',
+  id:'1-/thirdApp',
   component: Home,
   redirect: '/thirdApp/thirdAppLists',
   children: [thirdApp]

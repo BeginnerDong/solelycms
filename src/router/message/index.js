@@ -10,6 +10,7 @@ export default {
   path: '/message',
   name: '留言管理',
   icon: 'inbox',
+  id:'1-/message',
   component: Home,
   redirect: '/message/message',
   children: [message]

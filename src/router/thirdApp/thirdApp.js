@@ -10,6 +10,7 @@ export default {
   path: 'thirdAppLists',
   name: '用户列表',
   icon: 'inbox',
+  id:'2-/thirdApp/thirdAppLists',
   component: Content,
   redirect: '/thirdApp/thirdAppLists/thirdAppLists',
   children: [
@@ -17,6 +18,7 @@ export default {
       path: 'thirdAppLists',
       name: '项目列表',
       icon: 'reorder',
+      id:'3-/thirdApp/thirdAppLists/thirdAppLists',
       component: ThirdApp.ThirdApp
     },
     

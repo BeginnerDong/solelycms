@@ -11,12 +11,14 @@ export default {
   path: 'articleMenu',
   name: '菜单管理',
   icon: 'inbox',
+  id:'2-/label/articleMenu',
   component: Content,
   redirect: '/label/articleMenu/articleMenu',
   children: [{
     path: 'articleMenu',
     name: '文章菜单管理',
     icon: 'reorder',
+    id:'3-/label/articleMenu/articleMenu',
     component: Label.ArticleMenu
   }]
 }
