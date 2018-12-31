@@ -10,6 +10,7 @@ export default {
   path: 'message',
   name: '留言管理',
   icon: 'inbox',
+  id:'2-/message/message',
   component: Content,
   redirect: '/message/message/message',
   children: [
@@ -17,6 +18,7 @@ export default {
       path: 'message',
       name: '留言列表',
       icon: 'reorder',
+      id:'3-/message/message/message',
       component: Message.Message
     },
   ]

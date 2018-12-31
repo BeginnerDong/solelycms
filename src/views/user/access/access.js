@@ -85,9 +85,6 @@ export default {
             self.initMainData();
           },
         },
-
-
-
         {
           key: "name",
           label: '内容',
@@ -99,14 +96,16 @@ export default {
           label: '区域选择',
           application:['table','api_userInfo_add','api_userInfo_update'],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-
-          }],
+          select_list:[
+            {
+              text: '启用',
+              value: 1
+            }, 
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
         }, 
         {
           key: 'create_time',
@@ -137,88 +136,6 @@ export default {
 
       // 按钮配置
       btn_info:[
-        
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'footer',
-          text:function(data,self){
-            console.log(data);
-            return '添加'
-          },
-          func:{
-            apiName:function(data){
-              return "api_label_add"
-            },
-            formData:function(data,self){
-                self.resetChecked();
-                var data = {
-                  title:'',
-                  mainImg:[],
-                  description:'',
-                };
-                
-                return data;
-            },
-            
-            postData:function(data,self){
-              
-              var postData={
-                data:data
-              };
-              postData.data.type=3;
-              return postData;
-            }
-          },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'footer',
-          text:function(data,self){
-            console.log(data);
-            return '编辑'
-          },
-          func:{
-            apiName:function(data){
-              return "api_user_update"
-            },
-            formData:function(data,self,func){
-                var res = self.getCheckedNodesAlone();
-                console.log('formData-res',res);
-                var newArray = [];
-                for (var i = 0; i < res.length; i++) {
-                  newArray.push(res[i].id)
-                };
-                if(res){
-                  var data = {
-                    passage_array:newArray
-                  };
-                }else{
-                  return {
-                    error:'请选择一个菜单'
-                  }
-                };
-                return data||{};
-            },
-            postData:function(data,self){
-              var res = self.getCheckedNodes();
-              if(res){
-                console.log(data);
-                var postData={
-                  searchItem:{
-                  },
-                  data:data
-                };
-              }else{
-                var postData={}
-              };
-              return postData;
-            }
-          },
-        },
         {
           type:'danger',
           icon:'delete',
@@ -229,18 +146,15 @@ export default {
             return '更新权限'
           },
           func:{
-
             apiName:function(data){
               return "api_user_update"
-            },
-                          
+            },        
             postData:function(data,self,func){
               var res = self.getCheckedNodesAlone();
               var newArray = [];
               for (var i = 0; i < res.length; i++) {
                 newArray.push(res[i].id)
               };
-              
               var postData = {
                 searchItem:{
                   user_no:self.$store.getters.getUserinfo.user_no
@@ -249,7 +163,6 @@ export default {
                   passage_array:newArray
                 }
               };
-
               console.log('postData',postData);
               return postData;
             }
@@ -266,11 +179,9 @@ export default {
           },
           funcType:'func',
           func:{
-            
             func:function(data,self,func){
               self.$router.push('/user/adminLists/adminLists');
             },
-            
           },
         },
         

@@ -12,6 +12,7 @@ export default {
   path: '/flowLog',
   name: '流水管理',
   icon: 'inbox',
+  id:'1-/flowLog',
   component: Home,
   redirect: '/flowLog/balance',
   children: [
