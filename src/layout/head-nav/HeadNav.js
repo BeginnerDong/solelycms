@@ -63,11 +63,8 @@ export default {
   },
   mounted () {
     this.mainData = this.$router.options.routes;
-    console.log('mounted',this.mainData);
-    
-    // this.setDialogInfo('access');
 
-    // this.onGetSetting();
+
   },
   methods: {
 
@@ -76,12 +73,9 @@ export default {
      */
 
     checkInAuth(item){
-      console.log(this.mainData);
-      console.log(item);
-      //console.log(this.$store.state.user.userinfo.passage_array);
-      
+
       var index = this.$store.state.user.userinfo.passage_array.indexOf(item)
-      console.log(index);
+
 
       if(index>=0){
         return true;

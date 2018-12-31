@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
+import func from '../register/func.js'
 Vue.use(Router)
 
 // import { Home } from 'layout/'
@@ -63,26 +64,39 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log('routerJs');
-    console.log(to);
-    store.dispatch('update_tabs', {
-      route: to
-    });
+  
+    var length = to.matched.length;
+    var checkAuth = length+'-'+to.fullPath;
+    var auth = store.getters.getUserinfo.passage_array;
+    
+    
+    if(!(auth.indexOf(checkAuth)>=0)){
+      func.notify('无权限','error');
+      from();
+      return;
+    };
+    
 
 
 
 
     if (to.matched.some(r => r.meta.noRequireAuth)) {
-
+        store.dispatch('update_tabs', {
+          route: to
+        });
         next();
 
     }else{
         console.log(store.getters.getToken);
         if (store.getters.getToken) {
-            console.log(123);
+            store.dispatch('update_tabs', {
+              route: to
+            });
             next();
         }else {
-            console.log(456)
+            store.dispatch('update_tabs', {
+              route: to
+            });
             next({
                 path: '/login',
                 noRequireAuth: true,

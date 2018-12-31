@@ -13,12 +13,9 @@ export default {
   methods: {
 
     checkInAuth(item){
-      
-      console.log(item);
-      //console.log(this.$store.state.user.userinfo.passage_array);
-      
-      var index = this.$store.state.user.userinfo.passage_array.indexOf(item)
-      console.log(index);
+
+
+      var index = this.$store.state.user.userinfo.passage_array.indexOf(item);
 
       if(index>=0){
         return true;
@@ -43,11 +40,11 @@ export default {
       const self = this;
       self.active_path = '';
       route = route||self.$route
-      console.log(route)
+      
       if (route.matched.length) {
         var rootPath = route.matched[0].path
         var fullPath = route.fullPath
-        console.log('fullPath',route)
+        
         self.$store.dispatch('set_cur_route', {
           rootPath,
           fullPath
@@ -60,7 +57,7 @@ export default {
         };
         this.active_path = this.$route.fullPath;
 
-        console.log(self.nbPath)
+        
         this.nb_array = [route.matched[1].path]
 
       } else {

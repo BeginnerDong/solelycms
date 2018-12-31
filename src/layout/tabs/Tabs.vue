@@ -84,8 +84,7 @@
     },
     watch: {
       $route (to, from) {
-        console.log('tabs')
-        console.log(to)
+       
       }
     }
   }
