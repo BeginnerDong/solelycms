@@ -13,7 +13,9 @@ export default {
   icon: 'inbox',
   id:'1-/label',
   component: Home,
-  redirect: '/label/articleMenu',
+  meta:{
+    children:['2-/label/articleMenu','2-/label/subjectMenu']
+  },
   children: [
 	  articleMenu,
 	  subjectMenu

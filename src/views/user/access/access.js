@@ -240,8 +240,13 @@ export default {
 
     async initMainData(){
       const self =this;
-      self.mainData = self.$router.options.routes;
-
+      var data = self.$$cloneForm(self.$router.options.routes);
+      console.log('initMainData-data',data)
+      for (var i = 0; i < data.length; i++) {
+        if(!(data[i].meta&&data[i].meta.application&&data[i].meta.application.indexOf('notInAuth'))){
+          self.mainData.push(data[i]);
+        };
+      };
     },
 
 

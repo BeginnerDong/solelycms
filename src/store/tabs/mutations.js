@@ -10,7 +10,7 @@ export default {
     console.log(route)
     console.log('UPDATE_TABS',route)
     state.tabs_cur = route.path;
-    if (route.path!='/login'&& route.path != '/user/adminLists/access'){
+    if ((route.meta.application&&route.meta.application.indexOf('notInTab')==-1)||!route.meta.application){
       var hasOne = false;
       for(var j = 0,len = state.list.length; j < len; j++){
 

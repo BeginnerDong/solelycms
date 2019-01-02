@@ -43,6 +43,9 @@ export default {
       name: '权限管理',
       icon: 'reorder',
       id:'3-/user/adminLists/access',
+      meta:{
+        application:['notInTab','notInAuth']
+      },
       component: User.Access
     },
   ]
