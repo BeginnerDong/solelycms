@@ -13,7 +13,9 @@ export default {
   icon: 'inbox',
   id:'1-/order',
   component: Home,
-  redirect: '/order/order',
+  meta:{
+    children:['2-/order/order']
+  },
   children: [
 	  order
   ]

@@ -9,6 +9,9 @@ export default {
   icon: 'inbox',
   id:'1-/dashboard',
   component: Home,
+  meta:{
+    children:['2-/dashboard/dashboard']
+  },
   redirect: '/dashboard/dashboard',
   children: [dashboard]
 }

@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/thirdApp/thirdAppLists',
   component: Content,
-  redirect: '/thirdApp/thirdAppLists/thirdAppLists',
+  meta:{
+    children:['3-/thirdApp/thirdAppLists/thirdAppLists']
+  },
   children: [
     {
       path: 'thirdAppLists',

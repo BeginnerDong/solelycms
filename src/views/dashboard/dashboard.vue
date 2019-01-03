@@ -5,15 +5,14 @@
                 <el-row>
                     <el-col>
                         <el-card shadow="hover" class="mgb20">
-                            <div class="user-info">
-                                <img src="static/img/img.jpg" class="user-avator" alt="">
+                            <div :userInfo=userInfo class="user-info">
+                                <img :src="userInfo.mainImg[0].url" class="user-avator" alt="">
                                 <div class="user-info-cont">
-                                    <div class="user-info-name">{{name}}</div>
-                                    <div>{{role}}</div>
+                                    <div class="user-info-name">{{userInfo.login_name}}</div>
+                                    <div>{{userInfo.primary_scope==90?'超级管理员':'管理员'}}</div>
                                 </div>
                             </div>
-                            <div class="user-info-list">上次登录时间：<span>2018-01-01</span></div>
-                            <div class="user-info-list">上次登录地点：<span>东莞</span></div>
+                            <div class="user-info-list">上次登录时间：<span>{{userInfo.logintime}}</span></div>
                         </el-card>
                         <el-card shadow="hover">
                             <div slot="header" class="clearfix">
@@ -34,12 +33,12 @@
             <el-col :span="16">
                 <el-row :gutter="20" class="mgb20">
                     <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                        <el-card shadow="hover" :body-style="{padding:'0px'}">
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-view grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
-                                    <div>用户访问量</div>
+                                    <div class="grid-num">{{userNum}}</div>
+                                    <div>用户总数</div>
                                 </div>
                             </div>
                         </el-card>
@@ -49,8 +48,8 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-message grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
-                                    <div>系统消息</div>
+                                    <div class="grid-num">{{articleNum}}</div>
+                                    <div>文章数</div>
                                 </div>
                             </div>
                         </el-card>
@@ -60,8 +59,8 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
-                                    <div>数量</div>
+                                    <div class="grid-num">{{orderNum}}</div>
+                                    <div>成交订单数</div>
                                 </div>
                             </div>
                         </el-card>

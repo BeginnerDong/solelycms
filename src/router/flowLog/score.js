@@ -11,7 +11,9 @@ export default {
   icon: 'inbox',
   id:'2-/flowLog/score',
   component: Content,
-  redirect: '/flowLog/score/score',
+  meta:{
+    children:['3-/flowLog/score/score']
+  },
   children: [
     {
       path: 'score',

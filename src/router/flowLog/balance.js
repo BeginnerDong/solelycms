@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/flowLog/balance',
   component: Content,
-  redirect: '/flowLog/balance/balance',
+  meta:{
+    children:['3-/flowLog/balance/balance']
+  },
   children: [
     {
       path: 'balance',

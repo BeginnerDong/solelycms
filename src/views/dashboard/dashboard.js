@@ -3,33 +3,11 @@ export default {
     components: {},
     data() {
         return {
-            name: localStorage.getItem('ms_username'),
-            todoList: [
-                {
-                    title: '今天要修复100个bug',
-                    status: false,
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: false,
-                },
-                {
-                    title: '今天要写100行代码加几个bug吧',
-                    status: false,
-                }, {
-                    title: '今天要修复100个bug',
-                    status: false,
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: true,
-                },
-                {
-                    title: '今天要写100行代码加几个bug吧',
-                    status: true,
-                }
-            ],
             mainData:[],
+            userInfo:[],
+            userNum:'',
+            orderNum:'',
+            articleNum:'',
             self:this,
             fields:[
                 {
@@ -142,6 +120,13 @@ export default {
                     text:function(data){
                       return '处理'
                     },
+                    isHide:function(data,self){
+                      if(data.status==1){
+                        return true;
+                      }else{
+                        return false;
+                      };
+                    },
                     func:{
                       apiName:function(data){
                         return "api_message_update"
@@ -190,9 +175,6 @@ export default {
         token: function () {
             return this.$store.getters.getToken
         },
-        role() {
-            return this.name === 'admin' ? '超级管理员' : '普通用户';
-        }
     },
     watch: {
         $route (to, from) {
@@ -209,6 +191,9 @@ export default {
          */
         init () {
           this.initMainData()
+          this.initUserData()
+          this.initOrderData()
+          this.initArticleData()
         }, 
 
         /**
@@ -217,9 +202,9 @@ export default {
         async initMainData () {
           
           const self = this;
-          const postData  = {};
-          postData.paginate = self.$$cloneForm(self.paginate);        
-          postData.token = self.$store.getters.getToken; 
+          const postData = {};
+          postData.paginate = self.$$cloneForm(self.paginate);
+          postData.token = self.$store.getters.getToken;
           if (self.searchItem) {
             postData.searchItem = self.$$cloneForm(self.searchItem)
           };
@@ -229,8 +214,86 @@ export default {
           var res =  await self.$$api_message_get({data: postData});
           self.mainData = res.info.data;
           self.paginate.count = res.info.total;
+          self.userInfo = self.$store.getters.getUserinfo;
+          self.userInfo.logintime = new Date(parseInt(self.userInfo.lastlogintime) * 1000).toLocaleString();
+          console.log('info',self.userInfo);
+        },
+
+        /**
+         * 获取用户数据
+         */
+        async initUserData () {
+
+          const self =this;
+          const postData = {};
+          postData.paginate = self.$$cloneForm(self.paginate);
+          postData.searchItem ={
+            user_type:['in',[0]]
+          };
+          postData.token = self.$store.getters.getToken;
+
+          try{
+            var res = await self.$$api_user_get({data: postData});
+          }catch(err){
+            console.log(err); 
+            notify('网络故障','error');
+          };
+           
+          if(res){
+            self.userNum = res.info.total;
+          };
 
         },
+
+        /**
+         * 获取用户数据
+         */
+        async initOrderData () {
+
+          const self =this;
+          const postData = {};
+          postData.paginate = self.$$cloneForm(self.paginate);
+          postData.searchItem ={
+            pay_status:['in',[1]]
+          };
+          postData.token = self.$store.getters.getToken;
+
+          try{
+            var res = await self.$$api_order_get({data: postData});
+          }catch(err){
+            console.log(err); 
+            notify('网络故障','error');
+          };
+           
+          if(res){
+            self.orderNum = res.info.total;
+          };
+
+        },
+
+        /**
+         * 获取文章数据
+         */
+        async initArticleData () {
+
+          const self =this;
+          const postData = {};
+          postData.paginate = self.$$cloneForm(self.paginate);
+          postData.token = self.$store.getters.getToken;
+
+          try{
+            var res = await self.$$api_article_get({data: postData});
+          }catch(err){
+            console.log(err); 
+            notify('网络故障','error');
+          };
+           
+          if(res){
+            self.articleNum = res.info.total;
+          };
+
+        },
+
 
         onClickBtn(val){
             console.log(val)

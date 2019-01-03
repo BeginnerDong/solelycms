@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/order/order',
   component: Content,
-  redirect: '/order/order/order',
+  meta:{
+    children:['3-/order/order/order']
+  },
   children: [
     {
       path: 'order',

@@ -238,13 +238,21 @@ export default {
             text:function(data){
               return '管理权限'
             },
+            isHide:function(data,self){
+              console.log('test',self.$store.getters.getUserinfo);
+              if(data.user_no==self.$store.getters.getUserinfo.user_no&&self.$store.getters.getUserinfo.primary_scope<60){
+                return true;
+              }else{
+                return false;
+              };
+            },
             funcType:'func',
             func:{
               func:function(data,self){
                 self.$router.push({
                   path:'/user/adminLists/access',
                   name:'权限管理',
-                  
+
                   params:{
                     defaultChecked:data.passage_array,
                     user_no:data.user_no,

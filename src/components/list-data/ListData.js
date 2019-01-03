@@ -35,7 +35,8 @@ export default {
       dialogFormVisible:false,
       apiName:'',
       form_fields:[],
-      token:0
+      token:0,
+      self:this
       
 
     }

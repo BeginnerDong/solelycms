@@ -81,7 +81,7 @@ export default {
           options:'categoryOptions',
           listType:'normal',
           formatter:function(val,tests){
-            return  val.label[val.category_id]['title'];
+            return  val.label[val.category_id]&&val.label[val.category_id]['title']?val.label[val.category_id]['title']:'' ;
           },
           defaultProps: {
             children: 'child',

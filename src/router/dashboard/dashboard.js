@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/dashboard/dashboard',
   component: Content,
-  redirect: '/dashboard/dashboard/dashboard',
+  meta:{
+    children:['3-/dashboard/dashboard/dashboard']
+  },
   children: [
     {
       path: 'dashboard',

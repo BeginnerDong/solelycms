@@ -12,6 +12,8 @@ export default {
   icon: 'inbox',
   id:'1-/thirdApp',
   component: Home,
-  redirect: '/thirdApp/thirdAppLists',
+  meta:{
+    children:['2-/thirdApp/thirdAppLists']
+  },
   children: [thirdApp]
 }

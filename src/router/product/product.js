@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/product/product',
   component: Content,
-  redirect: '/product/product/product',
+  meta:{
+    children:['3-/product/product/product','3-/product/product/Coupon','3-/product/product/sku']
+  },
   children: [
     {
       path: 'product',

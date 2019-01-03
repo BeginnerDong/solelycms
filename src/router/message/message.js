@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/message/message',
   component: Content,
-  redirect: '/message/message/message',
+  meta:{
+    children:['3-/message/message/message']
+  },
   children: [
     {
       path: 'message',

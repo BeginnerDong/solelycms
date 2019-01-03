@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/user/adminLists',
   component: Content,
-  redirect: '/user/adminLists/adminLists',
+  meta:{
+    children:['3-/user/adminLists/adminLists','3-/user/adminLists/userOne','3-/user/adminLists/user']
+  },
   children: [
     {
       path: 'adminLists',

@@ -8,6 +8,8 @@ export default {
   icon: 'inbox',
   id:'1-/product',
   component: Home,
-  redirect: '/product/product',
+  meta:{
+    children:['2-/product/product']
+  },
   children: [product]
 }

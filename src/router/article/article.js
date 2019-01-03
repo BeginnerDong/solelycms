@@ -12,7 +12,9 @@ export default {
   icon: 'inbox',
   id:'2-/article/article',
   component: Content,
-  redirect: '/article/article/article',
+  meta:{
+    children:['3-/article/article/article']
+  },
   children: [
     {
       path: 'article',

@@ -12,6 +12,8 @@ export default {
   icon: 'inbox',
   id:'1-/article',
   component: Home,
-  redirect: '/article/article',
+  meta:{
+    children:['2-/article/article']
+  },
   children: [article]
 }

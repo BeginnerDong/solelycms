@@ -14,7 +14,7 @@
     <el-header>
       <el-button
         v-for='(btn,index) in btn_info'
-        v-if="btn.position=='header'"
+        v-if="btn.position=='header'&&(!btn.isHide||!btn.isHide(btn,self))"
         :key='index'
         :type="btn.type || 'info'"
         :icon="btn.icon || 'view'"
@@ -117,7 +117,7 @@
           <template slot-scope='scope'>
             <el-button
               v-for='(btn,index) in btn_info'
-              v-if="btn.position=='list'"
+              v-if="btn.position=='list'&&(!btn.isHide||!btn.isHide(scope.row,self))"
               :key='index'
               :type="btn.type || 'info'"
               :icon="btn.icon || 'view'"

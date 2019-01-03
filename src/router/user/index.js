@@ -12,6 +12,8 @@ export default {
   icon: 'inbox',
   id:'1-/user',
   component: Home,
-  redirect: '/user/adminLists',
+  meta:{
+    children:['2-/user/adminLists']
+  },
   children: [adminLists]
 }

@@ -11,7 +11,9 @@ export default {
   icon: 'inbox',
   id:'2-/flowLog/pay',
   component: Content,
-  redirect: '/flowLog/pay/pay',
+  meta:{
+    children:['3-/flowLog/pay/pay']
+  },
   children: [
     {
       path: 'pay',
