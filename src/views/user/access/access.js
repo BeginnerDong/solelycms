@@ -240,17 +240,50 @@ export default {
 
     async initMainData(){
       const self =this;
+      var results = [];
       var data = self.$$cloneForm(self.$router.options.routes);
-      console.log('initMainData-data',data)
-      for (var i = 0; i < data.length; i++) {
-        if(!(data[i].meta&&data[i].meta.application&&data[i].meta.application.indexOf('notInAuth'))){
-          self.mainData.push(data[i]);
-        };
+      if(self.$store.getters.getUserinfo.primary_scope==90){
+        var checkData = 'All';
+      }else{
+        var checkData = self.$store.getters.getUserinfo.passage_array;
       };
+      
+      console.log('initMainData-data',data);
+      pushItemsExclude(data,results);
+      self.mainData = results;
+      console.log('initMainData-results',results);
+      return;
+      
+
+      function pushItemsExclude(data,results){
+        
+        for (var i = 0; i < data.length; i++) {
+          var childItem = {};
+          if(!(data[i].meta&&data[i].meta.application&&data[i].meta.application.indexOf('notInAuth')>=0)){
+            if(checkData!='All'&&checkData.indexOf(data[i].id)>=0){
+              childItem = data[i];
+            }else if(checkData=='All'){
+              childItem = data[i];
+            };
+          };
+          if(JSON.stringify(childItem)!='{}'&&data[i].children&&data[i].children.length>0){
+            var newArray = self.$$cloneForm(data[i].children);
+            childItem.children = [];
+            pushItemsExclude(newArray,childItem.children);
+          }else if(JSON.stringify(childItem)!='{}'&&data[i].child_button&&data[i].child_button.length>0){
+            var newArray = self.$$cloneForm(data[i].child_button);
+            childItem.children = [];
+            pushItemsExclude(newArray,childItem.children);
+          };
+          if(JSON.stringify(childItem)!='{}'){
+            results.push(childItem);
+          };
+        };
+
+      }; 
+
     },
 
-
-    
 
     async onSubmit(data){
       console.log(data)

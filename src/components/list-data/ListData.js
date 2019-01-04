@@ -3,7 +3,7 @@ import FormData from '../form-data/'
 import _ from 'underscore'
 import plugins from '../../register/plugin.js'
 import func from '../../register/func.js'
-//import store from 'store/'
+import store from 'store/'
 
 
 export default {
@@ -45,6 +45,22 @@ export default {
 
     funcTransfer(){
       return func;
+    },
+
+
+    hasAuth(btn,data){
+
+      const self = this;
+      var auth = store.getters.getUserinfo.passage_array;
+      if(btn){
+        var id = this.$route.path+'-'+btn.text(data);
+        if(auth.indexOf(id)>=0){
+          return true;
+        }else if(id=='/user/adminLists/adminLists-管理权限'){
+          return true;
+        };
+      };
+      
     },
 
     /**

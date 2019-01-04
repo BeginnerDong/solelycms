@@ -36,6 +36,20 @@ export default {
       name: '用户列表',
       icon: 'reorder',
       id:'3-/user/adminLists/user',
+      child_button:[
+        { 
+          name:'添加信息',
+          id:'/user/adminLists/user-添加信息'
+        },
+        { 
+          name:'编辑信息',
+          id:'/user/adminLists/user-编辑信息'
+        },
+        { 
+          name:'编辑账号',
+          id:'/user/adminLists/user-编辑账号'
+        }
+      ],
       component: User.User
     },
 

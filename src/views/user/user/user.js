@@ -426,7 +426,7 @@ export default {
           },
       ],
       DistriChild:{
-        tableName:'Distribution',
+        tableName:'Fistribution',
         searchItem:{
         },
         fixSearchItem:{
@@ -437,7 +437,7 @@ export default {
         condition:'in',
       },
       DistriParent:{
-        tableName:'Distribution',
+        tableName:'Fistribution',
         searchItem:{
 
         },
@@ -528,7 +528,7 @@ export default {
       };
       postData.getAfter = {
         file:{
-          tableName:'file',
+          tableName:'File',
           middleKey:'user_no',
           key:'user_no',
           condition:'=',
@@ -540,7 +540,7 @@ export default {
           info:['path'],
         },
         parentInfo:{
-          tableName:'userInfo',
+          tableName:'UserInfo',
           middleKey:'parent_no',
           key:'user_no',
           condition:'=',
