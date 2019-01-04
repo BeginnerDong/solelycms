@@ -21,6 +21,28 @@ export default {
       name: '管理员列表',
       id:'3-/user/adminLists/adminLists',
       icon: 'reorder',
+      child_button:[
+        { 
+          name:'编辑信息',
+          id:'/user/adminLists/adminLists-编辑信息'
+        },
+        { 
+          name:'添加信息',
+          id:'/user/adminLists/adminLists-添加信息'
+        },
+        { 
+          name:'编辑账号',
+          id:'/user/adminLists/adminLists-编辑账号'
+        },
+        { 
+          name:'删除选中',
+          id:'/user/adminLists/adminLists-删除选中'
+        },
+        { 
+          name:'添加账号',
+          id:'/user/adminLists/adminLists-添加账号'
+        },        
+      ],
       component: User.AdminLists
     },
     {
@@ -28,6 +50,28 @@ export default {
       name: '员工列表',
       icon: 'reorder',
       id:'3-/user/adminLists/userOne',
+      child_button:[
+        { 
+          name:'编辑信息',
+          id:'/user/adminLists/userOne-编辑信息'
+        },
+        { 
+          name:'添加信息',
+          id:'/user/adminLists/userOne-添加信息'
+        },
+        { 
+          name:'编辑账号',
+          id:'/user/adminLists/userOne-编辑账号'
+        },
+        { 
+          name:'删除选中',
+          id:'/user/adminLists/userOne-删除选中'
+        },
+        { 
+          name:'添加账号',
+          id:'/user/adminLists/userOne-添加账号'
+        },                  
+      ],
       component: User.UserOne
     },
 
@@ -48,6 +92,18 @@ export default {
         { 
           name:'编辑账号',
           id:'/user/adminLists/user-编辑账号'
+        },
+        { 
+          name:'管理佣金',
+          id:'/user/adminLists/user-管理佣金'
+        },
+        { 
+          name:'删除选中',
+          id:'/user/adminLists/user-删除选中'
+        },
+        { 
+          name:'添加账号',
+          id:'/user/adminLists/user-添加账号'
         }
       ],
       component: User.User

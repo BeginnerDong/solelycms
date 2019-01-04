@@ -20,6 +20,20 @@ export default {
       name: '商品分类管理',
       icon: 'reorder',
       id:'3-/label/subjectMenu/areaMenu',
+      child_button:[
+        { 
+          name:'添加',
+          id:'/label/subjectMenu/areaMenu-添加'
+        },
+        { 
+          name:'编辑',
+          id:'/label/subjectMenu/areaMenu-编辑'
+        },
+        { 
+          name:'删除选中',
+          id:'/label/subjectMenu/areaMenu-删除选中'
+        },       
+      ],
       component: Label.AreaMenu
     },
     {
@@ -27,6 +41,20 @@ export default {
       name: 'sku标签管理',
       icon: 'reorder',
       id:'3-/label/subjectMenu/sku',
+      child_button:[
+        { 
+          name:'添加',
+          id:'/label/subjectMenu/sku-添加'
+        },
+        { 
+          name:'编辑',
+          id:'/label/subjectMenu/sku-编辑'
+        },
+        { 
+          name:'删除选中',
+          id:'/label/subjectMenu/sku-删除选中'
+        },       
+      ],
       component: Label.Sku
     },
   ]

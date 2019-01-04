@@ -14,7 +14,9 @@
     <el-header>
       <el-button
         v-for='(btn,index) in btn_info'
-        v-if="btn.position=='header'&&(!btn.isHide||!btn.isHide(btn,self))&&hasAuth(btn.id)"
+        v-if="btn.position=='header'&&(!btn.isHide||!btn.isHide(btn,self))&&hasAuth(btn,{
+          data : {},
+        })"
         :key='index'
         :type="btn.type || 'info'"
         :icon="btn.icon || 'view'"

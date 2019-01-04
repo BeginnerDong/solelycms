@@ -21,6 +21,20 @@ export default {
       name: '文章列表',
       icon: 'reorder',
       id:'3-/article/article/article',
+      child_button:[
+        { 
+          name:'添加',
+          id:'/article/article/article-添加'
+        },
+        { 
+          name:'编辑',
+          id:'/article/article/article-编辑'
+        },
+        { 
+          name:'删除选中',
+          id:'/article/article/article-删除选中'
+        },               
+      ],
       component: Article.Article
     },
   ]

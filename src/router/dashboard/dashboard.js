@@ -21,6 +21,16 @@ export default {
       name: '控制面板',
       icon: 'reorder',
       id:'3-/dashboard/dashboard/dashboard',
+      child_button:[
+        { 
+          name:'添加',
+          id:'/dashboard/dashboard/dashboard-添加'
+        },
+        { 
+          name:'处理',
+          id:'/dashboard/dashboard/dashboard-处理'
+        },
+      ],
       component: Dashboard.Dashboard
     },
   ]

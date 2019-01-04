@@ -21,6 +21,20 @@ export default {
       name: '佣金列表',
       icon: 'reorder',
       id:'3-/flowLog/balance/balance',
+      child_button:[
+        { 
+          name:'添加',
+          id:'/flowLog/balance/balance-添加'
+        },
+        { 
+          name:'编辑',
+          id:'/flowLog/balance/balance-编辑'
+        },
+        { 
+          name:'删除选中',
+          id:'/flowLog/balance/balance-删除选中'
+        },
+      ],
       component: Flowlog.Balance
     },
   ]

@@ -145,28 +145,12 @@ export default {
             return val.info.qrImg
           }
         },
-        
-        {
-          key: "menu_id",
-          label: '菜单',
-          application:[],
-          type:'cascader',
-          options:'labelOptions',
-        },
         {
           key: "mainImg",
           label: '主图',
           application:[],
           type:'upload',
-          options:'labelOptions',
           limit:10,
-        },
-        {
-          key: "name",
-          label: '内容',
-          application:[],
-          type:'vueEditor',
-          
         },
         {
           key: "status",
@@ -426,7 +410,7 @@ export default {
           },
       ],
       DistriChild:{
-        tableName:'Fistribution',
+        tableName:'Distribution',
         searchItem:{
         },
         fixSearchItem:{
@@ -437,7 +421,7 @@ export default {
         condition:'in',
       },
       DistriParent:{
-        tableName:'Fistribution',
+        tableName:'Distribution',
         searchItem:{
 
         },

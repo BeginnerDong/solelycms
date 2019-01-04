@@ -21,6 +21,16 @@ export default {
       name: '留言列表',
       icon: 'reorder',
       id:'3-/message/message/message',
+      child_button:[
+        { 
+          name:'编辑',
+          id:'/message/message/message-编辑'
+        },
+        { 
+          name:'删除选中',
+          id:'/message/message/message-删除选中'
+        },       
+      ],
       component: Message.Message
     },
   ]

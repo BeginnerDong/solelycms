@@ -20,6 +20,20 @@ export default {
       name: '积分记录列表',
       icon: 'reorder',
       id:'3-/flowLog/score/score',
+      child_button:[
+        { 
+          name:'添加流水',
+          id:'/flowLog/score/score-添加流水'
+        },
+        { 
+          name:'编辑',
+          id:'/flowLog/score/score-编辑'
+        },
+        { 
+          name:'删除选中',
+          id:'/flowLog/score/score-删除选中'
+        },       
+      ],
       component: Flowlog.Score
     },
   ]

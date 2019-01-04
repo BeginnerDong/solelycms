@@ -146,7 +146,8 @@ export default {
 
       // 按钮配置
       btn_info:[
-        { type:'info',
+        { 
+          type:'info',
           icon:'edit',
           size:'mini',
           text:function(data){
