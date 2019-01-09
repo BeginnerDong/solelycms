@@ -91,19 +91,11 @@ export default {
           }
         },
         {
-          key: "menu_id",
-          label: '菜单',
-          application:[],
-          type:'cascader',
-          options:'labelOptions',
-        },
-        {
           key: "mainImg",
-          label: '主图',
-          application:[],
+          label: '头像',
+          application:['编辑账号'],
           type:'upload',
-          options:'labelOptions',
-          limit:10,
+          limit:1,
         },
         {
           key: "name",

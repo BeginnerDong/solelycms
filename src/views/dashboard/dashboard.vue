@@ -6,7 +6,7 @@
                     <el-col>
                         <el-card shadow="hover" class="mgb20">
                             <div :userInfo=userInfo class="user-info">
-                                <img :src="userInfo.mainImg[0].url" class="user-avator" alt="">
+                                <img :src="headImgUrl" class="user-avator" alt="">
                                 <div class="user-info-cont">
                                     <div class="user-info-name">{{userInfo.login_name}}</div>
                                     <div>{{userInfo.primary_scope==90?'超级管理员':'管理员'}}</div>

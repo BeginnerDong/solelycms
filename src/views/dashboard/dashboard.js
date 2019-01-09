@@ -8,6 +8,7 @@ export default {
             userNum:'',
             orderNum:'',
             articleNum:'',
+            headImgUrl:'',
             self:this,
             fields:[
                 {
@@ -216,7 +217,9 @@ export default {
           self.paginate.count = res.info.total;
           self.userInfo = self.$store.getters.getUserinfo;
           self.userInfo.logintime = new Date(parseInt(self.userInfo.lastlogintime) * 1000).toLocaleString();
-          console.log('info',self.userInfo);
+          if (self.userInfo.mainImg[0].url) {
+            self.headImgUrl = self.userInfo.mainImg[0].url
+          };
         },
 
         /**
