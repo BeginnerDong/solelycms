@@ -108,13 +108,16 @@ export default {
           label: '状态',
           application:['编辑账号'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -398,6 +401,9 @@ export default {
       };
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
+      };
+      postData.order = {
+        create_time:'desc',
       };
       var res =  await self.$$api_user_get({data: postData});
       self.mainData = res.info.data;

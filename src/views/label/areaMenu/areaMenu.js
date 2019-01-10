@@ -45,7 +45,6 @@ export default {
           application:['添加','编辑'],
           type:'cascader',
           options:'labelOptions',
-          
         },
         {
           key: "mainImg",
@@ -59,18 +58,20 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
           },
-          value:'',
           placeholder:'请选择状态',
           header_search:true,
           header_search_type:'select',
@@ -85,9 +86,6 @@ export default {
             self.initMainData();
           },
         },
-
-
-
         {
           key: "name",
           label: '内容',
@@ -99,14 +97,16 @@ export default {
           label: '区域选择',
           application:['table','api_userInfo_add','api_userInfo_update'],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
         }, 
         {
           key: 'create_time',
@@ -186,22 +186,22 @@ export default {
               return "api_label_update"
             },
             formData:function(data,self,func){
-                var res = self.getCheckedNodes();
-                if(res){
-                  var data = {
-                    parentid: res.parentid,
-                    title:res.title,
-                    mainImg:res.mainImg,
-                    description:res.description,
-                    listorder:res.listorder,
-                    status:res.status
-                  };
-                }else{
-                  return {
-                    error:'请选择一个菜单'
-                  }
+              var res = self.getCheckedNodes();
+              if(res){
+                var data = {
+                  parentid: res.parentid,
+                  title:res.title,
+                  mainImg:res.mainImg,
+                  description:res.description,
+                  listorder:res.listorder,
+                  status:res.status
                 };
-                return data||{};
+              }else{
+                return {
+                  error:'请选择一个菜单'
+                }
+              };
+              return data||{};
             },
             postData:function(data,self){
               var res = self.getCheckedNodes();
@@ -262,11 +262,10 @@ export default {
               };
               return postData;
             }
-
           },
         }
-        
       ],
+
       paginate: {
           count: 0,
           currentPage: 1,
@@ -289,8 +288,6 @@ export default {
       otherData:{
         deleteApiName:'api_label_update',
       }
-      
-
     }
 
   },
@@ -299,7 +296,6 @@ export default {
     test(){
       this.$router.push('/function')
     },
-
 
     filtersChange(params){
       const self = this;
@@ -339,15 +335,8 @@ export default {
         self.mainData = res.info.data;
         self.optionData.labelOptions = res.info.data;
         console.log(self.mainData)
-        //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
-        
       };
-
-      
     },
-
-
-    
 
     async onSubmit(data){
       console.log(data)
@@ -507,8 +496,7 @@ export default {
       this.init()
     },
     token(){
-
     }
   }
-
+  
 }

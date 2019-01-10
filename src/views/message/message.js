@@ -39,16 +39,13 @@ export default {
           type:'input',
           listType:'normal'
         },
-
         {
           key: "mainImg",
           label: '图片',
           application:['编辑','添加'],
           type:'upload',
-          options:'labelOptions',
           limit:10,
         },
-        
         {
           key: "content",
           label: '内容',
@@ -60,13 +57,16 @@ export default {
           label: '状态',
           application:['编辑','添加'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -100,74 +100,70 @@ export default {
           listType:'deal',
           width:300
         },
-       
       ],
-
 
 
       // 按钮配置
       btn_info: [
-        
           
-          {
-            type:'info',
-            icon:'edit',
-            size:'mini',
-            position:'list',
-            text:function(data){
-              return '编辑'
-            },
-            func:{
-              apiName:function(data){
-                return "api_message_update"
-              },
-              formData:function(data,self){
-                return data
-              },
-              postData:function(data,self){
-                var postData={
-                  searchItem:{
-                    id:self.btnData.id,
-                    user_type:0
-                  },
-                  data:data
-                };
-
-                return postData;
-              }
-            },
+        {
+          type:'info',
+          icon:'edit',
+          size:'mini',
+          position:'list',
+          text:function(data){
+            return '编辑'
           },
-          {
-            type:'danger',
-            icon:'delete',
-            size:'normal',
-            funcType:'submit',
-            position:'header',
-            text:function(data){
-              return '删除选中'
+          func:{
+            apiName:function(data){
+              return "api_message_update"
             },
-            func:{
-
-              apiName:function(data){
-                return "api_message_update"
-              },
-                            
-              postData:function(data,self){
-                var postData = {
-                  searchItem:{
-                    id:['in',self.deleteArray],
-                    user_type:0
-                  },
-                  data:{
-                    status:-1
-                  }
-                };
-                return postData;
-              }
-
+            formData:function(data,self){
+              return data
             },
+            postData:function(data,self){
+              var postData={
+                searchItem:{
+                  id:self.btnData.id,
+                  user_type:0
+                },
+                data:data
+              };
+
+              return postData;
+            }
           },
-          
+        },
+        {
+          type:'danger',
+          icon:'delete',
+          size:'normal',
+          funcType:'submit',
+          position:'header',
+          text:function(data){
+            return '删除选中'
+          },
+          func:{
+
+            apiName:function(data){
+              return "api_message_update"
+            },
+                          
+            postData:function(data,self){
+              var postData = {
+                searchItem:{
+                  id:['in',self.deleteArray],
+                  user_type:0
+                },
+                data:{
+                  status:-1
+                }
+              };
+              return postData;
+            }
+
+          },
+        },
 
       ],
       paginate: {
@@ -211,7 +207,6 @@ export default {
       this.init()
     },
     token(){
-
     }
   },
   methods: {
@@ -223,8 +218,6 @@ export default {
       this.initMainData()
       this.initMenuData()
     },
-
-    
 
     async initMenuData(){
       const self =this;
@@ -295,7 +288,6 @@ export default {
     },
 
 
-
     filtersChange(params){
       const self = this;
       console.log(params);
@@ -320,5 +312,4 @@ export default {
 
   },
   
-
 }

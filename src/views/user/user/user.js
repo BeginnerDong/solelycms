@@ -157,13 +157,16 @@ export default {
           label: '状态',
           application:['编辑账号'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -491,10 +494,6 @@ export default {
     },
 
 
-
-
-
-
     /**
      * 获取文章列表
      */
@@ -509,6 +508,9 @@ export default {
       };
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
+      };
+      postData.order = {
+        create_time:'desc',
       };
       postData.getAfter = {
         file:{
@@ -587,10 +589,6 @@ export default {
       self.initMainData();
     },
 
-
-
-
-    
   },
   
 

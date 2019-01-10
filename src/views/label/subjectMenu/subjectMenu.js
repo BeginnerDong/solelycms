@@ -32,7 +32,6 @@ export default {
           application:['添加','编辑'],
           type:'input'
         },
-        
         {
           key: "mainImg",
           label: '主图',
@@ -45,17 +44,17 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: '1'
-          }, {
-            text: '禁用',
-            value: '-1'
-          }],
+          options:[
+            {
+              text: '启用',
+              value: '1'
+            },
+            {
+              text: '禁用',
+              value: '-1'
+            }
+          ],
         },
-
-
-
         {
           key: "name",
           label: '内容',
@@ -67,14 +66,16 @@ export default {
           label: '区域选择',
           application:['table','api_userInfo_add','api_userInfo_update'],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
         }, 
         {
           key: 'create_time',
@@ -267,14 +268,8 @@ export default {
       if(res){
         self.mainData = res.info.data[1]['child']?res.info.data[1]['child']:[];
         self.optionData.labelOptions = res.info.data[1]['child']?res.info.data[1]['child']:[];
-        console.log(self.mainData)
-        //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
       };
-
     },
-
-
-    
 
     async onSubmit(data){
       console.log(data)

@@ -67,7 +67,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     console.log('router.beforeEach',to)
     var length = to.matched.length;
-    var checkAuth = length+'-'+to.fullPath;
+    var checkAuth = length+'-'+to.path;
     var auth = store.getters.getUserinfo.passage_array;
     
     var routes = router.options.routes;
@@ -91,7 +91,6 @@ router.beforeEach((to, from, next) => {
     }else if((to.meta&&to.meta.application&&to.meta.application.indexOf('notInAuth')==-1)||!to.meta.application){
       if(auth&&!(auth.indexOf(checkAuth)>=0)){
         func.notify('无权限','error');
-        from();
         return;
       };
     };

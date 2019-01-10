@@ -44,7 +44,6 @@ export default {
           application:['添加','编辑'],
           type:'cascader',
           options:'labelOptions',
-          
         },
         {
           key: "mainImg",
@@ -58,21 +57,21 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
           },
         },
-
-
-
         {
           key: "name",
           label: '内容',
@@ -84,14 +83,16 @@ export default {
           label: '区域选择',
           application:['table','api_userInfo_add','api_userInfo_update'],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
         }, 
         {
           key: 'create_time',
@@ -273,8 +274,6 @@ export default {
       otherData:{
         deleteApiName:'api_label_update',
       }
-      
-
     }
 
   },
@@ -322,16 +321,9 @@ export default {
       if(res){
         self.mainData = res.info.data;
         self.optionData.labelOptions = res.info.data;
-        console.log(self.mainData)
-        //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
-        
       };
 
-      
     },
-
-
-    
 
     async onSubmit(data){
       console.log(data)
@@ -491,8 +483,6 @@ export default {
       this.init()
     },
     token(){
-
     }
   }
-
 }

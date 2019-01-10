@@ -46,13 +46,15 @@ export default {
           label: '优惠券类型',
           application:['编辑','添加'],
           type:'select',
-          options:[{
-            text: '抵扣卷',
-            value: 3
-          }, {
-            text: '折扣卷',
-            value: 4
-          }],
+          options:[
+            {
+              text: '抵扣卷',
+              value: 3
+            }, {
+              text: '折扣卷',
+              value: 4
+            }
+          ],
           formatter:function(val,tests){
             return val.type == 3 ? '抵扣卷' : '折扣卷'
           },
@@ -130,7 +132,6 @@ export default {
           label: '主图',
           application:['编辑','添加'],
           type:'upload',
-          options:'labelOptions',
           limit:10,
         },
         {
@@ -144,13 +145,16 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -218,57 +222,57 @@ export default {
           },
         },
         {
-            type:'danger',
-            icon:'delete',
-            size:'normal',
-            funcType:'submit',
-            position:'header',
-            text:function(data){
-              return '删除选中'
-            },
-            func:{
-              apiName:function(data){
-                return "api_product_update"
-              },
-              postData:function(data,self){
-                var postData = {
-                  searchItem:{
-                    id:['in',self.deleteArray],
-                  },
-                  data:{
-                    status:-1
-                  }
-                };
-                return postData;
-              }
-            },
+          type:'danger',
+          icon:'delete',
+          size:'normal',
+          funcType:'submit',
+          position:'header',
+          text:function(data){
+            return '删除选中'
           },
-          {
-            type:'info',
-            icon:'edit',
-            size:'normal',
-            position:'header',
-            text:function(data){
-              return '添加'
+          func:{
+            apiName:function(data){
+              return "api_product_update"
             },
-            func:{
-              apiName:function(data){
-                return "api_product_add"
-              },
-              formData:function(data,self,func){
-                var data = {}; 
-                data.sku_array = [];
-                return data
-              },
-              postData:function(data,self){
-                var postData={
-                  data:data
-                };
-                postData.data.category_id = 0;
-                return postData;
-              }
-            },
+            postData:function(data,self){
+              var postData = {
+                searchItem:{
+                  id:['in',self.deleteArray],
+                },
+                data:{
+                  status:-1
+                }
+              };
+              return postData;
+            }
           },
+        },
+        {
+          type:'info',
+          icon:'edit',
+          size:'normal',
+          position:'header',
+          text:function(data){
+            return '添加'
+          },
+          func:{
+            apiName:function(data){
+              return "api_product_add"
+            },
+            formData:function(data,self,func){
+              var data = {}; 
+              data.sku_array = [];
+              return data
+            },
+            postData:function(data,self){
+              var postData={
+                data:data
+              };
+              postData.data.category_id = 0;
+              return postData;
+            }
+          },
+        },
       ],
 
       paginate: {
@@ -314,7 +318,6 @@ export default {
       this.init()
     },
     token(){
-
     }
   },
   methods: {
@@ -347,8 +350,6 @@ export default {
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
     },
-
-
 
 
     async onClickBtn(val){
@@ -421,7 +422,6 @@ export default {
               ],
             }
           }
-          
         };
         postData.excelOutput = {
           expTitle:'test',
@@ -434,7 +434,6 @@ export default {
         };
         var res =  await self.$$api_product_get({data: postData});
         window.location.href = res.info;
-        console.log(res);
       }
     },
 
@@ -478,8 +477,6 @@ export default {
       self.initMainData();
     },
 
-    
   },
-  
 
 }

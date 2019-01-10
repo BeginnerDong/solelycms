@@ -91,18 +91,10 @@ export default {
           }
         },
         {
-          key: "menu_id",
-          label: '菜单',
-          application:[],
-          type:'cascader',
-          options:'labelOptions',
-        },
-        {
           key: "mainImg",
           label: '头像',
           application:['编辑账号'],
           type:'upload',
-          options:'labelOptions',
           limit:1,
         },
         {
@@ -116,13 +108,16 @@ export default {
           label: '状态',
           application:['编辑账号'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',

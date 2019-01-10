@@ -11,158 +11,158 @@ export default {
             headImgUrl:'',
             self:this,
             fields:[
-                {
-                  key: 'id',
-                  label: 'ID',
-                  application:[],
-                  type:'input',
-                  listType:'normal'
+              {
+                key: 'id',
+                label: 'ID',
+                application:[],
+                type:'input',
+                listType:'normal'
+              },
+              {
+                key: 'title',
+                label: '标题',
+                application:['添加'],
+                type:'input',
+                listType:'normal'
+              }, 
+              {
+                key: 'description',
+                label: '事项',
+                application:['添加'],
+                type:'input',
+                listType:'normal'
+              },
+              {
+                key: "status",
+                label: '状态',
+                application:[],
+                type:'select',
+                options:
+                [
+                  {
+                    text: '已处理',
+                    value: 1
+                  }, 
+                  {
+                    text: '待处理',
+                    value: 0
+                  }
+                ],
+                formatter:function(val,tests){
+                return val.status == 1 ? '已处理' : '待处理'
                 },
-                {
-                  key: 'title',
-                  label: '标题',
-                  application:['添加'],
-                  type:'input',
-                  listType:'normal'
-                }, 
-                {
-                  key: 'description',
-                  label: '事项',
-                  application:['添加'],
-                  type:'input',
-                  listType:'normal'
+                filter_multiple: false,
+                listType:'normal',
+                defaultProps: {
+                    label: 'text',
+                    value: 'value',
                 },
-                {
-                    key: "status",
-                    label: '状态',
-                    application:[''],
-                    type:'select',
-                    options:
-                    [
-                        {
-                            text: '已处理',
-                            value: 1
-                        }, 
-                        {
-                            text: '待处理',
-                            value: 0
-                        }
-                    ],
-                    formatter:function(val,tests){
-                    return val.status == 1 ? '已处理' : '待处理'
-                    },
-                    filter_multiple: false,
-                    listType:'normal',
-                    defaultProps: {
-                        label: 'text',
-                        value: 'value',
-                    },
-                    placeholder:'请选择状态',
-                    header_search:true,
-                    header_search_type:'select',
-                    header_search_style:'width:160px;margin-right:2px;',
-                    changeFunc:function(e,self){
-                        if(e.target._value){
-                            self.searchItem.status = e.target._value;
-                        }else{
-                                delete self.searchItem.status;
-                        };
-                        self.initMainData();
-                    },
-                }, 
-                {
-                  label: '操作',
-                  listType:'deal',
-                  width:100
+                placeholder:'请选择状态',
+                header_search:true,
+                header_search_type:'select',
+                header_search_style:'width:160px;margin-right:2px;',
+                changeFunc:function(e,self){
+                    if(e.target._value){
+                        self.searchItem.status = e.target._value;
+                    }else{
+                            delete self.searchItem.status;
+                    };
+                    self.initMainData();
                 },
+              }, 
+              {
+                label: '操作',
+                listType:'deal',
+                width:100
+              },
             ],
 
             btn_info:[
 
-                {
-                    type:'info',
-                    icon:'edit',
-                    size:'normal',
-                    position:'header',
-                    text:function(data){
-                      return '添加'
-                    },
-                    func:{
-                        apiName:function(data){
-                            return "api_message_add"
-                        },
-
-                        formData:function(data,self,func){
-                            var data = {
-                                description:''
-                            }; 
-                            return data
-                        },
-                                    
-                        postData:function(data,self){
-
-                            data.status = 0;
-                            data.type = 10;
-
-                            var postData = {
-                                data:data
-                            };
-                            return postData;
-                        }
-
-                    },
+              {
+                type:'info',
+                icon:'edit',
+                size:'normal',
+                position:'header',
+                text:function(data){
+                  return '添加'
                 },
-                {
-                    type:'danger',
-                    icon:'delete',
-                    size:'mini',
-                    funcType:'submit',
-                    position:'list',
-                    text:function(data){
-                      return '处理'
-                    },
-                    isHide:function(data,self){
-                      if(data.status==1){
-                        return true;
-                      }else{
-                        return false;
+                func:{
+
+                  apiName:function(data){
+                      return "api_message_add"
+                  },
+
+                  formData:function(data,self,func){
+                      var data = {
+                          description:''
+                      }; 
+                      return data
+                  },
+                              
+                  postData:function(data,self){
+
+                      data.status = 0;
+                      data.type = 10;
+
+                      var postData = {
+                          data:data
                       };
-                    },
-                    func:{
-                      apiName:function(data){
-                        return "api_message_update"
-                      },
-                                    
-                      postData:function(data,self){
-                        var postData = {
-                          searchItem:{
-                            id:self.btnData.id,
-                          },
-                          data:{
-                            status:1
-                          }
-                        };
-                        return postData;
-                        }
-
-                    },
+                      return postData;
+                  }
                 },
+              },
+              {
+                type:'danger',
+                icon:'delete',
+                size:'mini',
+                funcType:'submit',
+                position:'list',
+                text:function(data){
+                  return '处理'
+                },
+                isHide:function(data,self){
+
+                  if(data.status==1){
+                    return true;
+                  }else{
+                    return false;
+                  };
+                },
+                func:{
+                  apiName:function(data){
+                    return "api_message_update"
+                  },
+                                
+                  postData:function(data,self){
+                    var postData = {
+                      searchItem:{
+                        id:self.btnData.id,
+                      },
+                      data:{
+                        status:1
+                      }
+                    };
+                    return postData;
+                  }
+                },
+              },
             ],
             
             paginate:{
-                count: 0,
-                currentPage: 1,
-                pagesize:3,
-                is_page:true,
-                page_sizes: [10, 30, 60, 90],
-                layout: 'total, sizes, prev, pager, next, jumper',
+              count: 0,
+              currentPage: 1,
+              pagesize:3,
+              is_page:true,
+              page_sizes: [10, 30, 60, 90],
+              layout: 'total, sizes, prev, pager, next, jumper',
             },
             searchItem:{
-                type:10,
-                status:['in',[0,1]],
+              type:10,
+              status:['in',[0,1]],
             },
             optionData:{
-                labelOptions:[]
+              labelOptions:[]
             },
             otherData:{
             },
@@ -249,7 +249,7 @@ export default {
         },
 
         /**
-         * 获取用户数据
+         * 获取订单数据
          */
         async initOrderData () {
 

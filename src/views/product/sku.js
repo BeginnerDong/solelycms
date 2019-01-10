@@ -1,6 +1,6 @@
 
 export default {
-  name: 'product',
+  name: 'sku',
   components: {},
   data () {
     return {
@@ -87,13 +87,16 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -104,7 +107,6 @@ export default {
           filter_multiple: false,
           listType:'normal',
         },
- 
         {
           key: 'create_time',
           label: '创建时间',
@@ -170,20 +172,22 @@ export default {
           application:['编辑','添加'],
           type:'input',
         },
-
         //index:19
         {
           key: "is_group",
           label: '是否团购',
           application:['编辑','添加'],
           type:'select',
-          options:[{
-            text: '开启',
-            value: 1
-          }, {
-            text: '关闭',
-            value: 0
-          }],
+          options:[
+            {
+              text: '开启',
+              value: 1
+            },
+            {
+              text: '关闭',
+              value: 0
+            }
+          ],
           formatter:function(val,tests){
             return val.is_group === 1 ? '开启' : '关闭'
           },
@@ -218,8 +222,6 @@ export default {
           width:300
         },
       ],
-
-
 
       // 按钮配置
       btn_info: [
@@ -301,7 +303,6 @@ export default {
             }
           },
         },
-
         {
           type:'danger',
           icon:'delete',
@@ -331,7 +332,6 @@ export default {
 
           },
         },
-
         {
           type:'info',
           icon:'edit',
@@ -353,10 +353,7 @@ export default {
                   data[self.optionData.sku_item[i].title] = '';
                 };
               };
-              
-          
               return data;
-
             },
             
             postData:function(data,self){
@@ -382,7 +379,6 @@ export default {
             }
           },
         },
-
         {
           type:'info',
           icon:'edit',
@@ -417,8 +413,6 @@ export default {
         },
       ],
         
-
-
       paginate: {
           count: 0,
           currentPage: 1,
@@ -435,9 +429,7 @@ export default {
         sku_item:[],
       },
       otherData:{
-
       },
-
       getBefore:{},
       UserInfo:{
         tableName:'UserInfo',
@@ -451,10 +443,9 @@ export default {
         label: 'title',
         value: 'id',
       },
-      
     }
-
   },
+
   mounted () {
     this.init()
   },
@@ -737,5 +728,4 @@ export default {
     },
 
   },
-
 }

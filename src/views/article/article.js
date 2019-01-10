@@ -46,7 +46,6 @@ export default {
           type:'input',
           listType:'normal'
         },
-        
         {
           key: "menu_id",
           label: '菜单',
@@ -88,7 +87,6 @@ export default {
           label: '主图',
           application:['编辑','添加'],
           type:'upload',
-          options:'labelOptions',
           limit:10,
         },
         {
@@ -96,7 +94,6 @@ export default {
           label: '内容多图',
           application:['编辑','添加'],
           type:'upload',
-          options:'labelOptions',
           limit:10,
         },
         {
@@ -110,13 +107,16 @@ export default {
           label: '状态',
           application:['编辑','添加'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -157,96 +157,93 @@ export default {
 
       // 按钮配置
       btn_info: [
-        
           
-          {
-            type:'info',
-            icon:'edit',
-            size:'mini',
-            position:'list',
-            text:function(data){
-              return '编辑'
-            },
-            func:{
-              apiName:function(data){
-                return "api_article_update"
-              },
-              formData:function(data,self){
-                return data
-              },
-              postData:function(data,self){
-                var postData={
-                  searchItem:{
-                    id:self.btnData.id
-                  },
-                  data:data
-                };
-
-                return postData;
-              }
-            },
+        {
+          type:'info',
+          icon:'edit',
+          size:'mini',
+          position:'list',
+          text:function(data){
+            return '编辑'
           },
-          {
-            type:'danger',
-            icon:'delete',
-            size:'normal',
-            funcType:'submit',
-            position:'header',
-            text:function(data){
-              return '删除选中'
+          func:{
+            apiName:function(data){
+              return "api_article_update"
             },
-            func:{
-
-              apiName:function(data){
-                return "api_article_update"
-              },
-                            
-              postData:function(data,self){
-                var postData = {
-                  searchItem:{
-                    id:['in',self.deleteArray],
-                    
-                  },
-                  data:{
-                    status:-1
-                  }
-                };
-                return postData;
-              }
-
+            formData:function(data,self){
+              return data
             },
+            postData:function(data,self){
+              var postData={
+                searchItem:{
+                  id:self.btnData.id
+                },
+                data:data
+              };
+
+              return postData;
+            }
           },
-          {
-            type:'info',
-            icon:'edit',
-            size:'normal',
-            position:'header',
-            text:function(data){
-              return '添加'
+        },
+        {
+          type:'danger',
+          icon:'delete',
+          size:'normal',
+          funcType:'submit',
+          position:'header',
+          text:function(data){
+            return '删除选中'
+          },
+          func:{
+
+            apiName:function(data){
+              return "api_article_update"
             },
-            func:{
-              apiName:function(data){
-                return "api_article_add"
-              },
+                          
+            postData:function(data,self){
+              var postData = {
+                searchItem:{
+                  id:['in',self.deleteArray],
+                },
+                data:{
+                  status:-1
+                }
+              };
+              return postData;
+            }
+          },
+        },
+        {
+          type:'info',
+          icon:'edit',
+          size:'normal',
+          position:'header',
+          text:function(data){
+            return '添加'
+          },
+          func:{
+            apiName:function(data){
+              return "api_article_add"
+            },
+            
+            formData:function(data,self,func){
               
-              formData:function(data,self,func){
-                
-                var data = {
-                  content:''
-                }; 
-                return data
-              },
-              
-              postData:function(data,self){
-                var postData={
-                  data:data
-                };
-                return postData;
-              }
+              var data = {
+                content:''
+              }; 
+              return data
             },
+            
+            postData:function(data,self){
+              var postData = {
+                data:data
+              };
+              return postData;
+            }
           },
-
+        },
       ],
+
       paginate: {
           count: 0,
           currentPage: 1,
@@ -395,6 +392,5 @@ export default {
     },
 
   },
-  
 
 }
