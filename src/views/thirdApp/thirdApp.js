@@ -48,6 +48,20 @@ export default {
           listType:'normal'
         },
         {
+          key: 'wx_appid',
+          label: '公众号appid',
+          application:['编辑','添加'],
+          type:'input',
+          listType:''
+        },
+        {
+          key: 'wx_appsecret',
+          label: '公众号appsecret',
+          application:['编辑','添加'],
+          type:'input',
+          listType:''
+        },
+        {
           key: 'distribution_level',
           label: '分销层级',
           application:['编辑','添加'],
@@ -75,7 +89,6 @@ export default {
           }
         },
         {
-
           key: "status",
           label: '状态',
           application:['编辑'],
@@ -99,7 +112,6 @@ export default {
             label: 'text',
             value: 'value',
           },
-
         },
         {
           key: 'create_time',
@@ -125,7 +137,6 @@ export default {
           listType:'deal',
           width:300
         }, 
-       
       ],
 
 

@@ -29,6 +29,7 @@ export default {
       pagination: this.Pagination, // 分页
       search: this.Search,// 搜索
       optiondata: this.optionData,// 搜索
+      otherdata: this.otherData,// 搜索
       formData:{},
       submitData:{},
       btn:{},
@@ -36,7 +37,8 @@ export default {
       apiName:'',
       form_fields:[],
       token:0,
-      self:this
+      self:this,
+      originArray:[]
       
 
     }
@@ -159,9 +161,9 @@ export default {
         this.$emit('onClickBtn', [this.btnName,this.btnData]);
         return ;
       };
-      this.apiName = opts.btn.func.apiName(opts.data);
+      this.apiName = opts.btn.func.apiName(opts.data,this);
       if(opts.btn.funcType=='submit'){
-        this.onSubmit();
+        this.onSubmit(opts.data);
         return ;
       };
       
@@ -216,12 +218,21 @@ export default {
 
     async onSubmit(val){
       const self = this;
-      console.log(val);
-      const postData = func.cloneForm(self.btn.func.postData(val,self));
+      // const postData = func.cloneForm(self.btn.func.postData(val,self));
+      const postData = self.btn.func.postData(val,self);
+
+      console.log('ListData',postData);
+
       if(!postData){
         func.notify('数据故障','fail');
         return;
       };
+
+      if(postData&&postData.errorMsg){
+        func.notify(postData.errorMsg,'fail');
+        return;
+      };
+      
       var res = await plugins[this.apiName]({data: postData});
       if(res){
         if(func.sCallBack(res)){
@@ -240,7 +251,8 @@ export default {
 
     handleSelectionChange(val) {
       const self = this;
-      console.log(val);
+
+      self.originArray = val?val:[];
       self.deleteArray = [];
       for (var i = val.length - 1; i >= 0; i--) {
         self.deleteArray.push(val[i].id)
@@ -285,7 +297,7 @@ export default {
 
   mounted () {
     console.log(this.fields);
-    //this.store = store;
+    this.store = store;
   },
 
   /**

@@ -49,7 +49,7 @@ export default function ({
   if (typeof path === 'function') {
     p = path(pathParams || {})
   }
-  console.log(p);
+  console.log('ajax-data',data);
 
   if(tokenFlag!='false'){
     data.token = store.getters.getToken;

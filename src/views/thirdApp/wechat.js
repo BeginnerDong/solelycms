@@ -1,36 +1,23 @@
 export default {
-  name: 'article',
+  name: 'thirdApp',
   components: {},
   data () {
     return {
       mainData: [],
-      self:this,
       fields: [
         {
           key: 'id',
-          label: '文章ID',
+          label: 'ID',
           application:[],
           type:'input',
           listType:'normal'
         },
         {
-          key: 'title',
-          label: '文章标题',
+          key: 'name',
+          label: '公众号名称',
           application:['编辑','添加'],
           type:'input',
-          listType:'normal',
-          placeholder:'请输入文章标题',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.searchItem.title = e.target._value;
-            }else{
-              delete self.searchItem.title;
-            };
-            self.initMainData();
-          },
+          listType:'normal'
         },
         {
           key: 'description',
@@ -40,72 +27,48 @@ export default {
           listType:'normal'
         },
         {
-          key: 'contactPhone',
-          label: '联系电话',
+          key: 'appid',
+          label: 'appid',
           application:['编辑','添加'],
           type:'input',
           listType:'normal'
         },
         {
-          key: "menu_id",
-          label: '菜单',
+          key: 'appsecret',
+          label: 'appsecret',
           application:['编辑','添加'],
-          type:'cascader',
-          options:'labelOptions',
-          listType:'normal',
+          type:'input',
+          listType:'normal'
+        },
+        {
+          key: 'type',
+          label: '类型',
+          application:['编辑','添加'],
+          type:'select',
+          options:[
+            {
+              text: '公众号',
+              value: 1
+            },
+            {
+              text: '小程序',
+              value: 2
+            }
+          ],
           formatter:function(val,tests){
-            return  val.label[val.menu_id]['title'];
+            return val.status === 1 ? '公众号' : '小程序'
           },
-          placeholder:'请选择菜单',
-          header_search:true,
-          header_search_type:'cascader',
-          header_search_value:'',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(value,self){
-            if(!value){ 
-              delete self.searchItem.menu_id;
-            }else{
-              self.searchItem.menu_id = value[value.length-1]
-            };
-            self.initMainData();
-          },
+          filter_multiple: false,
+          listType:'normal',
           defaultProps: {
-            label: 'title',
-            value: 'id',
-            children: 'child',
+            label: 'text',
+            value: 'value',
           },
-        },
-        {
-          key: 'user_no',
-          label: '用户NO',
-          application:[],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: "mainImg",
-          label: '主图',
-          application:['编辑','添加'],
-          type:'upload',
-          limit:10,
-        },
-        {
-          key: "bannerImg",
-          label: '内容多图',
-          application:['编辑','添加'],
-          type:'upload',
-          limit:10,
-        },
-        {
-          key: "content",
-          label: '内容',
-          application:['编辑','添加'],
-          type:'vueEditor',
         },
         {
           key: "status",
           label: '状态',
-          application:['编辑','添加'],
+          application:['编辑'],
           type:'select',
           options:[
             {
@@ -126,11 +89,12 @@ export default {
             label: 'text',
             value: 'value',
           },
-        }, 
+        },
         {
           key: 'create_time',
           label: '创建时间',
           listType:'normal',
+          width:150,
           placeholder:'请选择创建时间',
           header_search:true,
           header_search_type:'datePicker',
@@ -149,14 +113,12 @@ export default {
           label: '操作',
           listType:'deal',
           width:300
-        },
-       
+        }, 
       ],
 
 
-
       // 按钮配置
-      btn_info: [
+      btn_info:[
           
         {
           type:'info',
@@ -168,7 +130,7 @@ export default {
           },
           func:{
             apiName:function(data){
-              return "api_article_update"
+              return "api_wechat_update"
             },
             formData:function(data,self){
               return data
@@ -180,69 +142,67 @@ export default {
                 },
                 data:data
               };
-
               return postData;
             }
           },
         },
         {
-          type:'danger',
-          icon:'delete',
-          size:'normal',
-          funcType:'submit',
-          position:'header',
-          text:function(data){
-            return '删除选中'
-          },
-          func:{
+            type:'danger',
+            icon:'delete',
+            size:'normal',
+            funcType:'submit',
+            position:'header',
+            text:function(data){
+              return '删除选中'
+            },
+            func:{
 
-            apiName:function(data){
-              return "api_article_update"
+              apiName:function(data){
+                return "api_wechat_update"
+              },
+                            
+              postData:function(data,self){
+                var postData = {
+                  searchItem:{
+                    id:['in',self.deleteArray],
+                  },
+                  data:{
+                    status:-1
+                  }
+                };
+                return postData;
+              }
+
             },
-                          
-            postData:function(data,self){
-              var postData = {
-                searchItem:{
-                  id:['in',self.deleteArray],
-                },
-                data:{
-                  status:-1
-                }
-              };
-              return postData;
-            }
           },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'normal',
-          position:'header',
-          text:function(data){
-            return '添加'
-          },
-          func:{
-            apiName:function(data){
-              return "api_article_add"
+          {
+            type:'info',
+            icon:'edit',
+            size:'normal',
+            position:'header',
+            text:function(data){
+              return '添加'
             },
-            
-            formData:function(data,self,func){
+            func:{
+              apiName:function(data){
+                return "api_wechat_add"
+              },
               
-              var data = {
-                content:''
-              }; 
-              return data
+              formData:function(data,self,func){
+                var data = {}; 
+                return data
+              },
+              
+              postData:function(data,self){
+                var postData={
+                  data:data
+                };
+                return postData;
+              }
             },
-            
-            postData:function(data,self){
-              var postData = {
-                data:data
-              };
-              return postData;
-            }
           },
-        },
       ],
+        
 
       paginate: {
           count: 0,
@@ -253,9 +213,9 @@ export default {
           layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
+
       },
       optionData:{
-        labelOptions:[]
       },
       otherData:{
       },
@@ -267,6 +227,12 @@ export default {
         middleKey:'user_no',
         condition:'in',
       },
+      defaultProps: {
+        children: 'child',
+        label: 'title',
+        value: 'id',
+      },
+      
     }
 
   },
@@ -289,49 +255,21 @@ export default {
   },
   methods: {
 
+
     /**
      * 初始化
      */
     init () {
       this.initMainData()
-      this.initMenuData()
     },
-
-    
-
-    async initMenuData(){
-      const self =this;
-      const postData = {};
-      postData.searchItem ={
-        type:['=',1]  
-      };
-      postData.token = self.$store.getters.getToken;
-      postData.order ={
-        listorder:'desc'
-      };
-
-      try{
-        var res = await self.$$api_label_get({data: postData});
-      }catch(err){
-        console.log(err); 
-        notify('网络故障','error');
-      };
-       
-      if(res){
-        self.optionData.labelOptions = res.info.data;
-      };
-      
-    },
-
 
     /**
      * 获取文章列表
      */
     async initMainData () {
-      
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.paginate = self.$$cloneForm(self.paginate);        
       postData.token = self.$store.getters.getToken; 
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
@@ -339,19 +277,21 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res =  await self.$$api_article_get({data: postData});
+      postData.order = {
+          create_time:'desc',
+      };
+      var res =  await self.$$api_wechat_get({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
 
     },
 
-
-    onClickBtn(val){
-      console.log(val)
+    async fieldChange(val){
+      console.log('product_fieldChange',val);
+      const self = this;
     },
 
     beforeSearch(TableName){
-
       const self = this;
       if(JSON.stringify(self.getBefore) == "{}"&&JSON.stringify(self[TableName]['searchItem']) != "{}"){
         self.getBefore = {
@@ -366,8 +306,6 @@ export default {
       };
       self.initMainData();
     },
-
-
 
     filtersChange(params){
       const self = this;
@@ -386,9 +324,8 @@ export default {
       self.initMainData();
     },
 
-    async fieldChange(val){
-      console.log('product_fieldChange',val);
-      const self = this;
+    onClickBtn(val){
+      console.log(val)
     },
 
   },

@@ -23,5 +23,11 @@ export default [
     method: 'uploadImg',
     path: '/Base/FtpFile/upload',
     type: 'post'
+  },
+  {
+    name: '获取微信公众号素材',
+    method: 'getSource',
+    path: '/WeFunc/Source/getSource',
+    type: 'post'
   }
 ]

@@ -13,7 +13,10 @@ export default {
   id:'2-/thirdApp/thirdAppLists',
   component: Content,
   meta:{
-    children:['3-/thirdApp/thirdAppLists/thirdAppLists']
+    children:[
+      '3-/thirdApp/thirdAppLists/thirdAppLists',
+      '3-/thirdApp/thirdAppLists/wechatList',
+    ]
   },
   children: [
     {
@@ -40,6 +43,27 @@ export default {
         },       
       ],
       component: ThirdApp.ThirdApp
+    },
+    {
+      path: 'wechatList',
+      name: '微信公众号列表',
+      icon: 'reorder',
+      id:'3-/thirdApp/thirdAppLists/wechatList',
+      child_button:[
+        { 
+          name:'添加',
+          id:'/thirdApp/thirdAppLists/wechatList-添加'
+        },
+        { 
+          name:'编辑',
+          id:'/thirdApp/thirdAppLists/wechatList-编辑'
+        },       
+        { 
+          name:'删除选中',
+          id:'/thirdApp/thirdAppLists/wechatList-删除选中'
+        },       
+      ],
+      component: ThirdApp.Wechat
     },
   ]
 }

@@ -3,7 +3,9 @@
  */
 
 import ThirdApp from './thirdApp.vue'
+import Wechat from './wechat.vue'
 
 export default {
   ThirdApp,
+  Wechat,
 }

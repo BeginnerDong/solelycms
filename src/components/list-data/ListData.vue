@@ -51,6 +51,7 @@
 
       <el-table-column v-if='btn_info.batch!==false'
                        type="selection"
+                       :selectable="otherdata.canSelect?otherdata.canSelect:function(){return true}"
                        width="55">
       </el-table-column>
 
@@ -186,24 +187,6 @@
           </form-data>
       </div>            
     </el-dialog>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
 </template>
 

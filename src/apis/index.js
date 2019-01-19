@@ -21,6 +21,7 @@ import flowLog from './flowLog/'
 import thirdApp from './thirdApp/'
 import sku from './sku/'
 import message from './message/'
+import wechat from './wechat/'
 
 export default [
   {
@@ -87,5 +88,10 @@ export default [
     module: 'message',
     name: 'message管理',
     list: message
+  },
+  {
+    module: 'wechat',
+    name: 'wechat管理',
+    list: wechat
   }
 ]
