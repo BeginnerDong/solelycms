@@ -31,5 +31,5 @@ export {
   ThirdApp,
   Order,
   Message,
-  Dashboard
+  Dashboard,
 }

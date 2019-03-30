@@ -29,5 +29,11 @@ export default [
     method: 'getSource',
     path: '/WeFunc/Source/getSource',
     type: 'post'
-  }
+  },
+  {
+    name: '物理删除图片',
+    method: 'delImg',
+    path: '/Project/Solely/realDelImg',
+    type: 'post'
+  },
 ]

@@ -179,16 +179,13 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[
-            {
-              text: '启用', 
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          options:[{
+            text: '启用',
+            value: 1
+          }, {
+            text: '禁用',
+            value: -1
+          }],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -223,6 +220,7 @@ export default {
           listType:'deal',
           width:300
         },
+       
       ],
 
 
@@ -363,7 +361,11 @@ export default {
         categoryOptions:[],
         skuOptions:[],
       },
+
+
       otherData:{
+       
+       
       },
       getBefore:{},
       UserInfo:{
@@ -430,9 +432,11 @@ export default {
       };
        
       if(res){
+        console.log('menures',res);
         self.optionData.categoryOptions = res.info.data;
       };
 
+      
     },
 
     async initSkuData(){
@@ -455,7 +459,11 @@ export default {
        
       if(res){
         self.optionData.skuOptions = res.info.data;
+        console.log('skuOptions',self.optionData.skuOptions)
+        //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
+        
       };
+
       
     },
 
@@ -484,6 +492,7 @@ export default {
       self.paginate.count = res.info.total;
 
     },
+
 
 
 

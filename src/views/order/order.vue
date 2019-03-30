@@ -71,7 +71,7 @@
         :otherData='otherData'
       >
         <template slot="expand" slot-scope="slotProps">
-          <el-form  label-position="left" inline class="demo-table-expand">
+          <el-form label-position="left" inline class="demo-table-expand">
           
             <div v-if="slotProps.data.snap_address">  
               <el-form-item label="收货地址信息:">

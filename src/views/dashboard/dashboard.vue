@@ -105,10 +105,10 @@
 
 
 <style scoped>
+
     .el-row {
         margin-bottom: 20px;
     }
-
     .grid-content {
         display: flex;
         align-items: center;

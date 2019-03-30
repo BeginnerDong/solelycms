@@ -7,7 +7,7 @@ export default {
       self:this,
       fields: [
         {
-          key: 'product_no',
+          key: 'coupon_no',
           label: '优惠券No',
           application:[],
           type:'input',
@@ -28,8 +28,36 @@ export default {
           listType:'normal'
         },
         {
+          key: 'price',
+          label: '价格',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
+          key: 'value',
+          label: '价值',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
+          key: 'discount',
+          label: '折抵份额',
+          listType:'normal',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
+          key: 'condition',
+          label: '限额（满减）',
+          listType:'normal',
+          application:['编辑','添加'],
+          type:'input',
+        },
+        {
           key: 'stock',
-          label: '优惠券库存',
+          label: '库存',
           application:['编辑','添加'],
           type:'input',
           listType:'normal'
@@ -48,17 +76,17 @@ export default {
           type:'select',
           options:[
             {
-              text: '抵扣卷',
-              value: 3
-            }, {
-              text: '折扣卷',
-              value: 4
+              text: '抵扣券',
+              value: 1
+            },
+            {
+              text: '折扣券',
+              value: 2
             }
           ],
           formatter:function(val,tests){
-            return val.type == 3 ? '抵扣卷' : '折扣卷'
+            return val.type == 1 ? '抵扣券' : '折扣券'
           },
-          filter_multiple: false,
           listType:'normal',
           defaultProps: {
             label: 'text',
@@ -73,21 +101,45 @@ export default {
             if(value){
               self.searchItem.type = value;
             }else{
-              self.searchItem.type = ['in',[3,4]];
+              delete self.searchItem.type;
             };
             self.initMainData();
           },
         },
         {
-          key: 'end_time',
-          label: '截止日期',
+          key:'valid_time',
+          label:'有效期',
           application:['编辑','添加'],
-          type:'datetime',
-          listType:'custom',
-          width:150,
-          custom:function(val,func){
-            return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
+          type:'input',
+          listType: 'timeinit',
+          timeinit:function(val){
+            return val.valid_time?parseInt(val.valid_time)/86400/10000:''
           }
+        },
+        {
+          key: "onShelf",
+          label: '是否上架',
+          application:['编辑','添加'],
+          type:'select',
+          options:[
+            {
+              text: '上架',
+              value: 1
+            },
+            {
+              text: '下架',
+              value: -1
+            }
+          ],
+          defaultProps: {
+            label: 'text',
+            value: 'value',
+          },
+          formatter:function(val,tests){
+            return val.onShelf == 1 ? '上架' : '下架'
+          },
+          filter_multiple: false,
+          listType:'normal',
         },
         {
           key: 'limit',
@@ -102,34 +154,15 @@ export default {
           type:'input',
         },
         {
-          key:'duration',
-          label:'有效期',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
-          key: 'listorder',
-          label: '排序',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
-          key: 'discount',
-          label: '折抵份额',
-          listType:'normal',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
-          key: 'standard',
-          label: '使用标准',
-          listType:'',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
           key: "mainImg",
           label: '主图',
+          application:['编辑','添加'],
+          type:'upload',
+          limit:10,
+        },
+        {
+          key: "bannerImg",
+          label: '轮播图',
           application:['编辑','添加'],
           type:'upload',
           limit:10,
@@ -205,12 +238,19 @@ export default {
           },
           func:{
             apiName:function(data){
-              return "api_product_update"
+              return "api_coupon_update"
             },
-            formData:function(data,self){
-              return data
+            formData:function(data,self,func){
+              var newFormData = func.cloneForm(data);
+              newFormData.valid_time = parseInt(newFormData.valid_time)/86400/1000;
+              console.log('formData',newFormData)
+              return newFormData
             },
             postData:function(data,self){
+
+              if (data.valid_time) {
+                data.valid_time = data.valid_time*86400*1000;
+              }
               var postData={
                 searchItem:{
                   id:self.btnData.id
@@ -232,7 +272,7 @@ export default {
           },
           func:{
             apiName:function(data){
-              return "api_product_update"
+              return "api_coupon_update"
             },
             postData:function(data,self){
               var postData = {
@@ -257,18 +297,18 @@ export default {
           },
           func:{
             apiName:function(data){
-              return "api_product_add"
+              return "api_coupon_add"
             },
             formData:function(data,self,func){
               var data = {}; 
-              data.sku_array = [];
               return data
             },
             postData:function(data,self){
+
+              data.valid_time = data.valid_time?data.valid_time*86400*1000:'';
               var postData={
                 data:data
               };
-              postData.data.category_id = 0;
               return postData;
             }
           },
@@ -284,7 +324,6 @@ export default {
           layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
-        type:['in',[3,4]]
       },
       optionData:{
         categoryOptions:[],
@@ -318,6 +357,7 @@ export default {
       this.init()
     },
     token(){
+
     }
   },
   methods: {
@@ -344,9 +384,9 @@ export default {
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
       postData.order = {
-          end_time:'desc',
+          create_time:'desc',
       };
-      var res =  await self.$$api_product_get({data: postData});
+      var res =  await self.$$api_coupon_get({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
     },
@@ -355,86 +395,6 @@ export default {
     async onClickBtn(val){
       const self = this;
       console.log(val)
-      if(val[0]=='导出excel'){
-        const postData  = {};
-        postData.paginate = self.$$cloneForm(self.paginate);        
-        postData.token = self.$store.getters.getToken; 
-        if (self.searchItem) {
-          postData.searchItem = self.$$cloneForm(self.searchItem)
-        };
-        if(JSON.stringify(self.getBefore) != "{}"){
-          postData.getBefore = self.$$cloneForm(self.getBefore);
-        };
-        postData.order = self.$$cloneForm(self.order); 
-        postData.getAfter = {
-          UserInfo:{
-            tableName:'userInfo',
-            middleKey:'passage1',
-            key:'user_no',
-            condition:'=',
-            searchItem:{
-              status:1
-            },
-            info:['name'],
-          },
-          Area:{
-            tableName:'label',
-            middleKey:'discount',
-            key:'id',
-            condition:'=',
-            searchItem:{
-              status:1
-            },
-            info:['title'],
-          },
-          Subject:{
-            tableName:'label',
-            middleKey:'view_count',
-            key:'id',
-            condition:'=',
-            searchItem:{
-              status:1
-            },
-            info:['title'],
-          },
-          FlowLog:{
-            tableName:'FlowLog',
-            middleKey:'product_no',
-            key:'product_no',
-            condition:'=',
-            searchItem:{
-              status:1
-            },
-            compute:{
-              benifits:[
-                'sum',
-                'count',
-                {
-                  status:1
-                }
-              ],
-              count:[
-                'count',
-                'count',
-                {
-                  status:1
-                }
-              ],
-            }
-          }
-        };
-        postData.excelOutput = {
-          expTitle:'test',
-          expCellName:[
-            ['ID','id'],
-            ['名称','title'],
-            ['科目','Subject','title']
-          ],
-          fileName:'test'
-        };
-        var res =  await self.$$api_product_get({data: postData});
-        window.location.href = res.info;
-      }
     },
 
     async fieldChange(val){
@@ -477,6 +437,8 @@ export default {
       self.initMainData();
     },
 
+    
   },
+  
 
 }

@@ -29,7 +29,6 @@ export default {
       pagination: this.Pagination, // 分页
       search: this.Search,// 搜索
       optiondata: this.optionData,// 搜索
-      otherdata: this.otherData,// 搜索
       formData:{},
       submitData:{},
       btn:{},
@@ -37,8 +36,7 @@ export default {
       apiName:'',
       form_fields:[],
       token:0,
-      self:this,
-      originArray:[]
+      self:this
       
 
     }
@@ -53,12 +51,16 @@ export default {
     hasAuth(btn,data){
 
       const self = this;
-      var auth = store.getters.getUserinfo.passage_array;
+      var auth = store.getters.getUserinfo.auth;
+
       if(btn){
         var id = this.$route.path+'-'+btn.text(data);
         if(auth.indexOf(id)>=0){
           return true;
         }else if(id=='/user/adminLists/adminLists-管理权限'){
+          return true;
+        }
+        else if(id=='/user/adminLists/userOne-管理权限'){
           return true;
         };
       };
@@ -148,7 +150,7 @@ export default {
      * @param opts
      */
     onBtnEvent (opts) {
-      
+      const self = this;
       this.token = Date.parse(new Date())+Math.random()*10;
       this.btn = opts.btn;
       this.btnName = opts.btn.text({data:opts.data},this);
@@ -161,15 +163,15 @@ export default {
         this.$emit('onClickBtn', [this.btnName,this.btnData]);
         return ;
       };
-      this.apiName = opts.btn.func.apiName(opts.data,this);
+      this.apiName = opts.btn.func.apiName(opts.data);
       if(opts.btn.funcType=='submit'){
-        this.onSubmit(opts.data);
+        this.onSubmit();
         return ;
       };
       
       this.formData = {};
       this.formData = func.cloneForm(opts.btn.func.formData(opts.data,this,func));
-     
+     console.log('this.formData',this.formData)
       if(this.formData.error){
         func.notify(this.formData.error,'warning');
         return ;
@@ -182,12 +184,17 @@ export default {
       } else {
         this.$emit('onClickBtn', opts)
       };
+
+
       
       if(this.btn.submitAlone){
         this.onSubmit();
       }else{
         this.dialogFormVisible = true;
       };
+      
+      
+      
 
     },
 
@@ -217,32 +224,33 @@ export default {
     },
 
     async onSubmit(val){
+
       const self = this;
-      // const postData = func.cloneForm(self.btn.func.postData(val,self));
-      const postData = self.btn.func.postData(val,self);
-
-      console.log('ListData',postData);
-
-      if(!postData){
-        func.notify('数据故障','fail');
-        return;
-      };
-
-      if(postData&&postData.errorMsg){
-        func.notify(postData.errorMsg,'fail');
-        return;
-      };
-      
-      var res = await plugins[this.apiName]({data: postData});
-      if(res){
-        if(func.sCallBack(res)){
-          self.dialogFormVisible = false;
-          this.$emit('initMainData', )
+      this.$confirm('是否确定此操作?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const postData = func.cloneForm(self.btn.func.postData(val,self));
+        if(!postData){
+          func.notify('数据故障','fail');
+          return;
         };
-      };
+        var res = await plugins[this.apiName]({data: postData});
+        if(res){
+          if(func.sCallBack(res)){
+            self.dialogFormVisible = false;
+            self.$emit('initMainData', )
+          };
+        };
+      }).catch(() => {
+        self.$message({
+          type: 'info',
+          message: '已取消'
+        });          
+      });
 
     },
-
 
     fieldChange(val){   
       console.log('ListData_fieldChange',this.formData);
@@ -251,8 +259,7 @@ export default {
 
     handleSelectionChange(val) {
       const self = this;
-
-      self.originArray = val?val:[];
+      console.log(val);
       self.deleteArray = [];
       for (var i = val.length - 1; i >= 0; i--) {
         self.deleteArray.push(val[i].id)

@@ -8,18 +8,18 @@ export default {
       fields: [
         {
           key: 'id',
-          label: '管理员ID',
+          label: '员工ID',
           application:[],
           type:'input',
           listType:'normal'
         },
         {
           key: 'user_no',
-          label: '管理员NO',
+          label: '员工NO',
           application:[],
           type:'input',
           listType:'normal',
-          placeholder:'请输入管理员NO',
+          placeholder:'请输入员工NO',
           header_search:true,
           header_search_type:'input',
           header_search_style:'width:160px;margin-right:2px;',
@@ -34,11 +34,11 @@ export default {
         }, 
         {
           key: 'login_name',
-          label: '管理员登录名',
+          label: '员工登录名',
           application:['编辑账号','添加账号'],
           type:'input',
           listType:'normal',
-          placeholder:'请输入管理员登录名',
+          placeholder:'请输入员工登录名',
           header_search:true,
           header_search_type:'input',
           header_search_style:'width:160px;margin-right:2px;',
@@ -53,21 +53,20 @@ export default {
         }, 
         {
           key: 'password',
-          label: '管理员密码',
+          label: '员工密码',
           application:['编辑账号','添加账号'],
           type:'input',
-          
         }, 
         {
           key: "name",
-          label: '管理员姓名',
+          label: '员工姓名',
           application:['添加信息','编辑信息'],
           type:'input',
           listType:'normal',
           formatter:function(val){
-            return val.info.name
+            return val.info&&val.info.name?val.info.name:''
           },
-          placeholder:'请输入管理员姓名',
+          placeholder:'请输入员工姓名',
           header_search:true,
           header_search_type:'input',
           header_search_style:'width:160px;margin-right:2px;',
@@ -82,13 +81,67 @@ export default {
         },
         {
           key: "phone",
-          label: '管理员电话',
+          label: '员工电话',
           application:['添加信息','编辑信息'],
           type:'input',
           listType:'normal',
           formatter:function(val){
-            return val.info.phone
+            return val.info&&val.info.phone?val.info.phone:''
           }
+        },
+        {
+          key: "level",
+          label: '员工级别',
+          application:['添加信息','编辑信息'],
+          type:'input',
+          listType:'normal',
+          formatter:function(val){
+            return val.info&&val.info.level?val.info.level:''
+          }
+        },
+        {
+          key: "behavior",
+          label: '部门',
+          application:['添加信息','编辑信息'],
+          type:'select',
+          listType:'normal',
+          formatter:function(val,tests){
+            return ['开发','销售','运营','人事/行政'][val.info.behavior-1];
+          },
+          options:[
+            {
+              text: '开发',
+              value: 1
+            }, 
+            {
+              text: '销售',
+              value: 2
+            },
+            {
+              text: '运营',
+              value: 3
+            },
+            {
+              text: '人事/行政',
+              value: 4
+            },
+          ],
+          filter_multiple: false,
+          listType:'normal',
+          defaultProps: {
+            label: 'text',
+            value: 'value',
+          },
+        },
+        {
+          key: "passage1",
+          label: '职务',
+          application:['添加信息','编辑信息'],
+          type:'input',
+          listType:'normal',
+          formatter:function(val,tests){
+            return val.info&&val.info.passage1?val.info.passage1:'';
+          },
         },
         {
           key: "mainImg",
@@ -106,7 +159,7 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑账号'],
+          application:[],
           type:'select',
           options:[
             {
@@ -148,11 +201,17 @@ export default {
             self.initMainData();
           },
         }, 
-        
+        {
+          key: "primary_scope",
+          label: '用户权限',
+          application:['用户权限'],
+          type:'input',
+          listType:'',
+        },
         {
           label: '操作',
           listType:'deal',
-          width:300
+          width:400
         }, 
       ],
       // 按钮配置
@@ -173,11 +232,8 @@ export default {
               
               formData:function(data,self,func){
                 
-                var data = {
-                  name:(data.info&&data.info.name)?data.info.name:'',
-                  phone:(data.info&&data.info.phone)?data.info.phone:'',
-                }; 
-                return data
+                var newData = data.info;
+                return newData
               },
               
               postData:function(data,self){
@@ -189,6 +245,7 @@ export default {
                     data:data
                   }
                   postData.data.user_no=self.btnData.user_no;
+
                 }else if(self.btnName=='添加信息'){
                   var postData={
                     data:data
@@ -221,9 +278,48 @@ export default {
                   },
                   data:data
                 }
-                postData.data.user_no=self.btnData.user_no;
+                postData.data.user_no = self.btnData.user_no;
                 return postData;
               }
+            },
+          },
+          {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              return '管理权限'
+            },
+            isHide:function(data,self){
+              if(data.user_no==self.$store.getters.getUserinfo.user_no&&self.$store.getters.getUserinfo.primary_scope<60){
+                return true;
+              }else{
+                return false;
+              };
+            },
+            funcType:'func',
+            func:{
+              func:function(data,self){
+                self.$router.push({
+                  path:'/user/adminLists/access',
+                  name:'权限管理',
+                  params:{
+                    defaultChecked:data.passage_array,
+                    user_no:data.user_no,
+                  }
+                });
+
+              },
+              postData:function(data,self){
+                var postData={
+                  searchItem:{
+                    id:self.btnData.id,
+                  },
+                  data:data
+                };
+                return postData;
+              },
             },
           },
           {
@@ -248,7 +344,7 @@ export default {
                     user_type:1,
                   },
                   data:{
-                    status:-1
+                    status:-1,
                   }
                 };
                 return postData;
@@ -287,6 +383,33 @@ export default {
               }
             },
           },
+          {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              return '用户权限'
+            },
+            func:{
+              apiName:function(data){
+                return "api_user_update"
+              },
+              formData:function(data,self){
+                return data
+              },
+              postData:function(data,self){
+                var postData={
+                  searchItem:{
+                    id:self.btnData.id
+                  },
+                  data:data
+                }
+                postData.data.user_no=self.btnData.user_no;
+                return postData;
+              }
+            },
+          },
       ],
       paginate: {
         count: 0,
@@ -297,7 +420,7 @@ export default {
         layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
-        user_type:1
+        user_type:1,
       },
       optionData:{
         labelOptions:[]

@@ -13,7 +13,12 @@ export default {
   id:'2-/user/adminLists',
   component: Content,
   meta:{
-    children:['3-/user/adminLists/adminLists','3-/user/adminLists/userOne','3-/user/adminLists/user']
+    children:[
+      '3-/user/adminLists/adminLists',
+      '3-/user/adminLists/userOne',
+      '3-/user/adminLists/user',
+      '3-/user/adminLists/personal',
+    ]
   },
   children: [
     {
@@ -22,7 +27,7 @@ export default {
       id:'3-/user/adminLists/adminLists',
       icon: 'reorder',
       child_button:[
-        { 
+        {
           name:'编辑信息',
           id:'/user/adminLists/adminLists-编辑信息'
         },
@@ -70,11 +75,35 @@ export default {
         { 
           name:'添加账号',
           id:'/user/adminLists/userOne-添加账号'
-        },                  
+        },
+        { 
+          name:'用户权限',
+          id:'/user/adminLists/userOne-用户权限'
+        },
+        { 
+          name:'管理权限',
+          id:'/user/adminLists/userOne-管理权限'
+        },
       ],
       component: User.UserOne
     },
-
+    {
+      path: 'personal',
+      name: '个人信息',
+      icon: 'reorder',
+      id:'3-/user/adminLists/personal',
+      child_button:[
+        { 
+          name:'编辑信息',
+          id:'/user/adminLists/personal-编辑信息'
+        },
+        { 
+          name:'编辑账号',
+          id:'/user/adminLists/personal-编辑账号'
+        },          
+      ],
+      component: User.Personal
+    },
     {
       path: 'user',
       name: '用户列表',

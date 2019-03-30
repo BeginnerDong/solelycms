@@ -14,9 +14,7 @@ export default {
 
     checkInAuth(item){
 
-
-      var index = this.$store.state.user.userinfo.passage_array.indexOf(item);
-
+      var index = this.$store.state.user.userinfo.auth.indexOf(item);
       if(index>=0){
         return true;
       }else{
@@ -32,37 +30,33 @@ export default {
       this.win_size.height = (this.$$lib_$(window).height() - 50) + 'px'
     },
     toggleMenu () {
-      
+      console.log(99635)
       this.active_path = this.$route.path;
       this.$store.dispatch(this.$store.state.leftmenu.menu_flag ? 'set_menu_close' : 'set_menu_open')
     },
     updateCurMenu (route) {
       const self = this;
+
       self.active_path = '';
-      route = route||self.$route
-      
+      route = route||self.$route;
       if (route.matched.length) {
-        var rootPath = route.matched[0].path
-        var fullPath = route.fullPath
-        
+        var rootPath = route.matched[0].path;
+        var fullPath = route.fullPath;
         self.$store.dispatch('set_cur_route', {
           rootPath,
           fullPath
-        })
-        var routes = self.$router.options.routes
+        });
+        var routes = self.$router.options.routes;
         for (var i = 0; i < routes.length; i++) {
           if (routes[i].path === rootPath && !routes[i].hidden) {
             self.menu_list = routes[i];
-          }
+          };
         };
         this.active_path = this.$route.fullPath;
-
-        
-        this.nb_array = [route.matched[1].path]
-
+        this.nb_array = [route.matched[1].path];
       } else {
-        self.$router.push('/404')
-      }
+        self.$router.push('/404');
+      };
     }
 
   },

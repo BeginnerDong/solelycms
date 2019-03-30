@@ -3,9 +3,7 @@
  */
 
 import Article from './article.vue'
-import Wxarticle from './wxarticle.vue'
 
 export default {
   Article,
-  Wxarticle,
 }

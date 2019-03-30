@@ -45,6 +45,7 @@ export default {
           application:['添加','编辑'],
           type:'cascader',
           options:'labelOptions',
+          
         },
         {
           key: "mainImg",
@@ -58,16 +59,13 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          options:[{
+            text: '启用',
+            value: 1
+          }, {
+            text: '禁用',
+            value: -1
+          }],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -88,28 +86,6 @@ export default {
           },
         },
         {
-          key: "name",
-          label: '内容',
-          application:['api_userInfo_add','api_userInfo_update'],
-          type:'vueEditor',
-        },
-        {
-          key: "area",
-          label: '区域选择',
-          application:['table','api_userInfo_add','api_userInfo_update'],
-          type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            }, 
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
-        }, 
-        {
           key: 'create_time',
           label: '创建时间'
         },
@@ -127,10 +103,12 @@ export default {
 
       // 搜索配置
       search_data: {
-        fields: [{
-          key: 'title',
-          label: '标题'
-        }],
+        fields: [
+          {
+            key: 'title',
+            label: '标题'
+          }
+        ],
         default_value: {
           title: ''
         }
@@ -149,7 +127,7 @@ export default {
           },
           func:{
             apiName:function(data){
-              return "api_user_update"
+              return "api_user_auth"
             },        
             postData:function(data,self,func){
               var res = self.getCheckedNodesAlone();
@@ -162,10 +140,9 @@ export default {
                   user_no:self.$store.getters.getUserinfo.user_no
                 },
                 data:{
-                  passage_array:newArray
+                  auth:newArray
                 }
               };
-              console.log('postData',postData);
               return postData;
             }
 
@@ -247,7 +224,7 @@ export default {
       if(self.$store.getters.getUserinfo.primary_scope==90){
         var checkData = 'All';
       }else{
-        var checkData = self.$store.getters.getUserinfo.passage_array;
+        var checkData = self.$store.getters.getUserinfo.auth;
       };
       
       console.log('initMainData-data',data);
@@ -453,11 +430,11 @@ export default {
           user_no:self.user_no
         },
         data:{
-          passage_array:newArray
+          auth:newArray
         }
       };
 
-      var res =  await self.$$api_user_update({data: postData});
+      var res = await self.$$api_user_auth({data: postData});
       if(res.solely_code==100000){
         this.$$notify('更新权限成功','success');
       }else{

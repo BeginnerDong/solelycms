@@ -9,19 +9,13 @@
           :style="item.header_search_style"
           v-model="item.value"  
           @change="(value) => {
-            item.changeFunc(valusse,self)
+            item.changeFunc(value,self)
           }" 
           :placeholder="item.placeholder"
           clearable
         >
-          <template v-if="typeof item.options === 'function'">
-            <el-option v-for="option_item in item.options(self)" :value="option_item[item.defaultProps.value]" :label="option_item[item.defaultProps.label]"></el-option>
-          </template>
-          <template v-if="typeof item.options === 'string'">
-            <el-option v-for="option_item in optionData[item.options]" :value="option_item[item.defaultProps.value]" :label="option_item[item.defaultProps.label]"></el-option>
-          </template>
-          <template v-if="typeof item.options === 'object'">
-            <el-option v-for="option_item in item.options" :value="option_item[item.defaultProps['value']]" :label="option_item[item.defaultProps['label']]"></el-option>
+          <template v-for="option_item in item.options">
+            <el-option  :value="option_item[item.defaultProps['value']]" :label="option_item[item.defaultProps['label']]"></el-option>
           </template>
         </el-select>
         <el-cascader

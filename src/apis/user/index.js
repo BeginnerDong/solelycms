@@ -39,6 +39,11 @@ export default [
     path: '/Base/User/add',
     type: 'post'
   },
-  
+  {
+    name: '更新权限',
+    method: 'auth',
+    path: '/Project/Solely/setAuth',
+    type: 'post'
+  },
   
 ]

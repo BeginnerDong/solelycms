@@ -14,19 +14,13 @@
           :placeholder="item.placeholder"
           clearable
         >
-          <template v-if="typeof item.options === 'function'">
-            <el-option v-for="option_item in item.options(self)" :value="option_item[item.defaultProps.value]" :label="option_item[item.defaultProps.label]"></el-option>
-          </template>
-          <template v-if="typeof item.options === 'string'">
-            <el-option v-for="option_item in optionData[item.options]" :value="option_item[item.defaultProps.value]" :label="option_item[item.defaultProps.label]"></el-option>
-          </template>
-          <template v-if="typeof item.options === 'object'">
-            <el-option v-for="option_item in item.options" :value="option_item[item.defaultProps['value']]" :label="option_item[item.defaultProps['label']]"></el-option>
+          <template v-for="option_item in item.options">
+            <el-option  :value="option_item.value" :label="option_item.label"></el-option>
           </template>
         </el-select>
         <el-cascader
           v-if="item.header_search&&item.header_search_type=='cascader'"
-          :options="typeof item.options === 'function'?item.options(self):optionData[item.options]"
+          :options="typeof item.options === 'function'?item.options(self):item.options"
           :props="item.defaultProps"
           :placeholder="item.placeholder"
           @change="(value) => {
@@ -78,8 +72,8 @@
 </template>
 
 <script>
-  import wxarticleJs from './wxarticle.js'
-  export default wxarticleJs
+  import personalJs from './personal.js'
+  export default personalJs
 </script>
 <style scoped lang='less'>
 

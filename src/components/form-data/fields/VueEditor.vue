@@ -7,6 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="plugins-tips">
+
             Vue-Quill-Editor：基于Quill、适用于Vue2的富文本编辑器。
             访问地址：<a href="https://github.com/surmon-china/vue-quill-editor" target="_blank">vue-quill-editor</a>
         </div>
@@ -134,7 +135,7 @@
             <span class="ql-formats"><button type="button" class="ql-link"></button></span>                
             <span class="ql-formats"><button type="button" class="ql-video"></button></span>
             <!--图片按钮点击事件-->  
-            <button type="button" @click="customButtonClick">upload</button>
+            <button type="button" @click="customButtonClick">img</button>
             <input type="file"  class="custom-input" @change='upload' style='display: none !important;'>
           </div>
         </quill-editor>
@@ -169,7 +170,9 @@
             },
           },
         },
-        content:{}
+        content:{},
+        image_array:[]
+
       }
     },
     components: {
@@ -203,16 +206,50 @@
     },
     methods: {
 
-      onEditorChange({ editor, html, text }) {
+      init(){
+        const self = this;
+        self.image_array = self.getIdArrByHtml(self.content_data);
+        console.log('init-self.idArr',self.idArr)
+      },
+
+      onEditorChange({quill, html, text ,iamge }) {
         const self = this;
         self.content = html;
-        this.$emit('onChange', [this.data.key,html])
+        console.log('onEditorChange-html',html);
+        var idArr = self.getIdArrByHtml(html);
+        var new_image_array = [];
+        for(var i =0;i<self.image_array.length;i++){
+          if(idArr.indexOf(self.image_array[i])==-1){
+            self.changeFileList(self.image_array[i],'del');
+          }else{
+            new_image_array.push(self.image_array[i]);
+          };
+        };
+        self.image_array = new_image_array;
+        console.log('self.image_array',self.image_array);
+        this.$emit('onChange', [this.data.key,html]);
+      },
+
+
+      getIdArrByHtml(html){
+        const self = this;
+        var imgReg = /<img.*?(?:>|\/>)/gi;
+        var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+        var imgIdReg = /id(\S*)\./i;
+        var arr = html.match(imgReg); 
+        if(!arr){
+          arr = [];
+        };
+        var idArr = []; 
+        for(var i=0;i<arr.length;i++){
+          idArr.push(arr[i].match(imgIdReg)[1]);
+        };
+        return idArr;
       },
         
 
       onEditorFocus(editor) {
         const self = this;
-        
         self.editor = editor   //当content获取到焦点的时候就 存储editor
       },
           
@@ -227,7 +264,6 @@
         }
         self.$el.querySelector('.custom-input').click();   //打开file 选择图片
       },
-
 
 
       async upload(e){
@@ -252,19 +288,39 @@
           //判断文件类型渲染(H5 video标签只支持H264编码的MP4)
           var videoArray = ['mp4'];
           var url = res.info.url;
+          var imgIdReg = /id(\S*)\./i;
+          var id = url.match(imgIdReg)[1];
           var obj = url.lastIndexOf(".");
           var ext = url.substr(obj+1);
           if(videoArray.indexOf(ext)!=-1){
             self.editor.insertEmbed(self.length, 'video', self.contentImg);
           }else{
-            self.editor.insertEmbed(self.length, 'image', self.contentImg);
-          }
-
+            self.editor.editor.insertEmbed(self.length, 'image', self.contentImg)
+          };
+          self.changeFileList(id,'add');
+          self.image_array.push(id);
           var jqObj=self.$el.querySelector('.custom-input');  
           jqObj.value = "";
           
         }
       },
+
+
+      changeFileList(id,type){
+        const self = this;
+        var image_array = this.submit_data['img_array'];
+        console.log('changeFileList',image_array);
+        if(!image_array){
+          image_array = [];
+        };
+        if(type=='add'&&image_array.indexOf(id)==-1){
+            image_array.push(id)
+        }else if(type=='del'&&image_array.indexOf(id)!=-1){
+            image_array.splice(image_array.indexOf(id),1);
+        };
+        self.$emit('onChange',['img_array',image_array]);
+      },
+
 
 
 
@@ -325,18 +381,15 @@
       }
     },
     created () {
-    
+      this.init();
     },
     mounted () {
-
     },
     watch:{
 
       content(val) {
         const self = this;
-               
         self.$emit('contentsave',self.content);
-        
       },
       defaultcontent(val) {
         console.log(val);

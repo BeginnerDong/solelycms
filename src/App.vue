@@ -17,6 +17,7 @@
       return {}
     },
     methods: {
+
       onTestRestFulApi(){
         this.$$api_test_getArticle({
           pathParams:{
@@ -31,10 +32,11 @@
           route: this.$route
         });
       },
-      init () {
+      init(){
 //        this.onTestRestFulApi();
 //        this.onUpdateTabs();
       }
+
     },
     mounted () {
       this.init()
@@ -46,17 +48,21 @@
         console.log(to)
         //this.init();
       }
+
     }
   }
 </script>
 
 <style lang="less">
   * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    
     margin: 0px;
     padding: 0px;
+  }
+
+  html,body {
+    width:100%;
+    height:100%;
   }
 
   .bounce-enter-active {

@@ -1,59 +1,151 @@
-# SlsAdmin介绍
+# solely项目开发文档
 
-## build
-#### master
-[![Build Status](https://travis-ci.org/sls-admin/sls-admin-vue.svg?branch=master)](https://travis-ci.org/sls-admin/sls-admin-vue)
+### 目录
 
-# 先看文档
-### 文档地址:  [https://doc.vue.slsadmin.org](https://doc.vue.slsadmin.org)
-### 文档地址:  [https://doc.vue.slsadmin.org](https://doc.vue.slsadmin.org)
-### 文档地址:  [https://doc.vue.slsadmin.org](https://doc.vue.slsadmin.org)
-
-### **在线演示地址说明**
-|分支        |      地址    |
-| --- | --- |
-| master        |     [https://vue.slsadmin.org](https://vue.slsadmin.org)   |
-
-### 此项目接口PHP版本已开源: [sls-admin-api-php](https://github.com/sailengsi/sls-admin-api-php)
+- 功能概述
+- 数据对照表
 
 
+---
 
-## **访问账号，可以在登录界面注册。**
-### 账号注册？
-**后台其实不需要注册，但最近增加了权限功能，为了完整的体验权限功能，也为了方便大家更加测试体验方便，在登录页面，开放了注册功能.**
+**1\. 功能概述**
 
-**大家注册的账号默认都归属到管理员(我)的下边，所以，除了我，别人无法操作你以及你添加的数据。**
+&emsp;&emsp;项目主要功能包括：
+多商户api，包含权限管理、用户管理、菜单管理、文章管理、商品管理、优惠券管理等基本模块；
+支持微信支付、公众号文章获取、公众号菜单编辑、小程序模板消息等微信功能；
+支持七牛云在线图片管理；
 
+---
+**2\. 数据对照表**
 
-此项目是一个后台管理系统，里面有完整并且实际的增删改查功能，有普通模式操作，也有高级模式操作，用此项目，可以快速帮您完成后台功能。
-此项目重点突出在于架构模式，相比那些有很多页面，但架构混乱的项目来说，一个真正的前端应该更在意项目的架构。
+##通用字段说明
 
-
-## 架构模式特点：
-* 易于协作开发
-* 方便拓展与维护
-* 结构清晰明了
-* 灵活，可自定义配置
-
-
-> 基于这个模式，可以拓展更为强大的功能，诸如类似其他后台模板里面的那些功能等，都可以用组件化形式开发，注入到此项目。
+| 字段 | 类型 | 说明 |
+| ------    | ------  | ------ | 
+| id | int(11)| 主键：该数据ID |
+| listorder | int(11) | 自定义排序 |
+| img_array | varchar(100) | 图片组 |
+| create_time | int(11) | 创建时间 |
+| update_time | int(11) | 更新时间 |
+| delete_time | bigint(13) | 删除时间 |
+| thirdapp_id | int(11) | 关联thirdapp |
+| user_no | varchar(255) | 关联user |
+| user_type | tinyint(2) | 用户类型0.前端2.cms |
+| status | tinyint(2) | 状态:1正常；-1删除 |
 
 
 
-## 涵盖技术包含
+##user表
 
-#### 技术点：
-* [Vue](http://cn.vuejs.org/) 当下最流行的前端JavaScript框架
-* [VueRouter](https://router.vuejs.org/zh-cn/) 基于Vue的路由插件
-* [Vuex](https://vuex.vuejs.org/zh-cn/) 管理Vue中多组件共享状态的插件，类似react的redux
-* [Axios](https://github.com/mzabriskie/axios) 当前最流行的一个http库
-* [ElementUI](https://github.com/ElemeFE/element) 饿了么团队开发的基于Vue的一套UI组件库
+| 字段 | 类型 | 说明 |
+| ------    | ------  | ------ | 
+| nickname | varchar(255) | 微信昵称 |
+| openid | varchar(255)| 微信openid |
+| headImgUrl | varchar(9999) | 微信头像 |
+| primary_scope| int(255) | 权限级别：90平台管理员;60超级管理员;30管理员;10用户 |
+| user_type| itinyint(10) | 0,小程序用户;2,cms用户; |
+| user_no| varchar(255)|用户编号|
 
-#### 富文本：
-* [wangEditor](http://www.wangeditor.com/) 一款国人开发的富文本编辑器
+
+##user_info表
+
+| 字段 | 类型 | 说明 |
+| ------    | ------  | ------ | 
+| gender | tinyint(2) | 性别:1.男;2.女 |
+| level | varchar(30) |  所在国家名称 |
+| address | varchar(255) | 所在城市名称 |
+| phone | varchar(255) | 电话 |
 
 
-## 沟通交流
- 1. 如果您有什么问题，可提issues，也可加QQ群讨论：613102022。
- 2. 更新日志：可查看下一章更新记录。
- 3. 广告：个人官方博客：https://sailengsi.com 交流技术，交流心得。
+##label表
+
+| 字段 | 类型 | 说明 |
+| ------    | ------  | ------  | 
+| title | varchar(40) | 菜单名称 |
+| description| varchar(255) | 描述 |
+| parentid| int(11) | 父级菜单ID |
+| type | tinyint(2) |  1,menu;2,menu_item; |
+
+
+
+##article表
+
+| 字段 | 类型 | 说明 |
+| ------    |  :------:  | ------  | 
+| title | varchar(100) | 文章标题 |
+| menu_id | int(11) | 关联label表 |
+| description | varchar((255) | 描述 |
+| content | text | 文章内容 |
+| mainImg | varchar(9999) | 文章主图，一般在列表渲染 |
+
+
+
+##message表-留言
+
+| 字段 | 类型 | 说明 |
+| ------    |  :------:  | ------  | 
+| title | varchar(255) | 标题 |
+| description | varchar(255) | 描述 |
+| content | text | 内容 |
+| mainImg | varchar(999) | 主图，一般在列表渲染 |
+
+
+
+##log表
+
+| 字段 | 类型 | 说明 |
+| ------    |  :------:  | ------  | 
+| type | int(11) | 类别:4.点赞;5.关注; |
+| order_no | varchar(100) | 关联message |
+| pay_no | varchar(255) | 关联user |
+
+
+
+##pay_log表
+
+| 字段 | 类型 | 说明 |
+| ------    |  :------:  | ------  | 
+| title | varchar(255) | 标题 |
+| result | varchar(255) | 结果描述 |
+| content | text | 详情 |
+| type | int(11) | 类别:1.微信支付 |
+| order_no | varchar(100) | 关联order |
+| pay_no | varchar(255) | 关联flowLog |
+| transaction_id | varchar(255) | 微信流水 |
+| behavior | int(11) | 预留 |
+| pay_info | varchar(999) | 支付信息 |
+| prepay_id | varchar(255) | 订单微信支付的预订单id(用于发送模板消息) |
+| wx_prepay_info | varchar(999) | 储存微信预支付信息，再次调起支付使用 |
+
+
+
+##coupon表
+
+| 字段 | 类型 | 说明 |
+| ------    | ------  | ------ | 
+| coupon_no | varchar(255) | 优惠券编号 |
+| title | varchar(255) | 标题 |
+| description | varchar(255) | 描述 |
+| content | text | 详情 |
+| mainImg | text | 主图 |
+| bannerImg | text | 轮播图 |
+| price | decimal(10,2) | 价格 |
+| score | int(11) | 最高可使用积分 |
+| value | int(11) | 价值，可抵扣金额 |
+| discount | int(11) | 折扣百分比，默认100，即无折扣 |
+| condition | int(11) | 使用条件，满减要求 |
+| stock | int(11) | 库存 |
+| sale_count | int(11) | 销量 |
+| type | int(11) | 1.抵扣券2.折扣券 |
+
+
+
+##user_coupon表
+
+| 字段 | 类型 | 说明 |
+| ------    | ------  | ------ | 
+| type | tinyint(2) | 1.抵扣券2.折扣券 |
+| use_step | tinyint(2) | 1.未使用2.已使用-1.已过期 |
+
+
+---

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-upload
+    <!--<el-upload
       class="upload-demo"
       action=""
       :limit="data.limit"
@@ -11,7 +11,33 @@
       list-type="picture">
       <el-button size="small" type="primary">点击上传</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,上传张数限制 {{data.limit}}张</div>
-    </el-upload>
+    </el-upload>-->
+
+
+    <div >
+      
+      <el-button size="small" type="primary" @click="customButtonClick">new upload</el-button>
+      <input type="file"  class="custom-input" @change='upload' style='display: none !important;'>
+    </div>
+    <div style="width:100%;height:15px;"></div>
+    <div style="width:100%;">
+      <div v-for="(item, index) in uploadImg" style="width:100px;height:110px;float:left;border-bottom:1px solid gray;position:relative;margin-right:10px;">
+        <div style="width:100%;height:90px;">
+          <img v-if="item.type=='image'" width="100%" height="100%;" :src="item.url"></img>
+          <video v-if="item.type=='vedio'" :src="item.url" controls="controls">
+            您的浏览器不支持 video 标签。
+          </video>
+        </div>
+        <div style="height:20px;line-height:15px;" ><i class="el-icon-delete" :data-index="index" @click="removeImg" ></i></div>
+      </div>
+    </div>
+    
+
+
+
+
+
+
   </div>
 </template>
 <script>
@@ -27,6 +53,8 @@
           label: 'title',
           value: 'id',
         },
+        
+        
       }
     },
     computed: {
@@ -34,7 +62,7 @@
         return this.Data.cascader_attrs || {}
       },
       
-      normalizedImglist () {
+      uploadImg () {
         if(this.isArrayFn(this.submit_data[this.data.key])){
           return this.submit_data[this.data.key];
         }else{
@@ -43,6 +71,93 @@
       }
     },
     methods: {
+
+
+      customButtonClick(){
+        const self = this;
+        self.$el.querySelector('.custom-input').click();   //打开file 选择图片
+      },
+
+
+      async upload(e){
+
+        const self = this;        
+        let file = e.target.files[0]
+        let param = new FormData()  // 创建form对象
+
+        param.append('file', file, file.name)  // 通过append向form对象添加数据
+        param.append('token', store.getters.getToken);
+        //param.append('chunk', '0') // 添加form表单中其他数据
+        //console.log(param.get('file'))  FormData私有类对象，访问不到，可以通过get判断值是否传进去
+        let config = {
+          headers: {'Content-Type': 'multipart/form-data'}
+        };
+        //console.log(param.get('file'));
+        var res = await plugins.api_system_uploadImg({data: param,headers: {'Content-Type': 'multipart/form-data'}});
+        if(res.solely_code == 100000){
+
+          var url = res.info.url ;    //获取到了图片的URL
+          var imgIdReg = /id(\S*)\./i;
+          var id = url.match(imgIdReg)[1];//获取到了图片的ID
+             
+                   
+          //判断文件类型渲染(H5 video标签只支持H264编码的MP4)
+          var videoArray = ['mp4'];
+          var url = res.info.url;
+          var obj = url.lastIndexOf(".");
+          var ext = url.substr(obj+1);
+          if(videoArray.indexOf(ext)!=-1){
+            self.uploadImg.push({
+              url:url,
+              type:'vedio',
+            });
+          }else{
+            self.uploadImg.push({
+              url:url,
+              type:'image'
+            });
+          };
+          self.$emit('onChange',[this.data.key,this.uploadImg]);
+          
+          var jqObj=self.$el.querySelector('.custom-input');  
+          jqObj.value = "";
+          self.changeFileList(id,'add');
+          
+        }
+      },
+
+      removeImg(e){
+
+        const self = this;
+        console.log('removeImg',e); 
+        var index = e.target.dataset.index;
+        var imgIdReg = /id(\S*)\./i;
+        var id = self.uploadImg[index].url.match(imgIdReg)[1];
+        self.changeFileList(id,'del');
+        self.uploadImg.splice(index,1);
+        self.$emit('onChange',[this.data.key,this.uploadImg]);
+
+      },
+
+      changeFileList(id,type){
+        const self = this;
+        var image_array = this.submit_data['image_array'];
+        if(!image_array){
+          image_array = [];
+        };
+        if(type=='add'&&image_array.indexOf(id)==-1){
+            image_array.push(id)
+        }else if(type=='del'&&image_array.indexOf(id)!=-1){
+            image_array.splice(image_array.indexOf(id),1);
+        };
+        self.$emit('onChange',['img_array',image_array]);
+      },
+
+
+
+
+
+
 
       isArrayFn(value){
         if (typeof Array.isArray === "function") {

@@ -46,6 +46,7 @@ export default {
           type:'input',
           listType:'normal'
         },
+        
         {
           key: "menu_id",
           label: '菜单',
@@ -107,16 +108,13 @@ export default {
           label: '状态',
           application:['编辑','添加'],
           type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          options:[{
+            text: '启用',
+            value: 1
+          }, {
+            text: '禁用',
+            value: -1
+          }],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -157,93 +155,96 @@ export default {
 
       // 按钮配置
       btn_info: [
+        
           
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'list',
-          text:function(data){
-            return '编辑'
-          },
-          func:{
-            apiName:function(data){
-              return "api_article_update"
+          {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              return '编辑'
             },
-            formData:function(data,self){
-              return data
-            },
-            postData:function(data,self){
-              var postData={
-                searchItem:{
-                  id:self.btnData.id
-                },
-                data:data
-              };
+            func:{
+              apiName:function(data){
+                return "api_article_update"
+              },
+              formData:function(data,self){
+                return data
+              },
+              postData:function(data,self){
+                var postData={
+                  searchItem:{
+                    id:self.btnData.id
+                  },
+                  data:data
+                };
 
-              return postData;
-            }
+                return postData;
+              }
+            },
           },
-        },
-        {
-          type:'danger',
-          icon:'delete',
-          size:'normal',
-          funcType:'submit',
-          position:'header',
-          text:function(data){
-            return '删除选中'
-          },
-          func:{
+          {
+            type:'danger',
+            icon:'delete',
+            size:'normal',
+            funcType:'submit',
+            position:'header',
+            text:function(data){
+              return '删除选中'
+            },
+            func:{
 
-            apiName:function(data){
-              return "api_article_update"
+              apiName:function(data){
+                return "api_article_update"
+              },
+                            
+              postData:function(data,self){
+                var postData = {
+                  searchItem:{
+                    id:['in',self.deleteArray],
+                    
+                  },
+                  data:{
+                    status:-1
+                  }
+                };
+                return postData;
+              }
+
             },
-                          
-            postData:function(data,self){
-              var postData = {
-                searchItem:{
-                  id:['in',self.deleteArray],
-                },
-                data:{
-                  status:-1
-                }
-              };
-              return postData;
-            }
           },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'normal',
-          position:'header',
-          text:function(data){
-            return '添加'
-          },
-          func:{
-            apiName:function(data){
-              return "api_article_add"
+          {
+            type:'info',
+            icon:'edit',
+            size:'normal',
+            position:'header',
+            text:function(data){
+              return '添加'
             },
-            
-            formData:function(data,self,func){
+            func:{
+              apiName:function(data){
+                return "api_article_add"
+              },
               
-              var data = {
-                content:''
-              }; 
-              return data
+              formData:function(data,self,func){
+                
+                var data = {
+                  content:''
+                }; 
+                return data
+              },
+              
+              postData:function(data,self){
+                var postData={
+                  data:data
+                };
+                return postData;
+              }
             },
-            
-            postData:function(data,self){
-              var postData = {
-                data:data
-              };
-              return postData;
-            }
           },
-        },
-      ],
 
+      ],
       paginate: {
           count: 0,
           currentPage: 1,
@@ -253,6 +254,7 @@ export default {
           layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
+        menu_id:['not in',[23,135,136]]
       },
       optionData:{
         labelOptions:[]
@@ -303,7 +305,8 @@ export default {
       const self =this;
       const postData = {};
       postData.searchItem ={
-        type:['=',1]  
+        type:['=',1],
+        id:['not in',[23,135,136]]
       };
       postData.token = self.$store.getters.getToken;
       postData.order ={
@@ -331,7 +334,7 @@ export default {
       
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.paginate = self.$$cloneForm(self.paginate);        
       postData.token = self.$store.getters.getToken; 
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
@@ -392,5 +395,6 @@ export default {
     },
 
   },
+  
 
 }

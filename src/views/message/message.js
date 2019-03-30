@@ -14,41 +14,8 @@ export default {
           listType:'normal'
         },
         {
-          key: 'title',
-          label: '名字',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal',
-          placeholder:'请输入留言姓名',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.searchItem.title = e.target._value;
-            }else{
-              delete self.searchItem.title;
-            };
-            self.initMainData();
-          },
-        },
-        {
-          key: 'phone',
-          label: '联系电话',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: "mainImg",
-          label: '图片',
-          application:['编辑','添加'],
-          type:'upload',
-          limit:10,
-        },
-        {
           key: "content",
-          label: '内容',
+          label: '详情',
           application:['编辑','添加'],
           type:'vueEditor',
         },
@@ -57,16 +24,13 @@ export default {
           label: '状态',
           application:['编辑','添加'],
           type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          options:[{
+            text: '启用',
+            value: 1
+          }, {
+            text: '禁用',
+            value: -1
+          }],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -100,70 +64,100 @@ export default {
           listType:'deal',
           width:300
         },
+       
       ],
+
 
 
       // 按钮配置
       btn_info: [
           
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'list',
-          text:function(data){
-            return '编辑'
-          },
-          func:{
-            apiName:function(data){
-              return "api_message_update"
+          {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              return '编辑'
             },
-            formData:function(data,self){
-              return data
+            func:{
+              apiName:function(data){
+                return "api_message_update"
+              },
+              formData:function(data,self){
+                return data
+              },
+              postData:function(data,self){
+                var postData={
+                  searchItem:{
+                    id:self.btnData.id,
+                    user_type:0
+                  },
+                  data:data
+                };
+
+                return postData;
+              }
             },
-            postData:function(data,self){
-              var postData={
-                searchItem:{
-                  id:self.btnData.id,
-                  user_type:0
-                },
-                data:data
-              };
-
-              return postData;
-            }
           },
-        },
-        {
-          type:'danger',
-          icon:'delete',
-          size:'normal',
-          funcType:'submit',
-          position:'header',
-          text:function(data){
-            return '删除选中'
-          },
-          func:{
-
-            apiName:function(data){
-              return "api_message_update"
+          {
+            type:'danger',
+            icon:'delete',
+            size:'normal',
+            funcType:'submit',
+            position:'header',
+            text:function(data){
+              return '删除选中'
             },
-                          
-            postData:function(data,self){
-              var postData = {
-                searchItem:{
-                  id:['in',self.deleteArray],
-                  user_type:0
-                },
-                data:{
-                  status:-1
-                }
-              };
-              return postData;
-            }
+            func:{
 
+              apiName:function(data){
+                return "api_message_update"
+              },
+                            
+              postData:function(data,self){
+                var postData = {
+                  searchItem:{
+                    id:['in',self.deleteArray],
+                    user_type:0
+                  },
+                  data:{
+                    status:-1
+                  }
+                };
+                return postData;
+              }
+
+            },
           },
-        },
+          {
+            type:'info',
+            icon:'edit',
+            size:'normal',
+            position:'header',
+            text:function(data){
+              return '添加'
+            },
+            func:{
+              apiName:function(data){
+                return "api_message_add"
+              },
+              formData:function(data,self){
+                var data = {
+                };
+                return data
+              },
+              postData:function(data,self){
+
+                data.type = 2;
+                var postData={
+                  data:data
+                };
+
+                return postData;
+              }
+            },
+          },
 
       ],
       paginate: {
@@ -175,10 +169,10 @@ export default {
           layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
-        user_type:0
+        type:2,
+        user_type:0,
       },
       optionData:{
-        labelOptions:[]
       },
       otherData:{
       },
@@ -207,6 +201,7 @@ export default {
       this.init()
     },
     token(){
+
     }
   },
   methods: {
@@ -216,31 +211,6 @@ export default {
      */
     init () {
       this.initMainData()
-      this.initMenuData()
-    },
-
-    async initMenuData(){
-      const self =this;
-      const postData = {};
-      postData.searchItem ={
-        type:['=',1]  
-      };
-      postData.token = self.$store.getters.getToken;
-      postData.order ={
-        listorder:'desc'
-      };
-
-      try{
-        var res = await self.$$api_label_get({data: postData});
-      }catch(err){
-        console.log(err); 
-        notify('网络故障','error');
-      };
-       
-      if(res){
-        self.optionData.labelOptions = res.info.data;
-      };
-      
     },
 
 
@@ -259,7 +229,7 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res =  await self.$$api_message_get({data: postData});
+      var res = await self.$$api_message_get({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
 
@@ -288,6 +258,7 @@ export default {
     },
 
 
+
     filtersChange(params){
       const self = this;
       console.log(params);
@@ -312,4 +283,5 @@ export default {
 
   },
   
+
 }

@@ -45,6 +45,7 @@ export default {
           application:['添加','编辑'],
           type:'cascader',
           options:'labelOptions',
+          
         },
         {
           key: "mainImg",
@@ -78,7 +79,6 @@ export default {
           header_search_type:'select',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            
             if(value){
               self.searchItem.status = value;
             }else{
@@ -87,7 +87,6 @@ export default {
             self.initMainData();
           },
         },
-
         {
           key: "name",
           label: '内容',

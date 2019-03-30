@@ -126,8 +126,9 @@ export default {
               } else {
 
                 var routes = this.$router.options.routes
+
                 for (var i = 0; i < routes.length; i++) {
-                  if (this.$store.state.user.userinfo.passage_array.indexOf(routes[i].id)>=0) {
+                  if (this.$store.state.user.userinfo.auth.indexOf(routes[i].id)>=0) {
                     this.$router.push(routes[i].path);
                     console.log(99809)
                     return;

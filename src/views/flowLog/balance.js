@@ -95,16 +95,13 @@ export default {
           label: '状态',
           application:['编辑','添加'],
           type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          options:[{
+            text: '启用',
+            value: 1
+          }, {
+            text: '禁用',
+            value: -1
+          }],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -138,11 +135,14 @@ export default {
           listType:'deal',
           width:300
         },
+       
       ],
 
       searchForm:{
 
       },
+
+
 
       // 按钮配置
       btn_info:[
@@ -173,60 +173,65 @@ export default {
           },
         },
         {
-          type:'danger',
-          icon:'delete',
-          size:'normal',
-          funcType:'submit',
-          position:'header',
-          text:function(data){
-            return '删除选中'
-          },
-          func:{
+            type:'danger',
+            icon:'delete',
+            size:'normal',
+            funcType:'submit',
+            position:'header',
+            text:function(data){
+              return '删除选中'
+            },
+            func:{
 
-            apiName:function(data){
-              return "api_flowLog_update"
+              apiName:function(data){
+                return "api_flowLog_update"
+              },
+                            
+              postData:function(data,self){
+                var postData = {
+                  searchItem:{
+                    id:['in',self.deleteArray],
+                    
+                  },
+                  data:{
+                    status:-1
+                  }
+                };
+                return postData;
+              }
+
             },
-                          
-            postData:function(data,self){
-              var postData = {
-                searchItem:{
-                  id:['in',self.deleteArray],
-                },
-                data:{
-                  status:-1
-                }
-              };
-              return postData;
-            }
           },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'normal',
-          position:'header',
-          text:function(data){
-            return '添加'
-          },
-          func:{
-            apiName:function(data){
-              return "api_flowLog_add"
+          {
+            type:'info',
+            icon:'edit',
+            size:'normal',
+            position:'header',
+            text:function(data){
+              return '添加'
             },
-            
-            formData:function(data,self,func){
-              var data = {}; 
-              return data
+            func:{
+              apiName:function(data){
+                return "api_flowLog_add"
+              },
+              
+              formData:function(data,self,func){
+                var data = {}; 
+                return data
+              },
+              postData:function(data,self){
+                var postData={
+                  data:data
+                };
+                postData.data.type = 2;
+                return postData;
+              }
             },
-            postData:function(data,self){
-              var postData={
-                data:data
-              };
-              postData.data.type = 2;
-              return postData;
-            }
           },
-        },
       ],
+        
+
+
       
       paginate: {
           count: 0,
@@ -241,6 +246,7 @@ export default {
         user_type:0
       },
       optionData:{
+        labelOptions:[]
       },
       otherData:{
       },
@@ -248,6 +254,7 @@ export default {
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
+
         },
         fixSearchItem:{
           status:['=',[1]]
@@ -261,9 +268,10 @@ export default {
         label: 'title',
         value: 'id',
       },
+      
     }
-  },
 
+  },
   mounted () {
     this.init()
   },
@@ -271,6 +279,10 @@ export default {
     token: function () {
       return this.$store.getters.getToken
     },
+    labelOptions:function(){
+      return this.optionData.labelOptions
+    }
+
   },
   watch: {
     $route (to, from) {
@@ -278,6 +290,7 @@ export default {
       this.init()
     },
     token(){
+
     }
   },
   methods: {
@@ -371,5 +384,6 @@ export default {
     },
     
   },
+  
 
 }

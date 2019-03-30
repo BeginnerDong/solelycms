@@ -1,6 +1,6 @@
 
 export default {
-  name: 'sku',
+  name: 'product',
   components: {},
   data () {
     return {
@@ -87,16 +87,13 @@ export default {
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          options:[{
+            text: '启用',
+            value: 1
+          }, {
+            text: '禁用',
+            value: -1
+          }],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -107,6 +104,7 @@ export default {
           filter_multiple: false,
           listType:'normal',
         },
+ 
         {
           key: 'create_time',
           label: '创建时间',
@@ -172,22 +170,20 @@ export default {
           application:['编辑','添加'],
           type:'input',
         },
+
         //index:19
         {
           key: "is_group",
           label: '是否团购',
           application:['编辑','添加'],
           type:'select',
-          options:[
-            {
-              text: '开启',
-              value: 1
-            },
-            {
-              text: '关闭',
-              value: 0
-            }
-          ],
+          options:[{
+            text: '开启',
+            value: 1
+          }, {
+            text: '关闭',
+            value: 0
+          }],
           formatter:function(val,tests){
             return val.is_group === 1 ? '开启' : '关闭'
           },
@@ -222,6 +218,8 @@ export default {
           width:300
         },
       ],
+
+
 
       // 按钮配置
       btn_info: [
@@ -303,6 +301,7 @@ export default {
             }
           },
         },
+
         {
           type:'danger',
           icon:'delete',
@@ -313,7 +312,6 @@ export default {
             return '删除选中'
           },
           func:{
-
             apiName:function(data){
               return "api_sku_update"
             },
@@ -321,7 +319,6 @@ export default {
               var postData = {
                 searchItem:{
                   id:['in',self.deleteArray],
-                  
                 },
                 data:{
                   status:-1
@@ -329,9 +326,9 @@ export default {
               };
               return postData;
             }
-
           },
         },
+
         {
           type:'info',
           icon:'edit',
@@ -344,7 +341,6 @@ export default {
             apiName:function(data){
               return "api_sku_add"
             },
-            
             formData:function(data,self,func){
               
               var data = {};
@@ -379,6 +375,7 @@ export default {
             }
           },
         },
+
         {
           type:'info',
           icon:'edit',
@@ -412,7 +409,7 @@ export default {
           },
         },
       ],
-        
+
       paginate: {
           count: 0,
           currentPage: 1,
@@ -429,7 +426,9 @@ export default {
         sku_item:[],
       },
       otherData:{
+
       },
+
       getBefore:{},
       UserInfo:{
         tableName:'UserInfo',
@@ -443,9 +442,10 @@ export default {
         label: 'title',
         value: 'id',
       },
+      
     }
-  },
 
+  },
   mounted () {
     this.init()
   },
@@ -568,7 +568,7 @@ export default {
       };
       postData.getAfter = {
         sku:{
-          tableName:'label',
+          tableName:'Label',
           middleKey:'sku_item',
           key:'id',
           condition:'in',
@@ -728,4 +728,5 @@ export default {
     },
 
   },
+
 }

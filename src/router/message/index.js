@@ -8,12 +8,16 @@ import message from './message'
 
 export default {
   path: '/message',
-  name: '留言管理',
+  name: '信息管理',
   icon: 'inbox',
   id:'1-/message',
   component: Home,
   meta:{
-    children:['2-/message/message']
+    children:[
+      '2-/message/message',
+    ]
   },
-  children: [message]
+  children: [
+  	message,
+  ]
 }

@@ -2,7 +2,10 @@
 
   
   <div class='tabs' >
-    <div class='clear' @click="clearTab"  >clear</div>
+    <div  @click="clearTab" style="width:30px;padding-top:10px" >
+      <i class="el-icon-delete" style="display:block;width:16px;margin:0 auto;"></i>
+    </div>
+    
       <div>
         <el-tabs
           :value="$route.fullPath"

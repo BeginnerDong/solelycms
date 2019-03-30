@@ -32,52 +32,48 @@ export default {
             self.initMainData();
           },
         },
+        // {
+        //   key: 'parent_no',
+        //   label: '父级NO',
+        //   application:[],
+        //   type:'input',
+        //   listType:'normal',
+        //   placeholder:'请输入父级No',
+        //   header_search:true,
+        //   header_search_type:'input',
+        //   header_search_style:'width:160px;margin-right:2px;',
+        //   changeFunc:function(e,self){
+        //     if(e.target._value){
+        //       self.DistriChild.searchItem.parent_no = ['LIKE',['%'+e.target._value+'%']]
+        //     }else{
+        //       delete self.DistriChild.searchItem.parent_no
+        //     };
+        //     self.beforeSearch('DistriChild');
+        //   },
+        // }, 
+        // {
+        //   key: 'parent_no.name',
+        //   label: '父级姓名',
+        //   application:[],
+        //   type:'input',
+        //   listType:'normal',
+        //   formatter:function(val){
+        //     return val.parentInfo.name
+        //   }
+        // }, 
         {
-          key: 'parent_no',
-          label: '父级NO',
-          application:[],
-          type:'input',
-          listType:'normal',
-          placeholder:'请输入父级No',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.DistriChild.searchItem.parent_no = ['LIKE',['%'+e.target._value+'%']]
-            }else{
-              delete self.DistriChild.searchItem.parent_no
-            };
-            self.beforeSearch('DistriChild');
-          },
-        }, 
-        {
-          key: 'parent_no.name',
-          label: '父级姓名',
-          application:[],
-          type:'input',
-          listType:'normal',
-          formatter:function(val){
-            return val.parentInfo.name
-          }
-        }, 
-        {
-          
           key: "headImgUrl",
           label: '用户头像',
-          application:['添加信息','编辑信息'],
+          application:[],
           type:'input',
           listType:'headImgUrl',
-          
         },
         {
-
           key: "nickname",
           label: '用户昵称',
-          application:['添加信息','编辑信息'],
+          application:[],
           type:'input',
           listType:'normal',
-          
         }, 
         {
           key: "name",
@@ -129,29 +125,60 @@ export default {
           application:[],
           type:'input',
           listType:'normal',
-          width:'50px',
-          height:'50px',
           formatter:function(val){
             return val.info.balance
           }
         },
+        // {
+        //   key: "file",
+        //   label: '用户二维码',
+        //   application:['添加信息','编辑信息'],
+        //   type:'input',
+        //   listType:'qrImg',
+        //   formatter:function(val){
+        //     return val.info.qrImg
+        //   }
+        // },
         {
-          key: "file",
-          label: '用户二维码',
-          application:['添加信息','编辑信息'],
-          type:'input',
-          listType:'qrImg',
-          formatter:function(val){
-            return val.info.qrImg
-          }
-        },
-        {
-          key: "mainImg",
-          label: '主图',
-          application:[],
-          type:'upload',
-          limit:10,
-        },
+          key: "primary_scope",
+          label: '用户身份',
+          application:['编辑账号'],
+          type:'select',
+          options:[
+            {
+              text: '用户',
+              value: 10
+            },  
+            {
+              text: '客户',
+              value: 30
+            }
+          ],
+          defaultProps: {
+            label: 'text',
+            value: 'value',
+          },
+          formatter:function(val,tests){
+            if(val.primary_scope==10){
+              return '用户';
+            }else{
+              return '客户';
+            };
+          },
+          listType:'normal',
+          placeholder:'请选择用户身份',
+          header_search:true,
+          header_search_type:'select',
+          header_search_style:'width:160px;margin-right:2px;',
+          changeFunc:function(value,self){
+            if(!value){
+              delete self.searchItem.primary_scope
+            }else{
+              self.searchItem.primary_scope = value
+            };
+            self.initMainData();
+          },
+        }, 
         {
           key: "status",
           label: '状态',
@@ -161,7 +188,7 @@ export default {
             {
               text: '启用',
               value: 1
-            },
+            },  
             {
               text: '禁用',
               value: -1
@@ -171,7 +198,6 @@ export default {
             label: 'text',
             value: 'value',
           },
-          
           formatter:function(val,tests){
             if(val.status==1){
               return '启用';
@@ -197,23 +223,6 @@ export default {
             };
             self.initMainData();
           },
-        }, 
-        {
-          width: '160',
-          key: 'status',
-          label: '状态',
-          formatter: function (item) {
-            return item.status === 1 ? '启用' : '禁用'
-          },
-          filter_list: [{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
-          listType:'normal',
-          filter_multiple: false
         },
         {
           key: "count",
@@ -240,7 +249,7 @@ export default {
 
       // 按钮配置
       btn_info: [
-        
+
         {
           type:'info',
           icon:'edit',
@@ -263,8 +272,6 @@ export default {
               }else if(self.btnName=='添加信息'){
                 var data = {}
               };
-              
-
               return data
             },
             
@@ -494,6 +501,10 @@ export default {
     },
 
 
+
+
+
+
     /**
      * 获取文章列表
      */
@@ -508,9 +519,6 @@ export default {
       };
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
-      };
-      postData.order = {
-        create_time:'desc',
       };
       postData.getAfter = {
         file:{
@@ -589,6 +597,10 @@ export default {
       self.initMainData();
     },
 
+
+
+
+    
   },
   
 

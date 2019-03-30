@@ -51,9 +51,15 @@ export default {
     onChange(val){
       
       const self = this;
+      console.log('onChange',val)
       self.submitData[val[0]] = val[1];
-      console.log('fieldChange',val)
+      if(val[0]=='img_array'){
+        self.$set(self.FormData,'img_array',val[1]);
+        console.log('63259632',self.FormData)
+      };
+      console.log('FormData--222',self.FormData)
       this.$emit('fieldChange', val);
+      
     },
 
 
@@ -79,10 +85,9 @@ export default {
     }
   },
   created () {
+    console.log('formDataJs',this.formData)
   },
   mounted () {
-
-
   },
   props: {
     FieldList: {

@@ -13,7 +13,7 @@ export default {
   id:'2-/message/message',
   component: Content,
   meta:{
-    children:['3-/message/message/message']
+    children:['3-/message/message/message','3-/message/message/consult']
   },
   children: [
     {
@@ -22,6 +22,10 @@ export default {
       icon: 'reorder',
       id:'3-/message/message/message',
       child_button:[
+        { 
+          name:'添加',
+          id:'/message/message/message-添加'
+        },
         { 
           name:'编辑',
           id:'/message/message/message-编辑'
@@ -32,6 +36,27 @@ export default {
         },       
       ],
       component: Message.Message
+    },
+    {
+      path: 'consult',
+      name: '咨询列表',
+      icon: 'reorder',
+      id:'3-/message/message/consult',
+      child_button:[
+        { 
+          name:'添加',
+          id:'/message/message/consult-添加'
+        },
+        { 
+          name:'编辑',
+          id:'/message/message/consult-编辑'
+        },
+        { 
+          name:'删除选中',
+          id:'/message/message/consult-删除选中'
+        },       
+      ],
+      component: Message.Consult
     },
   ]
 }

@@ -48,20 +48,6 @@ export default {
           listType:'normal'
         },
         {
-          key: 'wx_appid',
-          label: '公众号appid',
-          application:['编辑','添加'],
-          type:'input',
-          listType:''
-        },
-        {
-          key: 'wx_appsecret',
-          label: '公众号appsecret',
-          application:['编辑','添加'],
-          type:'input',
-          listType:''
-        },
-        {
           key: 'distribution_level',
           label: '分销层级',
           application:['编辑','添加'],
@@ -88,21 +74,20 @@ export default {
             return val.custom_rule.secondClass?val.custom_rule.secondClass:''
           }
         },
+        
         {
+
           key: "status",
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          options:[{
+            text: '启用',
+            value: 1
+          }, {
+            text: '禁用',
+            value: -1
+          }],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -112,6 +97,7 @@ export default {
             label: 'text',
             value: 'value',
           },
+
         },
         {
           key: 'create_time',
@@ -137,6 +123,7 @@ export default {
           listType:'deal',
           width:300
         }, 
+       
       ],
 
 
@@ -182,6 +169,8 @@ export default {
               return "api_thirdApp_update"
             },
             formData:function(data,self){
+              //data.discount = data.discount[0]?data.discount[0]:'';
+              //data.view_count = data.view_count[0]?data.view_count[0]:'';
               return data.custom_rule
             },
             postData:function(data,self){
@@ -390,5 +379,6 @@ export default {
 
     
   },
+
 
 }

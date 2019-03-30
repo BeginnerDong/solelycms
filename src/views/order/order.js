@@ -50,6 +50,7 @@ export default {
             label: 'text',
             value: 'value',
           },
+          
           formatter:function(val,tests){
             return ['未支付','已支付','已退款'][val.pay_status];
           },
@@ -210,6 +211,10 @@ export default {
             label: 'text',
             value: 'value',
           },
+          defaultProps: {
+            label: 'text',
+            value: 'value',
+          },
           formatter:function(val,tests){
             if(val.status==1){
               return '启用';
@@ -242,6 +247,7 @@ export default {
           width:300
         },
       ],
+
 
       // 按钮配置
       btn_info:[
@@ -344,6 +350,7 @@ export default {
           funcType:'emit',
         }
       ],
+        
 
       paginate: {
           count: 0,
@@ -366,6 +373,7 @@ export default {
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
+
         },
         fixSearchItem:{
           status:['=',[1]]
@@ -400,6 +408,7 @@ export default {
       this.init()
     },
     token(){
+
     }
   },
   methods: {
@@ -441,6 +450,7 @@ export default {
           info:['name','phone'],
         },
       };
+      console.log('postData',postData)
       var res =  await self.$$api_order_get({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
@@ -557,6 +567,7 @@ export default {
         +'&excelOutput='
         +JSON.stringify(postData.excelOutput))
         /*var res =  await self.$$api_order_get({data: postData});
+
         var a = document.createElement("a");
         a.href = res.info;
         a.download ="订单.xls";

@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div id="headNav" style="height:61px">
 
-    <header class="head-nav">
+    <header class="head-nav" id="header" >
       <el-row>
         <el-col :span="4" class='logo-container'>
-          <img src="../../assets/logo-sm.png" class='logo' alt="">
+         
+            <img style="display:block;margin:0 auto;margin-top:5px;" :src="this.$store.state.user.userinfo.mainImg.length>0?this.$store.state.user.userinfo.mainImg[0].url:'../../assets/logo-sm.png'" class='logo' alt="">
+          
         </el-col>
-        <el-col :span="16">
+        <el-col :span="16" >
           <el-menu 
             style="background:#324057;color:white!important" 
             theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
@@ -19,36 +21,47 @@
               v-for='(item,index) in mainData'
               :index="item.path"
               :key='item.path'
-              v-if='!item.hidden&&checkInAuth(item.id)'>
+              v-if='!item.hidden&&checkInAuth(item.id)&&!isPhone'>
               {{item.name}}
             </el-menu-item>
+
+            <el-submenu index="2" v-if="isPhone">
+              <template slot="title">顶部导航</template>
+              <el-menu-item
+              v-for='(item,index) in mainData'
+              :index="item.path"
+              :key='item.path'
+              v-if='!item.hidden&&checkInAuth(item.id)'>
+                {{item.name}}
+              </el-menu-item>
+            </el-submenu>
 
           </el-menu>
         </el-col>
         <el-col :span="4" class="userinfo">
           <!-- <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> -->
-          <span class='username'>
-                        <el-dropdown
-                          trigger="click"
-                          @command='setDialogInfo'>
-                            <span class="el-dropdown-link">
-                                {{this.$store.state.user.userinfo.login_name}}
-                            <i class="el-icon-caret-bottom el-icon--right"></i>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <!--<el-dropdown-item command='info'>修改信息</el-dropdown-item>-->
-                                <el-dropdown-item
-                                  command='pass'
-                                  >修改密码</el-dropdown-item>
-                                <!--<el-dropdown-item
-                                  command='set'
-                                  >系统设置</el-dropdown-item>-->
-                                <el-dropdown-item
-                                  command='logout'>退出</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </span>
-          <i class="fa fa-sign-out logout" @click='logout'></i>
+          <span class='username' >
+            <el-dropdown
+              trigger="click"
+              @command='setDialogInfo'>
+                <span class="el-dropdown-link">
+                    {{this.$store.state.user.userinfo.login_name}}
+                <i class="el-icon-caret-bottom el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <!--<el-dropdown-item command='info'>修改信息</el-dropdown-item>-->
+                    <el-dropdown-item
+                      command='pass'
+                      >修改密码</el-dropdown-item>
+                    <!--<el-dropdown-item
+                      command='set'
+                      >系统设置</el-dropdown-item>-->
+                    <el-dropdown-item
+                      command='logout'>退出</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </span>
+        
         </el-col>
       </el-row>
     </header>
@@ -99,10 +112,10 @@
   }
 
   .logo {
-    height: 50px;
+    height: 40px;
     width: auto;
     margin-left: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
   }
 
   .fa-user {
@@ -113,7 +126,6 @@
 
   .head-nav {
     width: 100%;
-    height: 60px;
     background: #324057;
     position: fixed;
     top: 0px;
@@ -141,10 +153,11 @@
     height: 60px;
     line-height: 60px;
     cursor: pointer;
-
+    margin-top:60x;
     .el-dropdown {
       color: #FFF;
-    }
+    };
+    margin-right: 30px;
 
   }
   .el-menu-item{
@@ -154,5 +167,9 @@
   .el-menu-item:hover {
     background-color: white!important;
     color:#324057!important;
+  }
+
+  .el-menu.el-menu--horizontal {
+      border-bottom:none; 
   }
 </style>

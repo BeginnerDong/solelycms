@@ -58,23 +58,34 @@ export default {
           }]
         }
       },
-      mainData:[]
+      mainData:[],
+      isPhone:false
+      
     }
   },
   mounted () {
-    this.mainData = this.$router.options.routes;
+    const self = this;
+    self.mainData = self.$router.options.routes;
+      
 
 
+
+  },
+  beforeDestroy() {
+   
+     
   },
   methods: {
 
     /**
      * 退出登录
      */
+    
+   
 
     checkInAuth(item){
 
-      var index = this.$store.state.user.userinfo.passage_array.indexOf(item)
+      var index = this.$store.state.user.userinfo.auth.indexOf(item)
 
 
       if(index>=0){
@@ -139,9 +150,12 @@ export default {
       
 
           var postData={
+            searchItem:{
+              user_no:this.$store.state.user.userinfo.user_no
+            },
             data:{
               login_name:this.dialog[userinfo].login_name,
-              password: this.dialog[userinfo].password,
+              password:this.dialog[userinfo].password,
             }
           };
 
