@@ -189,8 +189,8 @@ export default {
                   var postData={
                     data:data
                   };
-                  postData.data.user_no=self.btnData.user_no;
                 };
+                postData.data.user_no=self.btnData.user_no;
                 
                 return postData;
               }
@@ -214,7 +214,8 @@ export default {
               postData:function(data,self){
                 var postData={
                   searchItem:{
-                    id:self.btnData.id
+                    id:self.btnData.id,
+                    user_no:self.btnData.user_no,
                   },
                   data:data
                 }
