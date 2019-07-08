@@ -1,7 +1,6 @@
 var gbs = {
   //host: '/slsAdminApi', // 接口根地址。本地代理到slsadmin.api.sls.com,线上使用的是Nginx代理
-  //host: 'https://www.solelycloud.com/api/public/index.php/api/v1/', // 接口根地址。本地代理到slsadmin.api.sls.com,线上使用的是Nginx代理
-  host: 'https://api.solelycloud.com/api/public/index.php/api/v1/', // 接口根地址。本地代理到slsadmin.api.sls.com,线上使用的是Nginx代理
+  host: 'https://api.solelycloud.com/api/public/index.php/api/v1/',
   db_prefix: 'sls_admin_', // 本地存储的key
   // 状态码字段
   api_status_key_field: 'solely_code',

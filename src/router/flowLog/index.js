@@ -15,10 +15,15 @@ export default {
   id:'1-/flowLog',
   component: Home,
   meta:{
-    children:['2-/flowLog/balance','2-/flowLog/pay','2-/flowLog/score']
+    children:[
+			'2-/flowLog/balance',
+			'2-/flowLog/pay',
+			'2-/flowLog/score',
+		]
   },
   children: [
 	  Balance,
-	  pay
+		score,
+	  pay,
   ]
 }

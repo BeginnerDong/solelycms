@@ -23,6 +23,7 @@ import SlsDateTimeRange from './SlsDateTimeRange.vue'
 import SlsEditor from './SlsEditor.vue'
 import upload from './upload.vue'
 import VueEditor from './VueEditor.vue'
+import baiduMap from './baiduMap.vue'
 
 export default {
   SlsInput,
@@ -46,4 +47,5 @@ export default {
   SlsEditor,
   upload,
   VueEditor,
+  baiduMap,
 }

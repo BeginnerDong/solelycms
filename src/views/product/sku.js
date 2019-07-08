@@ -1,6 +1,6 @@
 
 export default {
-  name: 'product',
+  name: 'sku',
   components: {},
   data () {
     return {
@@ -85,15 +85,18 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+						{
+							text: '启用',
+							value: 1
+						},
+						{
+							text: '禁用',
+							value: -1
+						},
+					],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -102,7 +105,7 @@ export default {
             value: 'value',
           },
           filter_multiple: false,
-          listType:'normal',
+          listType:'',
         },
  
         {
@@ -237,7 +240,6 @@ export default {
               return "api_sku_update"
             },
             formData:function(data,self){
-              
               if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
                 for(var i=0;i<self.optionData.sku_item.length;i++){
                   data[self.optionData.sku_item[i].title] = '';
@@ -249,7 +251,6 @@ export default {
                   };
                 };
               };
-
               //团购字段控制
               if(data.is_group==1) {
                 self.fields[20]['application'] = ['编辑','添加'];
@@ -270,14 +271,9 @@ export default {
                 console.log('changeaAfter',self.fields);
                 self.computeFields();
               }
-
-
               return data;
-
             },
             postData:function(data,self){
-              
-
               data.sku_item = [];
               if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
                 for(var i=0;i<self.optionData.sku_item.length;i++){
@@ -289,19 +285,16 @@ export default {
                   delete data[self.optionData.sku_item[i].title];
                 };
               };
-              
               var postData={
                 searchItem:{
                   id:self.btnData.id
                 },
                 data:data
               };
-
               return postData;
             }
           },
         },
-
         {
           type:'danger',
           icon:'delete',
@@ -328,7 +321,6 @@ export default {
             }
           },
         },
-
         {
           type:'info',
           icon:'edit',
@@ -342,7 +334,6 @@ export default {
               return "api_sku_add"
             },
             formData:function(data,self,func){
-              
               var data = {};
               if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
                 for(var i=0;i<self.optionData.sku_item.length;i++){
@@ -351,9 +342,7 @@ export default {
               };
               return data;
             },
-            
             postData:function(data,self){
-              
               data.sku_item = [];
               if(self.optionData.sku_item&&self.optionData.sku_item.length>0){
                 for(var i=0;i<self.optionData.sku_item.length;i++){
@@ -375,7 +364,6 @@ export default {
             }
           },
         },
-
         {
           type:'info',
           icon:'edit',
@@ -386,26 +374,9 @@ export default {
           },
           funcType:'func',
           func:{
-            apiName:function(data){
-              return "api_user_add"
-            },
-            formData:function(data,self,func){
-              var data = {
-                login_name:'',
-                password:'',
-              }; 
-              return data
-            },
             func:function(data,self,func){
               self.$router.push('/product/product/product');
             },
-            postData:function(data,self){
-              var postData={
-                data:data
-              };
-              postData.data.user_type=0;
-              return postData;
-            }
           },
         },
       ],
@@ -546,10 +517,8 @@ export default {
 
     },
 
-    /**
-     * 获取文章列表
-     */
-    async initMainData () {
+
+    async initMainData() {
       
       const self = this;
       const postData  = {};

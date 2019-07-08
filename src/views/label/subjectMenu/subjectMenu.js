@@ -1,5 +1,5 @@
 export default {
-  name: 'areaMenu',
+  name: 'subjectMenu',
   components: {},
   data () {
     return {
@@ -32,7 +32,6 @@ export default {
           application:['添加','编辑'],
           type:'input'
         },
-        
         {
           key: "mainImg",
           label: '主图',
@@ -43,39 +42,19 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: '1'
-          }, {
-            text: '禁用',
-            value: '-1'
-          }],
+          options:[
+						{
+							text: '启用',
+							value: '1'
+						},
+						{
+							text: '禁用',
+							value: '-1'
+						},
+					],
         },
-
-
-
-        {
-          key: "name",
-          label: '内容',
-          application:['api_userInfo_add','api_userInfo_update'],
-          type:'vueEditor',
-        },
-        {
-          key: "area",
-          label: '区域选择',
-          application:['table','api_userInfo_add','api_userInfo_update'],
-          type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-
-          }],
-        }, 
         {
           key: 'create_time',
           label: '创建时间'
@@ -105,8 +84,7 @@ export default {
 
       // 按钮配置
       btn_info: {
-        // batch:false,
-        // batch_delete:false,
+
         width: 300,
         list:[
           {
@@ -122,25 +100,20 @@ export default {
                 return "api_label_add"
               },
               formData:function(data,self){
-                  self.resetChecked();
-                  var data = {
-                    title:'',
-                    mainImg:[],
-                    description:'',
-                    
-                  };
-                  
-                  return data;
+								self.resetChecked();
+								var data = {
+									title:'',
+									mainImg:[],
+									description:'',
+								};
+								return data;
               },
-              
               postData:function(data,self){
-                
                 var postData={
                   data:data
                 };
                 postData.data.parentid = 354;
-                postData.data.type=8;
-                
+                postData.data.type = 8;
                 return postData;
               }
             },
@@ -196,6 +169,7 @@ export default {
           },
         ],
       },
+	
       paginate: {
           count: 0,
           currentPage: 1,
@@ -267,14 +241,9 @@ export default {
       if(res){
         self.mainData = res.info.data[1]['child']?res.info.data[1]['child']:[];
         self.optionData.labelOptions = res.info.data[1]['child']?res.info.data[1]['child']:[];
-        console.log(self.mainData)
-        //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
       };
-
     },
 
-
-    
 
     async onSubmit(data){
       console.log(data)

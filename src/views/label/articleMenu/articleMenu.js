@@ -57,7 +57,7 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
           options:[
             {
@@ -87,28 +87,6 @@ export default {
             self.initMainData();
           },
         },
-        {
-          key: "name",
-          label: '内容',
-          application:['api_userInfo_add','api_userInfo_update'],
-          type:'vueEditor',
-        },
-        {
-          key: "area",
-          label: '区域选择',
-          application:['table','api_userInfo_add','api_userInfo_update'],
-          type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
-        }, 
         {
           key: 'create_time',
           label: '创建时间'
@@ -159,12 +137,9 @@ export default {
                   mainImg:[],
                   description:'',
                 };
-                
                 return data;
             },
-            
             postData:function(data,self){
-              
               var postData={
                 data:data
               };
@@ -233,13 +208,10 @@ export default {
             return '删除选中'
           },
           func:{
-
             apiName:function(data){
               return "api_label_update"
             },
-                          
             postData:function(data,self,func){
-
               if(self.$refs.tree.getCheckedNodes().length>0){
                 var deleteArray = [];
                 for (var i = self.$refs.tree.getCheckedNodes().length - 1; i >= 0; i--) {
@@ -263,11 +235,11 @@ export default {
               };
               return postData;
             }
-
           },
         }
-        
       ],
+
+
       paginate: {
           count: 0,
           currentPage: 1,
@@ -308,7 +280,6 @@ export default {
       for (var key in params) {
         self.searchItem[key] = params[key][0]
       }
-      console.log(self.searchItem)
       self.initMainData();
     },
 
@@ -339,16 +310,9 @@ export default {
       if(res){
         self.mainData = res.info.data;
         self.optionData.labelOptions = res.info.data;
-        console.log(self.mainData)
-        //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
-        
       };
-
-      
     },
 
-
-    
 
     async onSubmit(data){
       console.log(data)

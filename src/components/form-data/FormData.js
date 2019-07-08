@@ -30,6 +30,7 @@ export default {
         editor: 'SlsEditor',
         upload: 'upload',
         vueEditor: 'VueEditor',
+				baiduMap: 'baiduMap',
       },
       cur_component: '',
       temp_field_obj: {},

@@ -129,9 +129,6 @@ export default {
           type:'datetime',
           listType:'custom',
           width:150,
-          formatter:function(val,tests){
-            return val.start_time?new Date(parseInt(val.start_time)):'';
-          },
           custom:function(val,func){
             return val.start_time?func.formatDate(new Date(parseInt(val.start_time)),'yyyy/M/d hh:mm'):''
           }
@@ -143,9 +140,6 @@ export default {
           type:'datetime',
           listType:'custom',
           width:150,
-          formatter:function(val,tests){
-            return val.end_time?new Date(parseInt(val.end_time)):'';
-          },
           custom:function(val,func){
             return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
           }
@@ -177,20 +171,23 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+						{
+							text: '启用',
+							value: 1
+						},
+						{
+							text: '禁用',
+							value: -1
+						},
+					],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
           filter_multiple: false,
-          listType:'normal',
+          listType:'',
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -265,7 +262,7 @@ export default {
           func:{
             func:function(data,self){
               self.$router.push({
-                path:'/product/product/product',
+                path:'/product/product/sku',
                 name:'sku列表',
                 query:{
                   product_no:data.product_no
@@ -273,16 +270,6 @@ export default {
               });
               var path = '';
               return path
-            },
-            postData:function(data,self){
-              var postData={
-                searchItem:{
-                  id:self.btnData.id,
-                  
-                },
-                data:data
-              };
-              return postData;
             },
           },
         },
@@ -296,7 +283,6 @@ export default {
             return '删除选中'
           },
           func:{
-
             apiName:function(data){
               return "api_product_update"
             },
@@ -304,7 +290,6 @@ export default {
               var postData = {
                 searchItem:{
                   id:['in',self.deleteArray],
-                  
                 },
                 data:{
                   status:-1
@@ -327,21 +312,20 @@ export default {
             apiName:function(data){
               return "api_product_add"
             },
-            
             formData:function(data,self,func){
               var data = {
-                sku_array:[]
+                sku_array:[],
+								start_time:'',
+								end_time:'',
               }; 
               return data
             },
-            
             postData:function(data,self){
               var postData={
                 data:data
               };
               return postData;
             }
-
           },
         },
       ],
@@ -361,11 +345,7 @@ export default {
         categoryOptions:[],
         skuOptions:[],
       },
-
-
       otherData:{
-       
-       
       },
       getBefore:{},
       UserInfo:{
@@ -432,12 +412,11 @@ export default {
       };
        
       if(res){
-        console.log('menures',res);
         self.optionData.categoryOptions = res.info.data;
       };
 
-      
     },
+
 
     async initSkuData(){
       const self =this;
@@ -459,18 +438,12 @@ export default {
        
       if(res){
         self.optionData.skuOptions = res.info.data;
-        console.log('skuOptions',self.optionData.skuOptions)
-        //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
-        
       };
 
-      
     },
 
 
-    /**
-     * 获取文章列表
-     */
+
     async initMainData () {
       
       const self = this;
@@ -484,16 +457,13 @@ export default {
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
       postData.order = {
-          end_time:'desc',
+				create_time:'desc',
       };
 
       var res =  await self.$$api_product_get({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
-
     },
-
-
 
 
     async onClickBtn(val){
@@ -584,7 +554,6 @@ export default {
 
 
     async fieldChange(val){
-      console.log('product_fieldChange',val);
       const self = this;
     },
 

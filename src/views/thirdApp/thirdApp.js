@@ -74,20 +74,21 @@ export default {
             return val.custom_rule.secondClass?val.custom_rule.secondClass:''
           }
         },
-        
         {
-
           key: "status",
           label: '状态',
           application:['编辑'],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+						{
+							text: '启用',
+							value: 1
+						},
+						{
+							text: '禁用',
+							value: -1
+						},
+					],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -97,7 +98,6 @@ export default {
             label: 'text',
             value: 'value',
           },
-
         },
         {
           key: 'create_time',
@@ -169,9 +169,11 @@ export default {
               return "api_thirdApp_update"
             },
             formData:function(data,self){
-              //data.discount = data.discount[0]?data.discount[0]:'';
-              //data.view_count = data.view_count[0]?data.view_count[0]:'';
-              return data.custom_rule
+              var newFormData = {
+                firstClass:(data.custom_rule&&data.custom_rule.firstClass)?data.custom_rule.firstClass:'',
+                secondClass:(data.custom_rule&&data.custom_rule.secondClass)?data.custom_rule.secondClass:'',
+              } 
+              return newFormData
             },
             postData:function(data,self){
 

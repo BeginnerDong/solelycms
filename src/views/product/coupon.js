@@ -1,5 +1,5 @@
 export default {
-  name: 'product',
+  name: 'coupon',
   components: {},
   data () {
     return {
@@ -304,7 +304,6 @@ export default {
               return data
             },
             postData:function(data,self){
-
               data.valid_time = data.valid_time?data.valid_time*86400*1000:'';
               var postData={
                 data:data
@@ -369,9 +368,7 @@ export default {
       this.initMainData()
     },
   
-    /**
-     * 获取文章列表
-     */
+
     async initMainData () {
       const self = this;
       const postData  = {};
@@ -398,7 +395,6 @@ export default {
     },
 
     async fieldChange(val){
-      console.log('product_fieldChange',val);
       const self = this;
     },
 

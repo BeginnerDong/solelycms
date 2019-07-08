@@ -25,7 +25,7 @@ export default {
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(e,self){
             if(e.target._value){
-              self.searchItem.title = e.target._value;
+              self.searchItem.title = ['LIKE',['%'+e.target._value+'%']];
             }else{
               delete self.searchItem.title;
             };

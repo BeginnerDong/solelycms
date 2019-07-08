@@ -295,7 +295,7 @@
           if(videoArray.indexOf(ext)!=-1){
             self.editor.insertEmbed(self.length, 'video', self.contentImg);
           }else{
-            self.editor.editor.insertEmbed(self.length, 'image', self.contentImg)
+            self.editor.insertEmbed(self.length, 'image', self.contentImg)
           };
           self.changeFileList(id,'add');
           self.image_array.push(id);

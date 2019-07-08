@@ -33,6 +33,13 @@ export default {
           },
         },
         // {
+        //   key: 'latitude',
+        //   label: '地址',
+        //   application:['编辑','添加'],
+        //   type:'baiduMap',
+        //   listType:''
+        // },
+        // {
         //   key: 'parent_no',
         //   label: '父级NO',
         //   application:[],

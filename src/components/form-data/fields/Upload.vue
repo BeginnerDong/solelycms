@@ -117,6 +117,7 @@
               type:'image'
             });
           };
+					self.$set(self.data,'uploadImg',self.uploadImg);
           self.$emit('onChange',[this.data.key,this.uploadImg]);
           
           var jqObj=self.$el.querySelector('.custom-input');  

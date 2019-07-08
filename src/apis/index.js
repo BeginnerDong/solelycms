@@ -22,6 +22,8 @@ import thirdApp from './thirdApp/'
 import sku from './sku/'
 import message from './message/'
 import wechat from './wechat/'
+import coupon from './coupon/'
+import file from './file/'
 
 export default [
   {
@@ -93,5 +95,15 @@ export default [
     module: 'wechat',
     name: 'wechat管理',
     list: wechat
-  }
+  },
+  {
+    module: 'coupon',
+    name: 'coupon管理',
+    list: coupon
+  },
+  {
+    module: 'file',
+    name: 'file管理',
+    list: file
+  },
 ]

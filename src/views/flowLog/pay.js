@@ -1,5 +1,5 @@
 export default {
-  name: 'score',
+  name: 'pay',
   components: {},
   data () {
     return {
@@ -48,7 +48,7 @@ export default {
         },
         {
           key: 'name',
-          label: '用户真实姓名',
+          label: '用户姓名',
           application:[],
           type:'input',
           listType:'normal',
@@ -70,7 +70,7 @@ export default {
         },
         {
           key: 'phone',
-          label: '用户真实电话',
+          label: '用户电话',
           application:[],
           type:'input',
           listType:'normal',
@@ -93,15 +93,18 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑','添加'],
+          application:[],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],  
+          options:[
+						{
+							text: '启用',
+							value: 1
+						},
+						{
+							text: '禁用',
+							value: -1
+						},
+					],  
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -135,7 +138,6 @@ export default {
           listType:'deal',
           width:300
         },
-       
       ],
 
       searchForm:{
@@ -172,66 +174,59 @@ export default {
           },
         },
         {
-            type:'danger',
-            icon:'delete',
-            size:'normal',
-            funcType:'submit',
-            position:'header',
-            text:function(data){
-              return '删除选中'
-            },
-            func:{
-
-              apiName:function(data){
-                return "api_flowLog_update"
-              },
-                            
-              postData:function(data,self){
-                var postData = {
-                  searchItem:{
-                    id:['in',self.deleteArray],
-                    
-                  },
-                  data:{
-                    status:-1
-                  }
-                };
-                return postData;
-              }
-
-            },
-          },
-          {
-            type:'info',
-            icon:'edit',
-            size:'normal',
-            position:'header',
-            text:function(data){
-              return '添加'
-            },
-            func:{
-              apiName:function(data){
-                return "api_flowLog_add"
-              },
-              
-              formData:function(data,self,func){
-                var data = {}; 
-                return data
-              },
-              postData:function(data,self){
-                var postData={
-                  data:data
-                };
-                postData.data.type = 1;
-                return postData;
-              }
-            },
-          },
+					type:'danger',
+					icon:'delete',
+					size:'normal',
+					funcType:'submit',
+					position:'header',
+					text:function(data){
+						return '删除选中'
+					},
+					func:{
+						apiName:function(data){
+							return "api_flowLog_update"
+						},
+						postData:function(data,self){
+							var postData = {
+								searchItem:{
+									id:['in',self.deleteArray],
+								},
+								data:{
+									status:-1
+								}
+							};
+							return postData;
+						}
+					},
+				},
+				{
+					type:'info',
+					icon:'edit',
+					size:'normal',
+					position:'header',
+					text:function(data){
+						return '添加'
+					},
+					func:{
+						apiName:function(data){
+							return "api_flowLog_add"
+						},
+						formData:function(data,self,func){
+							var data = {}; 
+							return data
+						},
+						postData:function(data,self){
+							var postData={
+								data:data
+							};
+							postData.data.type = 1;
+							return postData;
+						}
+					},
+				},
       ],
-        
 
 
-      
       paginate: {
           count: 0,
           currentPage: 1,
@@ -301,10 +296,8 @@ export default {
       this.initMainData()
     },
 
-    /**
-     * 获取上课流水列表
-     */
-    async initMainData () {
+
+    async initMainData() {
       
       const self = this;
       const postData  = {};
@@ -381,6 +374,10 @@ export default {
     onClickBtn(val){
       console.log(val)
     },
+		
+		async fieldChange(val){
+		  const self = this;
+		},
     
   },
   

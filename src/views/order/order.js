@@ -1,5 +1,5 @@
 export default {
-  name: 'balance',
+  name: 'order',
   components: {},
   data () {
     return {
@@ -150,7 +150,7 @@ export default {
         },
         {
           key: 'name',
-          label: '用户真实姓名',
+          label: '用户姓名',
           application:[],
           type:'input',
           listType:'normal',
@@ -172,7 +172,7 @@ export default {
         },
         {
           key: 'phone',
-          label: '用户真实电话',
+          label: '用户电话',
           application:[],
           type:'input',
           listType:'normal',
@@ -195,7 +195,7 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
           options:[
             {
@@ -207,10 +207,6 @@ export default {
               value: -1
             }
           ],
-          defaultProps: {
-            label: 'text',
-            value: 'value',
-          },
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -251,6 +247,7 @@ export default {
 
       // 按钮配置
       btn_info:[
+
         {
           type:'info',
           icon:'edit',
@@ -274,7 +271,6 @@ export default {
                 },
                 data:data
               };
-
               return postData;
             }
           },
@@ -289,16 +285,13 @@ export default {
             return '删除选中'
           },
           func:{
-
             apiName:function(data){
               return "api_order_update"
             },
-                          
             postData:function(data,self){
               var postData = {
                 searchItem:{
                   id:['in',self.deleteArray],
-                  
                 },
                 data:{
                   status:-1
@@ -306,7 +299,6 @@ export default {
               };
               return postData;
             }
-
           },
         },
         {
@@ -321,16 +313,9 @@ export default {
             apiName:function(data){
               return "api_order_add"
             },
-            
             formData:function(data,self,func){
-              
-              var data = {
-                login_name:'',
-                password:'',
-              }; 
               return data
             },
-            
             postData:function(data,self){
               var postData={
                 data:data
@@ -420,10 +405,8 @@ export default {
       this.initMainData()
     },
 
-    /**
-     * 获取上课流水列表
-     */
-    async initMainData () {
+
+    async initMainData() {
       
       const self = this;
       const postData  = {};
@@ -458,7 +441,6 @@ export default {
     },
 
     async fieldChange(val){
-      console.log('product_fieldChange',val);
       const self = this;
     },
 
