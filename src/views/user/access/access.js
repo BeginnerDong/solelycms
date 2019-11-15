@@ -1,5 +1,5 @@
 export default {
-  name: 'areaMenu',
+  name: 'access',
   components: {},
   data () {
     return {
@@ -11,8 +11,8 @@ export default {
       fields: [
         {
           key: 'id',
-          label: '类别ID',
-          application:['table'],
+          label: 'ID',
+          application:['添加','编辑'],
           type:'input',
         },
         {
@@ -45,7 +45,6 @@ export default {
           application:['添加','编辑'],
           type:'cascader',
           options:'labelOptions',
-          
         },
         {
           key: "mainImg",
@@ -57,15 +56,18 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            },
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -76,7 +78,6 @@ export default {
           header_search_type:'select',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            
             if(value){
               self.searchItem.status = value;
             }else{
@@ -128,7 +129,7 @@ export default {
           func:{
             apiName:function(data){
               return "api_user_auth"
-            },        
+            },
             postData:function(data,self,func){
               var res = self.getCheckedNodesAlone();
               var newArray = [];
@@ -145,7 +146,6 @@ export default {
               };
               return postData;
             }
-
           },
         },
         {
@@ -159,12 +159,16 @@ export default {
           funcType:'func',
           func:{
             func:function(data,self,func){
-              self.$router.push('/user/adminLists/adminLists');
+              if(self.otherData.origin=="adminLists"){
+              	self.$router.push('/user/adminLists/adminLists');
+              }else if(self.otherData.origin=="userOne"){
+              	self.$router.push('/user/adminLists/userOne');
+              }
             },
           },
         },
-        
       ],
+
       paginate: {
           count: 0,
           currentPage: 1,
@@ -188,17 +192,14 @@ export default {
         deleteApiName:'api_label_update',
       },
       defaultChecked:[]
-      
-
     }
-
   },
+
   methods: {
 
     test(){
       this.$router.push('/function')
     },
-
 
     filtersChange(params){
       const self = this;
@@ -226,16 +227,16 @@ export default {
       }else{
         var checkData = self.$store.getters.getUserinfo.auth;
       };
-      
+
       console.log('initMainData-data',data);
       pushItemsExclude(data,results);
       self.mainData = results;
       console.log('initMainData-results',results);
       return;
-      
+
 
       function pushItemsExclude(data,results){
-        
+
         for (var i = 0; i < data.length; i++) {
           var childItem = {};
           if(!(data[i].meta&&data[i].meta.application&&data[i].meta.application.indexOf('notInAuth')>=0)){
@@ -259,7 +260,7 @@ export default {
           };
         };
 
-      }; 
+      };
 
     },
 
@@ -271,7 +272,7 @@ export default {
     /**
      * 点击删除按钮
      */
-    onClickBtnDelete (opts) {
+    onClickBtnDelete(opts) {
       this.$confirm('删除后不可恢复', '确认删除？').then(() => {
         this.$$api_article_deleteArticle({
           data: {
@@ -285,16 +286,14 @@ export default {
     },
 
 
-
-
     /**
      * 添加文章
      */
-    onClickBtnAdd () {
+    onClickBtnAdd() {
       this.$router.push('/adv/article/edit')
     },
 
-    onClickBtnSelect (opts) {
+    onClickBtnSelect(opts) {
       console.log(opts)
       this.$message('查看自己处理吧')
     },
@@ -303,7 +302,7 @@ export default {
      * 修改按钮
      * @param opts
      */
-    onClickBtnUpdate (opts) {
+    onClickBtnUpdate(opts) {
       this.$router.push({
         path: '/adv/article/edit',
         query: {
@@ -316,7 +315,7 @@ export default {
      * 改变页码事件
      * @param current_page    当前页码
      */
-    onChangeCurPage (currentPage) {
+    onChangeCurPage(currentPage) {
       var path = this.$route.path
       var query = Object.assign({}, this.$route.query)
       query.current_page = currentPage
@@ -330,7 +329,7 @@ export default {
      * 改变每页显示数量事件
      * @param page_size    每页显示的数量
      */
-    onChangePageSize (pageSize) {
+    onChangePageSize(pageSize) {
       var path = this.$route.path
       var query = Object.assign({}, this.$route.query)
       query.page_size = pageSize
@@ -343,7 +342,7 @@ export default {
     /**
      * 更新参数
      */
-    onUpdateParams () {
+    onUpdateParams() {
       if (this.$route.query.current_page) {
         this.paginations.current_page = parseInt(this.$route.query.current_page)
       }
@@ -359,7 +358,7 @@ export default {
      * @param data    表单数据
      * @param info    其他有用的数据
      */
-    onSearch ({data, info}) {
+    onSearch({data, info}) {
       console.log(data)
       console.log(info)
 
@@ -373,7 +372,7 @@ export default {
     },
 
     // 批量选择改变CheckBox事件
-    onSelectionChange ({ids, datas}) {
+    onSelectionChange({ids, datas}) {
       // console.log(ids);
       // console.log(datas);
     },
@@ -383,7 +382,7 @@ export default {
      * @param ids 选中的ids
      * @param datas  选中的数据集合
      */
-    onClickBtnBatchDelete ({ids, datas}) {
+    onClickBtnBatchDelete({ids, datas}) {
       this.$confirm('删除的数据：' + ids.join(','), '确认删除？').then(() => {
         this.$$api_article_deleteArticle({
           data: {
@@ -399,20 +398,21 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       console.log('init')
       this.onUpdateParams()
       this.initMainData()
-      //this.initMenuData()
 
-      const  routerquery = this.$route.params;
+      const routerquery = this.$route.params;
       this.user_no = routerquery.user_no;
       this.defaultChecked = routerquery.defaultChecked;
+      this.origin = routerquery.origin;
+      this.otherData.origin = routerquery.origin;
+
       if(!this.user_no||!this.defaultChecked){
         this.$router.push('/user/adminLists/adminLists');
       };
-      console.log('this.user_no',this.user_no)
-      console.log('this.defaultChecked',this.defaultChecked)
+
     },
 
     async onClickBtn(param){
@@ -424,7 +424,7 @@ export default {
       for (var i = 0; i < res.length; i++) {
         newArray.push(res[i].id)
       };
-      
+
       var postData = {
         searchItem:{
           user_no:self.user_no

@@ -21,13 +21,6 @@ export default {
           listType:'normal'
         },
         {
-          key: 'express_info',
-          label: '快递信息',
-          application:['编辑','添加'],
-          type:'input',
-          listType:''
-        },
-        {
           key: "pay_status",
           label: '支付状态',
           application:['编辑','添加'],
@@ -36,7 +29,7 @@ export default {
             {
               text: '未支付',
               value: 0
-            }, 
+            },
             {
               text: '已支付',
               value: 1
@@ -50,23 +43,23 @@ export default {
             label: 'text',
             value: 'value',
           },
-          
+
           formatter:function(val,tests){
             return ['未支付','已支付','已退款'][val.pay_status];
           },
           filter_multiple: false,
           listType:'normal',
-        }, 
+        },
         {
           key: "transport_status",
           label: '运输状态',
-          application:['编辑','添加'],
+          application:[],
           type:'select',
           options:[
             {
               text: '未发货',
               value: 0
-            }, 
+            },
             {
               text: '配送中',
               value: 1
@@ -86,17 +79,17 @@ export default {
           },
           filter_multiple: false,
           listType:'normal',
-        }, 
+        },
         {
           key: "order_step",
           label: '订单状态',
-          application:['编辑','添加'],
+          application:[],
           type:'select',
           options:[
             {
               text: '正常下单',
               value: 0
-            }, 
+            },
             {
               text: '申请撤单',
               value: 1
@@ -128,7 +121,19 @@ export default {
           },
           filter_multiple: false,
           listType:'normal',
-        }, 
+          placeholder:'请选择订单状态',
+          header_search:true,
+          header_search_type:'select',
+          header_search_style:'width:160px;margin-right:2px;',
+          changeFunc:function(value,self){
+            if(value||value===0){
+              self.searchItem.order_step = value;
+            }else{
+              delete self.searchItem.order_step;
+            };
+            self.initMainData();
+          },
+        },
         {
           key: 'user_no',
           label: '用户NO',
@@ -155,7 +160,7 @@ export default {
           type:'input',
           listType:'normal',
           formatter:function(val,tests){
-            return  val.UserInfo.name?val.UserInfo.name:'';
+            return val.UserInfo.name?val.UserInfo.name:'';
           },
           placeholder:'请输入用户姓名',
           header_search:true,
@@ -177,7 +182,7 @@ export default {
           type:'input',
           listType:'normal',
           formatter:function(val,tests){
-            return  val.UserInfo.phone?val.UserInfo.phone:'';
+            return val.UserInfo.phone?val.UserInfo.phone:'';
           },
           placeholder:'请输入用户电话',
           header_search:true,
@@ -229,14 +234,14 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           label: '操作',
           listType:'deal',
@@ -335,7 +340,7 @@ export default {
           funcType:'emit',
         }
       ],
-        
+
 
       paginate: {
           count: 0,
@@ -407,11 +412,11 @@ export default {
 
 
     async initMainData() {
-      
+
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
       };
@@ -489,15 +494,15 @@ export default {
       const self = this;
       console.log(val)
       if(val[0]=='导出excel'){
-        const postData  = {}; 
-        postData.token = self.$store.getters.getToken; 
+        const postData  = {};
+        postData.token = self.$store.getters.getToken;
         if (self.searchItem) {
           postData.searchItem = self.$$cloneForm(self.searchItem)
         };
         if(JSON.stringify(self.getBefore) != "{}"){
           postData.getBefore = self.$$cloneForm(self.getBefore);
         };
-        postData.order = {create_time:'desc'}; 
+        postData.order = {create_time:'desc'};
         postData.getAfter = {
           UserInfo:{
             tableName:'userInfo',
@@ -557,6 +562,6 @@ export default {
       }
 
     },
-    
+
   },
 }

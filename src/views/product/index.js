@@ -9,5 +9,5 @@ import Coupon from './coupon.vue'
 export default {
   Product,
   Sku,
-  Coupon
+  Coupon,
 }

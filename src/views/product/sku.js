@@ -8,61 +8,61 @@ export default {
       self:this,
       fields: [
         {
-          key: 'product_no',
+          key: 'sku_no',
           label: 'skuNo',
           application:[],
           type:'input',
-          listType:'normal'
+          listType:''
         },
         {
           key: 'title',
-          label: 'sku标题',
+          label: '视频标题',
           application:['编辑','添加'],
           type:'input',
           listType:'normal'
         },
         {
           key: 'description',
-          label: 'sku描述',
+          label: '描述',
           application:['编辑','添加'],
           type:'input',
           listType:'normal'
         },
-        {
-          key: 'price',
-          label: 'sku价格',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'score',
-          label: '可使用积分',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'o_price',
-          label: '原价价格',
-          application:['编辑','添加'],
-          type:'input',
-          listType:''
-        },
-        {
-          key: 'stock',
-          label: 'sku库存',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'sale_count',
-          label: '销量',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
+        // {
+        //   key: 'price',
+        //   label: 'sku价格',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        //   listType:'normal'
+        // },
+        // {
+        //   key: 'score',
+        //   label: '可使用积分',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        //   listType:'normal'
+        // },
+        // {
+        //   key: 'o_price',
+        //   label: '原价价格',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        //   listType:''
+        // },
+        // {
+        //   key: 'stock',
+        //   label: 'sku库存',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        //   listType:'normal'
+        // },
+        // {
+        //   key: 'sale_count',
+        //   label: '销量',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        //   listType:'normal'
+        // },
         {
           key: 'listorder',
           label: '排序',
@@ -71,17 +71,24 @@ export default {
         },
         {
           key: "mainImg",
-          label: '主图',
+          label: '封面',
           application:['编辑','添加'],
           type:'upload',
-          limit:10,
+          limit:1,
         },
         {
-          key: "content",
-          label: '内容',
+          key: "bannerImg",
+          label: '视频',
           application:['编辑','添加'],
-          type:'vueEditor',
+          type:'upload',
+          limit:1,
         },
+        // {
+        //   key: "content",
+        //   label: '内容',
+        //   application:['编辑','添加'],
+        //   type:'vueEditor',
+        // },
         {
           key: "status",
           label: '状态',
@@ -107,7 +114,7 @@ export default {
           filter_multiple: false,
           listType:'',
         },
- 
+
         {
           key: 'create_time',
           label: '创建时间',
@@ -119,84 +126,84 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
             };
             self.initMainData();
           },
-        }, 
-        {
-          key: 'start_time',
-          label: '开启时间',
-          application:['编辑','添加'],
-          type:'datetime',
-          listType:'custom',
-          width:150,
-          formatter:function(val,tests){
-            return val.start_time?new Date(parseInt(val.start_time)):'';
-          },
-          custom:function(val,func){
-            return val.start_time?func.formatDate(new Date(parseInt(val.start_time)),'yyyy/M/d hh:mm'):''
-          }
         },
-        {
-          key: 'end_time',
-          label: '结束时间',
-          application:['编辑','添加'],
-          type:'datetime',
-          listType:'custom',
-          width:150,
-          formatter:function(val,tests){
-            return val.end_time?new Date(parseInt(val.end_time)):'';
-          },
-          custom:function(val,func){
-            return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
-          }
-        },
-        {
-          key: 'limit',
-          label: '购买数量限制',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
-          key: 'use_limit',
-          label: '使用数量限制',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
-          key:'duration',
-          label:'有效期',
-          application:['编辑','添加'],
-          type:'input',
-        },
+        // {
+        //   key: 'start_time',
+        //   label: '开启时间',
+        //   application:['编辑','添加'],
+        //   type:'datetime',
+        //   listType:'custom',
+        //   width:150,
+        //   formatter:function(val,tests){
+        //     return val.start_time?new Date(parseInt(val.start_time)):'';
+        //   },
+        //   custom:function(val,func){
+        //     return val.start_time?func.formatDate(new Date(parseInt(val.start_time)),'yyyy/M/d hh:mm'):''
+        //   }
+        // },
+        // {
+        //   key: 'end_time',
+        //   label: '结束时间',
+        //   application:['编辑','添加'],
+        //   type:'datetime',
+        //   listType:'custom',
+        //   width:150,
+        //   formatter:function(val,tests){
+        //     return val.end_time?new Date(parseInt(val.end_time)):'';
+        //   },
+        //   custom:function(val,func){
+        //     return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
+        //   }
+        // },
+        // {
+        //   key: 'limit',
+        //   label: '购买数量限制',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        // },
+        // {
+        //   key: 'use_limit',
+        //   label: '使用数量限制',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        // },
+        // {
+        //   key:'duration',
+        //   label:'有效期',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        // },
 
         //index:19
-        {
-          key: "is_group",
-          label: '是否团购',
-          application:['编辑','添加'],
-          type:'select',
-          options:[{
-            text: '开启',
-            value: 1
-          }, {
-            text: '关闭',
-            value: 0
-          }],
-          formatter:function(val,tests){
-            return val.is_group === 1 ? '开启' : '关闭'
-          },
-          defaultProps: {
-            label: 'text',
-            value: 'value',
-          },
-          filter_multiple: false,
-          listType:'normal',
-        },
+        // {
+        //   key: "is_group",
+        //   label: '是否团购',
+        //   application:['编辑','添加'],
+        //   type:'select',
+        //   options:[{
+        //     text: '开启',
+        //     value: 1
+        //   }, {
+        //     text: '关闭',
+        //     value: 0
+        //   }],
+        //   formatter:function(val,tests){
+        //     return val.is_group === 1 ? '开启' : '关闭'
+        //   },
+        //   defaultProps: {
+        //     label: 'text',
+        //     value: 'value',
+        //   },
+        //   filter_multiple: false,
+        //   listType:'normal',
+        // },
         {
           key: 'group_stock',
           label: '团购库存',
@@ -216,7 +223,7 @@ export default {
           type:'input',
         },
         {
-          label: '操作', 
+          label: '操作',
           listType:'deal',
           width:300
         },
@@ -226,7 +233,7 @@ export default {
 
       // 按钮配置
       btn_info: [
-          
+
         {
           type:'info',
           icon:'edit',
@@ -252,25 +259,25 @@ export default {
                 };
               };
               //团购字段控制
-              if(data.is_group==1) {
-                self.fields[20]['application'] = ['编辑','添加'];
-                self.$set(self.fields,20,self.fields[20]);
-                self.fields[21]['application'] = ['编辑','添加'];
-                self.$set(self.fields,21,self.fields[21]);
-                self.fields[22]['application'] = ['编辑','添加'];
-                self.$set(self.fields,22,self.fields[22]);
-                console.log('changeaAfter',self.fields);
-                self.computeFields();
-              }else if(data.is_group==0){
-                self.fields[20]['application'] = [];
-                self.$set(self.fields,20,self.fields[20]);
-                self.fields[21]['application'] = [];
-                self.$set(self.fields,21,self.fields[21]);
-                self.fields[22]['application'] = [];
-                self.$set(self.fields,22,self.fields[22]);
-                console.log('changeaAfter',self.fields);
-                self.computeFields();
-              }
+              // if(data.is_group==1) {
+              //   self.fields[20]['application'] = ['编辑','添加'];
+              //   self.$set(self.fields,20,self.fields[20]);
+              //   self.fields[21]['application'] = ['编辑','添加'];
+              //   self.$set(self.fields,21,self.fields[21]);
+              //   self.fields[22]['application'] = ['编辑','添加'];
+              //   self.$set(self.fields,22,self.fields[22]);
+              //   console.log('changeaAfter',self.fields);
+              //   self.computeFields();
+              // }else if(data.is_group==0){
+              //   self.fields[20]['application'] = [];
+              //   self.$set(self.fields,20,self.fields[20]);
+              //   self.fields[21]['application'] = [];
+              //   self.$set(self.fields,21,self.fields[21]);
+              //   self.fields[22]['application'] = [];
+              //   self.$set(self.fields,22,self.fields[22]);
+              //   console.log('changeaAfter',self.fields);
+              //   self.computeFields();
+              // }
               return data;
             },
             postData:function(data,self){
@@ -375,7 +382,7 @@ export default {
           funcType:'func',
           func:{
             func:function(data,self,func){
-              self.$router.push('/product/product/product');
+              self.$router.push('/product/product/video');
             },
           },
         },
@@ -413,7 +420,7 @@ export default {
         label: 'title',
         value: 'id',
       },
-      
+
     }
 
   },
@@ -445,7 +452,7 @@ export default {
       this.otherData.product_no = routerquery.product_no;
       this.initProductData()
       this.initMainData()
-     
+
     },
 
     async initProductData(product_no){
@@ -457,12 +464,12 @@ export default {
       try{
         var res = await self.$$api_product_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
 
       if(res.info.data.length>0){
-        self.productInfo = res.info.data[0]; 
+        self.productInfo = res.info.data[0];
         self.initSkuData(self.productInfo.sku_array);
       }else{
         notify('制定商品不存在','error');
@@ -488,7 +495,7 @@ export default {
       try{
         var res = await self.$$api_label_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
       self.sku = res.info.data;
@@ -511,19 +518,17 @@ export default {
             self.optionData.sku_item.push(self.sku[key]);
           };
         };
-
-        console.log('self.optionData',self.optionData)
       };
 
     },
 
 
     async initMainData() {
-      
+
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem);
       };
@@ -591,15 +596,15 @@ export default {
       console.log(val)
       if(val[0]=='导出excel'){
         const postData  = {};
-        postData.paginate = self.$$cloneForm(self.paginate);        
-        postData.token = self.$store.getters.getToken; 
+        postData.paginate = self.$$cloneForm(self.paginate);
+        postData.token = self.$store.getters.getToken;
         if (self.searchItem) {
           postData.searchItem = self.$$cloneForm(self.searchItem)
         };
         if(JSON.stringify(self.getBefore) != "{}"){
           postData.getBefore = self.$$cloneForm(self.getBefore);
         };
-        postData.order = self.$$cloneForm(self.order); 
+        postData.order = self.$$cloneForm(self.order);
         postData.getAfter = {
           UserInfo:{
             tableName:'userInfo',
@@ -656,7 +661,7 @@ export default {
               ],
             }
           }
-          
+
         };
         postData.excelOutput = {
           expTitle:'test',

@@ -27,13 +27,13 @@ export default {
           type:'input',
           listType:'normal'
         },
-        {
-          key: 'price',
-          label: '价格',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
+        // {
+        //   key: 'price',
+        //   label: '价格',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        //   listType:'normal'
+        // },
         {
           key: 'value',
           label: '价值',
@@ -41,20 +41,20 @@ export default {
           type:'input',
           listType:'normal'
         },
-        {
-          key: 'discount',
-          label: '折抵份额',
-          listType:'normal',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
-          key: 'condition',
-          label: '限额（满减）',
-          listType:'normal',
-          application:['编辑','添加'],
-          type:'input',
-        },
+        // {
+        //   key: 'discount',
+        //   label: '折抵份额',
+        //   listType:'normal',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        // },
+        // {
+        //   key: 'condition',
+        //   label: '限额（满减）',
+        //   listType:'normal',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        // },
         {
           key: 'stock',
           label: '库存',
@@ -79,10 +79,10 @@ export default {
               text: '抵扣券',
               value: 1
             },
-            {
-              text: '折扣券',
-              value: 2
-            }
+            // {
+            //   text: '折扣券',
+            //   value: 2
+            // }
           ],
           formatter:function(val,tests){
             return val.type == 1 ? '抵扣券' : '折扣券'
@@ -92,19 +92,19 @@ export default {
             label: 'text',
             value: 'value',
           },
-          placeholder:'请选择优惠券类型',
-          header_search:true,
-          header_search_type:'select',
-          header_search_value:'',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(value,self){
-            if(value){
-              self.searchItem.type = value;
-            }else{
-              delete self.searchItem.type;
-            };
-            self.initMainData();
-          },
+        //   placeholder:'请选择优惠券类型',
+        //   header_search:true,
+        //   header_search_type:'select',
+        //   header_search_value:'',
+        //   header_search_style:'width:160px;margin-right:2px;',
+        //   changeFunc:function(value,self){
+        //     if(value){
+        //       self.searchItem.type = value;
+        //     }else{
+        //       delete self.searchItem.type;
+        //     };
+        //     self.initMainData();
+        //   },
         },
         {
           key:'valid_time',
@@ -116,31 +116,31 @@ export default {
             return val.valid_time?parseInt(val.valid_time)/86400/10000:''
           }
         },
-        {
-          key: "onShelf",
-          label: '是否上架',
-          application:['编辑','添加'],
-          type:'select',
-          options:[
-            {
-              text: '上架',
-              value: 1
-            },
-            {
-              text: '下架',
-              value: -1
-            }
-          ],
-          defaultProps: {
-            label: 'text',
-            value: 'value',
-          },
-          formatter:function(val,tests){
-            return val.onShelf == 1 ? '上架' : '下架'
-          },
-          filter_multiple: false,
-          listType:'normal',
-        },
+        // {
+        //   key: "onShelf",
+        //   label: '是否上架',
+        //   application:['编辑','添加'],
+        //   type:'select',
+        //   options:[
+        //     {
+        //       text: '上架',
+        //       value: 1
+        //     },
+        //     {
+        //       text: '下架',
+        //       value: -1
+        //     }
+        //   ],
+        //   defaultProps: {
+        //     label: 'text',
+        //     value: 'value',
+        //   },
+        //   formatter:function(val,tests){
+        //     return val.onShelf == 1 ? '上架' : '下架'
+        //   },
+        //   filter_multiple: false,
+        //   listType:'normal',
+        // },
         {
           key: 'limit',
           label: '购买数量限制',
@@ -158,25 +158,47 @@ export default {
           label: '主图',
           application:['编辑','添加'],
           type:'upload',
-          limit:10,
+          limit:1,
+        },
+        // {
+        //   key: "bannerImg",
+        //   label: '轮播图',
+        //   application:['编辑','添加'],
+        //   type:'upload',
+        //   limit:10,
+        // },
+        // {
+        //   key: "content",
+        //   label: '内容',
+        //   application:['编辑','添加'],
+        //   type:'vueEditor',
+        // },
+        {
+          key: 'start_time',
+          label: '开启时间',
+          application:['编辑','添加'],
+          type:'datetime',
+          listType:'',
+          width:150,
+          custom:function(val,func){
+            return val.start_time?func.formatDate(new Date(parseInt(val.start_time)),'yyyy/M/d hh:mm'):''
+          }
         },
         {
-          key: "bannerImg",
-          label: '轮播图',
+          key: 'end_time',
+          label: '结束时间',
           application:['编辑','添加'],
-          type:'upload',
-          limit:10,
-        },
-        {
-          key: "content",
-          label: '内容',
-          application:['编辑','添加'],
-          type:'vueEditor',
+          type:'datetime',
+          listType:'',
+          width:150,
+          custom:function(val,func){
+            return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
+          }
         },
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
           options:[
             {
@@ -209,14 +231,14 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           label: '操作',
           listType:'deal',
@@ -227,7 +249,7 @@ export default {
 
       // 按钮配置
       btn_info:[
-          
+
         {
           type:'info',
           icon:'edit',
@@ -243,15 +265,13 @@ export default {
             formData:function(data,self,func){
               var newFormData = func.cloneForm(data);
               newFormData.valid_time = parseInt(newFormData.valid_time)/86400/1000;
-              console.log('formData',newFormData)
               return newFormData
             },
             postData:function(data,self){
-
               if (data.valid_time) {
                 data.valid_time = data.valid_time*86400*1000;
               }
-              var postData={
+              var postData = {
                 searchItem:{
                   id:self.btnData.id
                 },
@@ -300,7 +320,10 @@ export default {
               return "api_coupon_add"
             },
             formData:function(data,self,func){
-              var data = {}; 
+              var data = {
+								start_time:'',
+								end_time:'',
+              };
               return data
             },
             postData:function(data,self){
@@ -328,7 +351,7 @@ export default {
         categoryOptions:[],
         skuOptions:[],
       },
-      otherData:{  
+      otherData:{
       },
       getBefore:{},
       UserInfo:{
@@ -338,7 +361,7 @@ export default {
         middleKey:'user_no',
         condition:'in',
       },
-      
+
     }
 
   },
@@ -367,13 +390,13 @@ export default {
     init () {
       this.initMainData()
     },
-  
 
-    async initMainData () {
+
+    async initMainData() {
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
       };
@@ -433,8 +456,8 @@ export default {
       self.initMainData();
     },
 
-    
+
   },
-  
+
 
 }

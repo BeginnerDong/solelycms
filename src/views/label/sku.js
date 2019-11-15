@@ -12,7 +12,7 @@ export default {
         {
           key: 'id',
           label: '类别ID',
-          application:['table'],
+          application:['添加','编辑'],
           type:'input',
         },
         {
@@ -45,7 +45,6 @@ export default {
           application:['添加','编辑'],
           type:'cascader',
           options:'labelOptions',
-          
         },
         {
           key: "mainImg",
@@ -57,15 +56,18 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            },
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -76,7 +78,6 @@ export default {
           header_search_type:'select',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            
             if(value){
               self.searchItem.status = value;
             }else{
@@ -85,29 +86,6 @@ export default {
             self.initMainData();
           },
         },
-
-
-
-        {
-          key: "name",
-          label: '内容',
-          application:['api_userInfo_add','api_userInfo_update'],
-          type:'vueEditor',
-        },
-        {
-          key: "area",
-          label: '区域选择',
-          application:['table','api_userInfo_add','api_userInfo_update'],
-          type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-
-          }],
-        }, 
         {
           key: 'create_time',
           label: '创建时间'
@@ -137,7 +115,7 @@ export default {
 
       // 按钮配置
       btn_info:[
-        
+
         {
           type:'info',
           icon:'edit',
@@ -158,21 +136,17 @@ export default {
                   mainImg:[],
                   description:'',
                 };
-                
                 return data;
             },
-            
             postData:function(data,self){
-              
-              var postData={
+              var postData = {
                 data:data
               };
               if(data.parentid){
-                postData.data.type=6;
+                postData.data.type = 6;
               }else{
-                postData.data.type=5;
+                postData.data.type = 5;
               };
-              
               return postData;
             }
           },
@@ -192,7 +166,6 @@ export default {
             },
             formData:function(data,self,func){
                 var res = self.getCheckedNodes();
-                
                 if(res){
                   var data = {
                     parentid: res.parentid,
@@ -216,14 +189,14 @@ export default {
                 return false;
               };
               if(res){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:res.id
                   },
                   data:data
                 };
               }else{
-                var postData={}
+                var postData = {}
               };
               return postData;
             }
@@ -239,11 +212,9 @@ export default {
             return '删除选中'
           },
           func:{
-
             apiName:function(data){
               return "api_label_update"
             },
-                          
             postData:function(data,self,func){
 
               if(self.$refs.tree.getCheckedNodes().length>0){
@@ -269,11 +240,11 @@ export default {
               };
               return postData;
             }
-
           },
         }
-        
+
       ],
+      
       paginate: {
           count: 0,
           currentPage: 1,
@@ -296,7 +267,7 @@ export default {
       otherData:{
         deleteApiName:'api_label_update',
       }
-      
+
 
     }
 
@@ -338,23 +309,21 @@ export default {
       try{
         var res = await self.$$api_label_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
-       
+
       if(res){
         self.mainData = res.info.data;
         self.optionData.labelOptions = res.info.data;
-        console.log(self.mainData)
         //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
-        
       };
 
-      
+
     },
 
 
-    
+
 
     async onSubmit(data){
       console.log(data)
@@ -363,7 +332,7 @@ export default {
     /**
      * 点击删除按钮
      */
-    onClickBtnDelete (opts) {
+    onClickBtnDelete(opts) {
       this.$confirm('删除后不可恢复', '确认删除？').then(() => {
         this.$$api_article_deleteArticle({
           data: {
@@ -384,11 +353,11 @@ export default {
     /**
      * 添加文章
      */
-    onClickBtnAdd () {
+    onClickBtnAdd() {
       this.$router.push('/adv/article/edit')
     },
 
-    onClickBtnSelect (opts) {
+    onClickBtnSelect(opts) {
       console.log(opts)
       this.$message('查看自己处理吧')
     },
@@ -397,7 +366,7 @@ export default {
      * 修改按钮
      * @param opts
      */
-    onClickBtnUpdate (opts) {
+    onClickBtnUpdate(opts) {
       this.$router.push({
         path: '/adv/article/edit',
         query: {
@@ -410,7 +379,7 @@ export default {
      * 改变页码事件
      * @param current_page    当前页码
      */
-    onChangeCurPage (currentPage) {
+    onChangeCurPage(currentPage) {
       var path = this.$route.path
       var query = Object.assign({}, this.$route.query)
       query.current_page = currentPage
@@ -424,7 +393,7 @@ export default {
      * 改变每页显示数量事件
      * @param page_size    每页显示的数量
      */
-    onChangePageSize (pageSize) {
+    onChangePageSize(pageSize) {
       var path = this.$route.path
       var query = Object.assign({}, this.$route.query)
       query.page_size = pageSize
@@ -437,7 +406,7 @@ export default {
     /**
      * 更新参数
      */
-    onUpdateParams () {
+    onUpdateParams() {
       if (this.$route.query.current_page) {
         this.paginations.current_page = parseInt(this.$route.query.current_page)
       }
@@ -453,7 +422,7 @@ export default {
      * @param data    表单数据
      * @param info    其他有用的数据
      */
-    onSearch ({data, info}) {
+    onSearch({data, info}) {
       console.log(data)
       console.log(info)
 
@@ -467,7 +436,7 @@ export default {
     },
 
     // 批量选择改变CheckBox事件
-    onSelectionChange ({ids, datas}) {
+    onSelectionChange({ids, datas}) {
       // console.log(ids);
       // console.log(datas);
     },
@@ -477,7 +446,7 @@ export default {
      * @param ids 选中的ids
      * @param datas  选中的数据集合
      */
-    onClickBtnBatchDelete ({ids, datas}) {
+    onClickBtnBatchDelete({ids, datas}) {
       this.$confirm('删除的数据：' + ids.join(','), '确认删除？').then(() => {
         this.$$api_article_deleteArticle({
           data: {
@@ -493,13 +462,14 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       console.log('init')
       this.onUpdateParams()
       this.initMainData()
       //this.initMenuData()
     }
   },
+  
   mounted () {
     this.init()
   },

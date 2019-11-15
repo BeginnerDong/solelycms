@@ -18,18 +18,7 @@
             <el-option  :value="option_item.value" :label="option_item.label"></el-option>
           </template>
         </el-select>
-        <el-cascader
-          v-if="item.header_search&&item.header_search_type=='cascader'"
-          :options="typeof item.options === 'function'?item.options(self):item.options"
-          :props="item.defaultProps"
-          :placeholder="item.placeholder"
-          @change="(value) => {
-            item.changeFunc(value,self)
-          }" 
-          change-on-select
-          clearable
-        >
-        </el-cascader>
+
         <el-date-picker
           v-if="item.header_search&&item.header_search_type=='datePicker'"
           is-range

@@ -40,14 +40,6 @@ export default {
           listType:'normal'
         },
         {
-          key: 'contactPhone',
-          label: '联系电话',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        
-        {
           key: "menu_id",
           label: '菜单',
           application:['编辑','添加'],
@@ -63,7 +55,7 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.menu_id;
             }else{
               self.searchItem.menu_id = value[value.length-1]
@@ -77,26 +69,19 @@ export default {
           },
         },
         {
-          key: 'user_no',
-          label: '用户NO',
-          application:[],
-          type:'input',
-          listType:'normal'
-        },
-        {
           key: "mainImg",
           label: '主图',
           application:['编辑','添加'],
           type:'upload',
           limit:10,
         },
-        {
-          key: "bannerImg",
-          label: '内容多图',
-          application:['编辑','添加'],
-          type:'upload',
-          limit:10,
-        },
+        // {
+        //   key: "bannerImg",
+        //   label: '内容多图',
+        //   application:['编辑','添加'],
+        //   type:'upload',
+        //   limit:10,
+        // },
         {
           key: "content",
           label: '内容',
@@ -106,15 +91,18 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑','添加'],
+          application:[],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            },
+          ],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -124,7 +112,7 @@ export default {
             label: 'text',
             value: 'value',
           },
-        }, 
+        },
         {
           key: 'create_time',
           label: '创建时间',
@@ -135,28 +123,28 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           label: '操作',
           listType:'deal',
           width:300
         },
-       
+
       ],
 
 
 
       // 按钮配置
       btn_info: [
-        
-          
+
+
           {
             type:'info',
             icon:'edit',
@@ -179,7 +167,6 @@ export default {
                   },
                   data:data
                 };
-
                 return postData;
               }
             },
@@ -194,16 +181,13 @@ export default {
               return '删除选中'
             },
             func:{
-
               apiName:function(data){
                 return "api_article_update"
               },
-                            
               postData:function(data,self){
                 var postData = {
                   searchItem:{
                     id:['in',self.deleteArray],
-                    
                   },
                   data:{
                     status:-1
@@ -226,17 +210,15 @@ export default {
               apiName:function(data){
                 return "api_article_add"
               },
-              
               formData:function(data,self,func){
-                
                 var data = {
                   content:''
-                }; 
+                };
                 return data
               },
-              
               postData:function(data,self){
-                var postData={
+                data.type = 1;
+                var postData = {
                   data:data
                 };
                 return postData;
@@ -245,6 +227,7 @@ export default {
           },
 
       ],
+
       paginate: {
           count: 0,
           currentPage: 1,
@@ -254,7 +237,6 @@ export default {
           layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
-        menu_id:['not in',[23,135,136]]
       },
       optionData:{
         labelOptions:[]
@@ -294,19 +276,18 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
       this.initMenuData()
     },
 
-    
+
 
     async initMenuData(){
       const self =this;
       const postData = {};
       postData.searchItem ={
         type:['=',1],
-        id:['not in',[23,135,136]]
       };
       postData.token = self.$store.getters.getToken;
       postData.order ={
@@ -316,26 +297,26 @@ export default {
       try{
         var res = await self.$$api_label_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
-       
+
       if(res){
         self.optionData.labelOptions = res.info.data;
       };
-      
+
     },
 
 
     /**
      * 获取文章列表
      */
-    async initMainData () {
-      
+    async initMainData() {
+
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
       };
@@ -395,6 +376,6 @@ export default {
     },
 
   },
-  
+
 
 }

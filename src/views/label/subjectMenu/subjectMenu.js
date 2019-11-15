@@ -4,6 +4,7 @@ export default {
   data () {
     return {
       mainData: [],
+      self:this,
       searchForm:{
         status:'1'
       },
@@ -11,7 +12,7 @@ export default {
         {
           key: 'id',
           label: '类别ID',
-          application:['table'],
+          application:[],
           type:'input',
         },
         {
@@ -83,93 +84,89 @@ export default {
       },
 
       // 按钮配置
-      btn_info: {
+      btn_info: [
 
-        width: 300,
-        list:[
-          {
-            type:'info',
-            icon:'edit',
-            size:'mini',
-            text:function(data,self){
-              console.log(data);
-              return '添加'
-            },
-            func:{
-              apiName:function(data){
-                return "api_label_add"
-              },
-              formData:function(data,self){
-								self.resetChecked();
-								var data = {
-									title:'',
-									mainImg:[],
-									description:'',
-								};
-								return data;
-              },
-              postData:function(data,self){
-                var postData={
-                  data:data
-                };
-                postData.data.parentid = 354;
-                postData.data.type = 8;
-                return postData;
-              }
-            },
+        {
+          type:'info',
+          icon:'edit',
+          size:'mini',
+          position:'footer',
+          text:function(data,self){
+            return '添加'
           },
-          {
-            type:'info',
-            icon:'edit',
-            size:'mini',
-            text:function(data,self){
-              console.log(data);
-              return '编辑'
+          func:{
+            apiName:function(data){
+              return "api_label_add"
             },
-            func:{
-              apiName:function(data){
-                return "api_label_update"
-              },
-              formData:function(data,self,func){
-                  var res = self.getCheckedNodes();
-                  if(res){
-                    var data = {
-                      parentid: res.parentid,
-                      title:res.title,
-                      mainImg:res.mainImg,
-                      description:res.description,
-                      listorder:res.listorder,
-                      status:res.status.toString()
-                    };
-                  }else{
-                    return {
-                      error:'请选择一个菜单'
-                    }
-                  };
-                  return data||{};
-              },
-              postData:function(data,self){
+            formData:function(data,self){
+              self.resetChecked();
+              var data = {
+                title:'',
+                mainImg:[],
+                description:'',
+              };
+              return data;
+            },
+            postData:function(data,self){
+              var postData = {
+                data:data
+              };
+              return postData;
+            }
+          },
+        },
+        {
+          type:'info',
+          icon:'edit',
+          size:'mini',
+          position:'footer',
+          text:function(data,self){
+            return '编辑'
+          },
+          func:{
+            apiName:function(data){
+              return "api_label_update"
+            },
+            formData:function(data,self,func){
                 var res = self.getCheckedNodes();
-                if (res.id==data.parentid) {
-                  return false;
-                };
                 if(res){
-                  var postData={
-                    searchItem:{
-                      id:res.id
-                    },
-                    data:data
+                  var data = {
+                    parentid: res.parentid,
+                    title:res.title,
+                    mainImg:res.mainImg,
+                    description:res.description,
+                    listorder:res.listorder,
+                    status:res.status.toString()
                   };
                 }else{
-                  var postData={}
+                  return {
+                    error:'请选择一个菜单'
+                  }
                 };
-                return postData;
-              }
+                return data||{};
             },
+            postData:function(data,self){
+              var res = self.getCheckedNodes();
+              if (res.id==data.parentid) {
+                return false;
+              };
+              if(res){
+                var postData={
+                  searchItem:{
+                    id:res.id
+                  },
+                  data:data
+                };
+              }else{
+                var postData={}
+              };
+              return postData;
+            }
           },
-        ],
-      },
-	
+        },
+      ],
+
+
       paginate: {
           count: 0,
           currentPage: 1,
@@ -193,7 +190,7 @@ export default {
       otherData:{
         deleteApiName:'api_label_update',
       }
-      
+
 
     }
 
@@ -234,13 +231,13 @@ export default {
       try{
         var res = await self.$$api_label_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
 
       if(res){
-        self.mainData = res.info.data[1]['child']?res.info.data[1]['child']:[];
-        self.optionData.labelOptions = res.info.data[1]['child']?res.info.data[1]['child']:[];
+        self.mainData = res.info.data;
+        self.optionData.labelOptions = res.info.data;
       };
     },
 

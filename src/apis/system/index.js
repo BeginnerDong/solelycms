@@ -22,6 +22,7 @@ export default [
     name: '上传文件',
     method: 'uploadImg',
     path: '/Base/FtpFile/upload',
+    // path: '/Base/AliFile/upload',
     type: 'post'
   },
   {

@@ -31,7 +31,7 @@ export default {
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           key: 'login_name',
           label: '员工登录名',
@@ -50,13 +50,13 @@ export default {
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           key: 'password',
           label: '员工密码',
           application:['编辑账号','添加账号'],
           type:'input',
-        }, 
+        },
         {
           key: "name",
           label: '员工姓名',
@@ -112,7 +112,7 @@ export default {
             {
               text: '开发',
               value: 1
-            }, 
+            },
             {
               text: '销售',
               value: 2
@@ -134,27 +134,11 @@ export default {
           },
         },
         {
-          key: "passage1",
-          label: '职务',
-          application:['添加信息','编辑信息'],
-          type:'input',
-          listType:'normal',
-          formatter:function(val,tests){
-            return val.info&&val.info.passage1?val.info.passage1:'';
-          },
-        },
-        {
           key: "mainImg",
           label: '头像',
           application:['编辑账号'],
           type:'upload',
           limit:1,
-        },
-        {
-          key: "name",
-          label: '内容',
-          application:[],
-          type:'vueEditor',
         },
         {
           key: "status",
@@ -182,7 +166,7 @@ export default {
               return '关闭';
             };
           }
-        }, 
+        },
         {
           key: 'create_time',
           label: '创建时间',
@@ -193,14 +177,14 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           key: "primary_scope",
           label: '用户权限',
@@ -212,11 +196,11 @@ export default {
           label: '操作',
           listType:'deal',
           width:400
-        }, 
+        },
       ],
       // 按钮配置
       btn_info: [
-        
+
           {
             type:'info',
             icon:'edit',
@@ -229,25 +213,21 @@ export default {
               apiName:function(data){
                 return JSON.stringify(data.info) != "[]" ?"api_userInfo_update":"api_userInfo_add"
               },
-              
               formData:function(data,self,func){
-                
                 var newData = data.info;
                 return newData
               },
-              
               postData:function(data,self){
                 if(self.btnName=='编辑信息'){
-                  var postData={
+                  var postData = {
                     searchItem:{
-                      id:self.btnData.info.id
+                      id:self.btnData.info.id,
+                      user_no:self.btnData.info.user_no,
                     },
                     data:data
                   }
-                  postData.data.user_no=self.btnData.user_no;
-
                 }else if(self.btnName=='添加信息'){
-                  var postData={
+                  var postData = {
                     data:data
                   };
                   postData.data.user_no=self.btnData.user_no;
@@ -272,13 +252,13 @@ export default {
                 return data
               },
               postData:function(data,self){
-                var postData={
+                var postData = {
                   searchItem:{
-                    id:self.btnData.id
+                    id:self.btnData.id,
+                    user_no:self.btnData.user_no,
                   },
                   data:data
                 }
-                postData.data.user_no = self.btnData.user_no;
                 return postData;
               }
             },
@@ -305,14 +285,14 @@ export default {
                   path:'/user/adminLists/access',
                   name:'权限管理',
                   params:{
-                    defaultChecked:data.passage_array,
+                    defaultChecked:data.auth,
                     user_no:data.user_no,
+                    origin:'userOne',
                   }
                 });
-
               },
               postData:function(data,self){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:self.btnData.id,
                   },
@@ -332,11 +312,9 @@ export default {
               return '删除选中'
             },
             func:{
-
               apiName:function(data){
                 return "api_user_update"
               },
-                            
               postData:function(data,self){
                 var postData = {
                   searchItem:{
@@ -349,7 +327,6 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
           {
@@ -364,16 +341,13 @@ export default {
               apiName:function(data){
                 return "api_user_add"
               },
-              
               formData:function(data,self,func){
-                
                 var data = {
                   login_name:'',
                   password:'',
-                }; 
+                };
                 return data
               },
-              
               postData:function(data,self){
                 data.user_type = 1;
                 var postData={
@@ -399,7 +373,7 @@ export default {
                 return data
               },
               postData:function(data,self){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:self.btnData.id
                   },
@@ -411,6 +385,7 @@ export default {
             },
           },
       ],
+
       paginate: {
         count: 0,
         currentPage: 1,
@@ -439,7 +414,7 @@ export default {
         condition:'in',
       },
       getBefore:{},
-      
+
     }
 
   },
@@ -466,19 +441,19 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
     },
 
     /**
      * 列表主函数
      */
-    async initMainData () {
-      
+    async initMainData() {
+
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
       };
@@ -520,9 +495,8 @@ export default {
       console.log(self.searchItem)
       self.initMainData();
     },
-    
+
     async fieldChange(val){
-      console.log('product_fieldChange',val);
       const self = this;
     },
 
@@ -537,7 +511,7 @@ export default {
       console.log('onClickBtn',val)
     },
 
-    
+
   },
 
 

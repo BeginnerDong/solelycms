@@ -4,8 +4,10 @@
 
 import ThirdApp from './thirdApp.vue'
 import Wechat from './wechat.vue'
+import Template from './template.vue'
 
 export default {
   ThirdApp,
   Wechat,
+  Template,
 }

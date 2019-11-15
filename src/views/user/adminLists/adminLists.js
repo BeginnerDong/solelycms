@@ -31,7 +31,7 @@ export default {
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           key: 'login_name',
           label: '管理员登录名',
@@ -50,14 +50,13 @@ export default {
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           key: 'password',
           label: '管理员密码',
           application:['编辑账号','添加账号'],
           type:'input',
-          
-        }, 
+        },
         {
           key: "name",
           label: '管理员姓名',
@@ -98,23 +97,20 @@ export default {
           limit:10,
         },
         {
-          key: "name",
-          label: '内容',
-          application:[],
-          type:'vueEditor',
-        },
-        {
           key: "status",
           label: '状态',
-          application:['编辑账号'],
+          application:[],
           type:'select',
-          options:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            },
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -126,7 +122,7 @@ export default {
               return '关闭';
             };
           }
-        }, 
+        },
         {
           key: 'create_time',
           label: '创建时间',
@@ -137,24 +133,24 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
             };
             self.initMainData();
           },
-        }, 
-        
+        },
+
         {
           label: '操作',
           listType:'deal',
           width:300
-        }, 
+        },
       ],
       // 按钮配置
       btn_info: [
-        
+
           {
             type:'info',
             icon:'edit',
@@ -167,31 +163,28 @@ export default {
               apiName:function(data){
                 return JSON.stringify(data.info) != "[]" ?"api_userInfo_update":"api_userInfo_add"
               },
-              
               formData:function(data,self,func){
-                
                 var data = {
                   name:(data.info&&data.info.name)?data.info.name:'',
                   phone:(data.info&&data.info.phone)?data.info.phone:'',
-                }; 
+                };
                 return data
               },
-              
               postData:function(data,self){
                 if(self.btnName=='编辑信息'){
-                  var postData={
+                  var postData = {
                     searchItem:{
-                      id:self.btnData.info.id
+                      id:self.btnData.info.id,
+                      user_no:self.btnData.info.user_no,
                     },
                     data:data
                   }
                 }else if(self.btnName=='添加信息'){
-                  var postData={
+                  var postData = {
                     data:data
                   };
                 };
                 postData.data.user_no=self.btnData.user_no;
-                
                 return postData;
               }
             },
@@ -212,7 +205,7 @@ export default {
                 return data
               },
               postData:function(data,self){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:self.btnData.id,
                     user_no:self.btnData.user_no,
@@ -244,16 +237,15 @@ export default {
                 self.$router.push({
                   path:'/user/adminLists/access',
                   name:'权限管理',
-
                   params:{
                     defaultChecked:data.auth,
                     user_no:data.user_no,
+                    origin:'adminLists',
                   }
                 });
-
               },
               postData:function(data,self){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:self.btnData.id,
                   },
@@ -273,16 +265,13 @@ export default {
               return '删除选中'
             },
             func:{
-
               apiName:function(data){
                 return "api_user_update"
               },
-                            
               postData:function(data,self){
                 var postData = {
                   searchItem:{
                     id:['in',self.deleteArray],
-                    
                   },
                   data:{
                     status:-1
@@ -290,7 +279,6 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
           {
@@ -305,16 +293,13 @@ export default {
               apiName:function(data){
                 return "api_user_add"
               },
-              
               formData:function(data,self,func){
-                
                 var data = {
                   login_name:'',
                   password:'',
-                }; 
+                };
                 return data
               },
-              
               postData:function(data,self){
                 data.user_type = 2;
                 var postData={
@@ -325,6 +310,7 @@ export default {
             },
           },
       ],
+
       paginate: {
         count: 0,
         currentPage: 1,
@@ -353,7 +339,7 @@ export default {
         condition:'in',
       },
       getBefore:{},
-      
+
     }
 
   },
@@ -380,19 +366,19 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
     },
 
     /**
      * 列表主函数
      */
-    async initMainData () {
-      
+    async initMainData() {
+
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
       };
@@ -434,7 +420,7 @@ export default {
       console.log(self.searchItem)
       self.initMainData();
     },
-    
+
     async fieldChange(val){
       console.log('product_fieldChange',val);
       const self = this;
@@ -451,7 +437,7 @@ export default {
       console.log('onClickBtn',val)
     },
 
-    
+
   },
 
 

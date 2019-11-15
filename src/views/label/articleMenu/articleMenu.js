@@ -170,6 +170,7 @@ export default {
                     mainImg:res.mainImg,
                     description:res.description,
                     listorder:res.listorder,
+                    url:res.url,
                     status:res.status
                   };
                 }else{

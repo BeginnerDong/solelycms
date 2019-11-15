@@ -77,7 +77,11 @@
       },
       onChange (val) {
         if(val&&val.length>0){
-          var changeData = val[val.length-1]
+          if(this.data.multi){
+            var changeData  = val;
+          }else{
+            var changeData = val[val.length-1]
+          }
         }else{
           var changeData  = 0
         };

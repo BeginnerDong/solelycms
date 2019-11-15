@@ -1,5 +1,5 @@
 export default {
-  name: 'student',
+  name: 'user',
   components: {},
   data () {
     return {
@@ -57,7 +57,7 @@ export default {
         //     };
         //     self.beforeSearch('DistriChild');
         //   },
-        // }, 
+        // },
         // {
         //   key: 'parent_no.name',
         //   label: '父级姓名',
@@ -67,7 +67,7 @@ export default {
         //   formatter:function(val){
         //     return val.parentInfo.name
         //   }
-        // }, 
+        // },
         {
           key: "headImgUrl",
           label: '用户头像',
@@ -81,10 +81,10 @@ export default {
           application:[],
           type:'input',
           listType:'normal',
-        }, 
+        },
         {
           key: "name",
-          label: '用户真实姓名',
+          label: '用户姓名',
           application:['添加信息','编辑信息'],
           type:'input',
           listType:'normal',
@@ -131,7 +131,7 @@ export default {
           label: '佣金',
           application:[],
           type:'input',
-          listType:'normal',
+          listType:'',
           formatter:function(val){
             return val.info.balance
           }
@@ -147,55 +147,15 @@ export default {
         //   }
         // },
         {
-          key: "primary_scope",
-          label: '用户身份',
-          application:['编辑账号'],
-          type:'select',
-          options:[
-            {
-              text: '用户',
-              value: 10
-            },  
-            {
-              text: '客户',
-              value: 30
-            }
-          ],
-          defaultProps: {
-            label: 'text',
-            value: 'value',
-          },
-          formatter:function(val,tests){
-            if(val.primary_scope==10){
-              return '用户';
-            }else{
-              return '客户';
-            };
-          },
-          listType:'normal',
-          placeholder:'请选择用户身份',
-          header_search:true,
-          header_search_type:'select',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(value,self){
-            if(!value){
-              delete self.searchItem.primary_scope
-            }else{
-              self.searchItem.primary_scope = value
-            };
-            self.initMainData();
-          },
-        }, 
-        {
           key: "status",
           label: '状态',
-          application:['编辑账号'],
+          application:[],
           type:'select',
           options:[
             {
               text: '启用',
               value: 1
-            },  
+            },
             {
               text: '禁用',
               value: -1
@@ -212,7 +172,7 @@ export default {
               return '关闭';
             };
           }
-        }, 
+        },
         {
           key: 'create_time',
           label: '创建时间',
@@ -223,7 +183,7 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
@@ -263,15 +223,12 @@ export default {
           size:'mini',
           position:'list',
           text:function(data){
-            console.log(data);
-            console.log(JSON.stringify(data.data.info))
             return JSON.stringify(data.data.info)!= '[]'?'编辑信息':'添加信息'
           },
           func:{
             apiName:function(data){
               return JSON.stringify(data.info) != "[]" ?"api_userInfo_update":"api_userInfo_add"
             },
-            
             formData:function(data,self,func){
               console.log(data)
               if(self.btnName=='编辑信息'){
@@ -281,7 +238,6 @@ export default {
               };
               return data
             },
-            
             postData:function(data,self){
               if(self.btnName=='编辑信息'){
                 var postData={
@@ -297,7 +253,6 @@ export default {
                 };
                 postData.data.user_no=self.btnData.user_no;
               };
-              
               return postData;
             }
           },
@@ -311,7 +266,6 @@ export default {
             return '编辑账号'
           },
           func:{
-
             apiName:function(data){
               return "api_user_update"
             },
@@ -319,7 +273,7 @@ export default {
               return data
             },
             postData:function(data,self){
-              var postData={
+              var postData = {
                 searchItem:{
                   id:self.btnData.id,
                   user_type:0
@@ -378,12 +332,12 @@ export default {
               apiName:function(data){
                 return "api_user_update"
               },
-                            
+
               postData:function(data,self){
                 var postData = {
                   searchItem:{
                     id:['in',self.deleteArray],
-                    
+
                   },
                   data:{
                     status:-1
@@ -406,16 +360,16 @@ export default {
               apiName:function(data){
                 return "api_user_add"
               },
-              
+
               formData:function(data,self,func){
-                
+
                 var data = {
                   login_name:'',
                   password:'',
-                }; 
+                };
                 return data
               },
-              
+
               postData:function(data,self){
                 data.user_type = 0;
                 var postData={
@@ -477,7 +431,7 @@ export default {
       otherData:{
       },
       getBefore:{},
-      
+
     }
 
   },
@@ -516,11 +470,11 @@ export default {
      * 获取文章列表
      */
     async initMainData () {
-      
+
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
       };
@@ -550,7 +504,7 @@ export default {
           },
           info:['name'],
         },
-        
+
       };
       var res =  await self.$$api_user_get({data: postData});
       self.mainData = res.info.data;
@@ -607,8 +561,8 @@ export default {
 
 
 
-    
+
   },
-  
+
 
 }

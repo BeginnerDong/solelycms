@@ -4,6 +4,7 @@ export default {
   data () {
     return {
       mainData: [],
+      self:this,
       fields: [
         {
           key: 'id',

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <!--<el-upload
       class="upload-demo"
       action=""
@@ -14,29 +14,31 @@
     </el-upload>-->
 
 
-    <div >
-      
+    <div>
       <el-button size="small" type="primary" @click="customButtonClick">new upload</el-button>
       <input type="file"  class="custom-input" @change='upload' style='display: none !important;'>
     </div>
     <div style="width:100%;height:15px;"></div>
-    <div style="width:100%;">
-      <div v-for="(item, index) in uploadImg" style="width:100px;height:110px;float:left;border-bottom:1px solid gray;position:relative;margin-right:10px;">
-        <div style="width:100%;height:90px;">
-          <img v-if="item.type=='image'" width="100%" height="100%;" :src="item.url"></img>
-          <video v-if="item.type=='vedio'" :src="item.url" controls="controls">
-            您的浏览器不支持 video 标签。
-          </video>
+    <div style="width:100%;overflow:hidden">
+      <template v-for="(item, index) in uploadImg">
+        <div :style="item.type=='image'?'width:110px;height:120px;':'width:220px;height:140px;'"  style="float:left;border-bottom:1px solid gray;position:relative;margin-right:10px;">
+          <div style="width:100%;height:80%;">
+            <img v-if="item.type=='image'" width="100%" height="100%;" :src="item.url">
+            </img>
+            <video v-else-if="item.type=='video'" :src="item.url" controls="controls" width="100%" height="100%" >
+              您的浏览器不支持 video 标签。
+            </video>
+            <video v-else-if="item.type=='audio'" :src="item.url" controls="controls" width="100%" height="100%"  >
+              您的浏览器不支持 audio 标签。
+            </video>
+            <view v-else style="width:100%;height:100%" >
+              {{item.url}}
+            </view>
+          </div>
+          <div style="height:20px;line-height:15px;" ><i class="el-icon-delete" :data-index="index" @click="removeImg" ></i></div>
         </div>
-        <div style="height:20px;line-height:15px;" ><i class="el-icon-delete" :data-index="index" @click="removeImg" ></i></div>
-      </div>
+      </template>
     </div>
-    
-
-
-
-
-
 
   </div>
 </template>
@@ -53,15 +55,14 @@
           label: 'title',
           value: 'id',
         },
-        
-        
+        loading:false
       }
     },
     computed: {
       cascader_attrs () {
         return this.Data.cascader_attrs || {}
       },
-      
+
       uploadImg () {
         if(this.isArrayFn(this.submit_data[this.data.key])){
           return this.submit_data[this.data.key];
@@ -72,7 +73,6 @@
     },
     methods: {
 
-
       customButtonClick(){
         const self = this;
         self.$el.querySelector('.custom-input').click();   //打开file 选择图片
@@ -81,7 +81,7 @@
 
       async upload(e){
 
-        const self = this;        
+        const self = this;
         let file = e.target.files[0]
         let param = new FormData()  // 创建form对象
 
@@ -92,49 +92,61 @@
         let config = {
           headers: {'Content-Type': 'multipart/form-data'}
         };
-        //console.log(param.get('file'));
+        self.loading = true;
         var res = await plugins.api_system_uploadImg({data: param,headers: {'Content-Type': 'multipart/form-data'}});
         if(res.solely_code == 100000){
 
           var url = res.info.url ;    //获取到了图片的URL
-          var imgIdReg = /id(\S*)\./i;
-          var id = url.match(imgIdReg)[1];//获取到了图片的ID
-             
-                   
+          //var imgIdReg = /id(\S*)\./i;
+          //var id = url.match(imgIdReg)[1];//获取到了图片的ID
+
           //判断文件类型渲染(H5 video标签只支持H264编码的MP4)
           var videoArray = ['mp4'];
+          var imgArray = ['png','jpg','JPG','PNG'];
+          var audioArray = ['mp3','wmv'];
           var url = res.info.url;
           var obj = url.lastIndexOf(".");
           var ext = url.substr(obj+1);
           if(videoArray.indexOf(ext)!=-1){
             self.uploadImg.push({
               url:url,
-              type:'vedio',
+              type:'video',
             });
-          }else{
+          }else if(imgArray.indexOf(ext)!=-1){
             self.uploadImg.push({
               url:url,
               type:'image'
             });
+          }else if(audioArray.indexOf(ext)!=-1){
+            self.uploadImg.push({
+              url:url,
+              type:'audio'
+            });
+          }else{
+            self.uploadImg.push({
+              url:url,
+              type:'other'
+            });
           };
+
 					self.$set(self.data,'uploadImg',self.uploadImg);
           self.$emit('onChange',[this.data.key,this.uploadImg]);
-          
-          var jqObj=self.$el.querySelector('.custom-input');  
+          self.loading = false;
+          var jqObj=self.$el.querySelector('.custom-input');
           jqObj.value = "";
-          self.changeFileList(id,'add');
-          
+          //self.changeFileList(id,'add');
+
         }
       },
 
       removeImg(e){
 
         const self = this;
-        console.log('removeImg',e); 
+        console.log('removeImg',e);
         var index = e.target.dataset.index;
-        var imgIdReg = /id(\S*)\./i;
-        var id = self.uploadImg[index].url.match(imgIdReg)[1];
-        self.changeFileList(id,'del');
+        //var imgIdReg = /id(\S*)\./i;
+        //var id = self.uploadImg[index].url.match(imgIdReg)[1];
+        // self.changeFileList(id,'del');
         self.uploadImg.splice(index,1);
         self.$emit('onChange',[this.data.key,this.uploadImg]);
 
@@ -153,11 +165,6 @@
         };
         self.$emit('onChange',['img_array',image_array]);
       },
-
-
-
-
-
 
 
       isArrayFn(value){
@@ -180,44 +187,44 @@
             );
           });
           return imgArray;
-          
+
         }else{
-          return 'empty';       
+          return 'empty';
         };
 
       },
 
       handleRemove(file, fileList) {
-        const self = this;       
+        const self = this;
         self.$emit('onChange',[this.data.key,this.imageChange(fileList)]);
       },
-      
+
       handlesuccess(response, file, fileList){
         const self = this;
         file.url = self.response;
         self.$emit('onChange',[this.data.key,this.imageChange(fileList)]);
       },
-      
+
       async handleFileUpload(data){
         const self = this;
-        
+
         let file = data.file;
         let param = new FormData();
-        
+
         param.append('file', file, file.name);
         param.append('token', store.getters.getToken);
 
         let config = {
             headers: {'Content-Type': 'multipart/form-data'}
         };
-        //console.log(self.$store.getters.getUserInfo.token);     
+        //console.log(self.$store.getters.getUserInfo.token);
         var res = await plugins.api_system_uploadImg({data: param,headers: {'Content-Type': 'multipart/form-data'}});
         console.log(res)
-        
+
         this.response = res.info.url;
-        
+
       },
-      
+
       onChange (val) {
         this.$emit('onChange', [this.data.key,val[val.length-1]])
       },

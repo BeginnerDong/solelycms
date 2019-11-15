@@ -24,6 +24,8 @@ import message from './message/'
 import wechat from './wechat/'
 import coupon from './coupon/'
 import file from './file/'
+import qrcode from './qrcode/'
+import wxTemplate from './qrcode/'
 
 export default [
   {
@@ -35,7 +37,7 @@ export default [
     module: 'userInfo',
     name: '用户信息管理',
     list: userInfo
-  }, 
+  },
   {
     module: 'article',
     name: '文章管理',
@@ -45,17 +47,17 @@ export default [
     module: 'product',
     name: '商品管理',
     list: product
-  }, 
+  },
   {
     module: 'order',
     name: '订单管理',
     list: order
-  }, 
+  },
   {
     module: 'system',
     name: '系统设置',
     list: system
-  }, 
+  },
   {
     module: 'test',
     name: '测试模块',
@@ -105,5 +107,15 @@ export default [
     module: 'file',
     name: 'file管理',
     list: file
+  },
+  {
+    module: 'qrcode',
+    name: 'qrcode管理',
+    list: qrcode
+  },
+  {
+    module: 'wxTemplate',
+    name: 'wxTemplate管理',
+    list: wxTemplate
   },
 ]

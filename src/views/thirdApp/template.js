@@ -1,5 +1,5 @@
 export default {
-  name: 'thirdApp',
+  name: 'template',
   components: {},
   data () {
     return {
@@ -8,86 +8,31 @@ export default {
       fields: [
         {
           key: 'id',
-          label: '项目ID',
-          application:[],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'name',
-          label: '项目名称',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'appid',
-          label: '小程序appid',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'appsecret',
-          label: '小程序appsecret',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'mchid',
-          label: '商户支付商户号',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'wxkey',
-          label: '商户支付随机Key',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'smsKey_ali',
-          label: '阿里云smsKey',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'smsSecret_ali',
-          label: '阿里云smsSecret',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
-        },
-        {
-          key: 'distribution_level',
-          label: '分销层级',
+          label: 'ID',
           application:[],
           type:'input',
           listType:''
         },
         {
-          key: "firstClass",
-          label: '一级分销比例',
-          application:['编辑分销规则'],
+          key: 'name',
+          label: '模板名称',
+          application:['编辑','添加'],
           type:'input',
-          listType:'',
-          formatter:function(val){
-            return val.custom_rule.firstClass?val.custom_rule.firstClass:''
-          }
+          listType:'normal'
         },
         {
-          key: "secondClass",
-          label: '二级分销比例',
-          application:['编辑分销规则'],
+          key: 'template_id',
+          label: '模板号',
+          application:['编辑','添加'],
           type:'input',
-          listType:'',
-          formatter:function(val){
-            return val.custom_rule.secondClass?val.custom_rule.secondClass:''
-          }
+          listType:'normal'
+        },
+        {
+          key: 'path',
+          label: '跳转小程序路径',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
         },
         {
           key: "status",
@@ -95,15 +40,15 @@ export default {
           application:[],
           type:'select',
           options:[
-						{
-							text: '启用',
-							value: 1
-						},
-						{
-							text: '禁用',
-							value: -1
-						},
-					],
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            }
+          ],
           formatter:function(val,tests){
             return val.status === 1 ? '启用' : '禁用'
           },
@@ -138,7 +83,6 @@ export default {
           listType:'deal',
           width:300
         },
-
       ],
 
 
@@ -155,7 +99,7 @@ export default {
           },
           func:{
             apiName:function(data){
-              return "api_thirdApp_update"
+              return "api_wxTemplate_update"
             },
             formData:function(data,self){
               return data
@@ -172,42 +116,6 @@ export default {
           },
         },
         {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'list',
-          text:function(data){
-            return '编辑分销规则'
-          },
-          func:{
-            apiName:function(data){
-              return "api_thirdApp_update"
-            },
-            formData:function(data,self){
-              var newFormData = {
-                firstClass:(data.custom_rule&&data.custom_rule.firstClass)?data.custom_rule.firstClass:'',
-                secondClass:(data.custom_rule&&data.custom_rule.secondClass)?data.custom_rule.secondClass:'',
-              }
-              return newFormData
-            },
-            postData:function(data,self){
-
-              for(var key in data){
-                self.formData[key] = data[key]
-              };
-              var postData={
-                searchItem:{
-                  id:self.btnData.id
-                },
-                data:{
-                  custom_rule:self.formData
-                }
-              };
-              return postData;
-            }
-          },
-        },
-        {
             type:'danger',
             icon:'delete',
             size:'normal',
@@ -217,16 +125,13 @@ export default {
               return '删除选中'
             },
             func:{
-
               apiName:function(data){
-                return "api_thirdApp_update"
+                return "api_wxTemplate_update"
               },
-
               postData:function(data,self){
                 var postData = {
                   searchItem:{
                     id:['in',self.deleteArray],
-
                   },
                   data:{
                     status:-1
@@ -234,7 +139,6 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
           {
@@ -247,15 +151,12 @@ export default {
             },
             func:{
               apiName:function(data){
-                return "api_thirdApp_add"
+                return "api_wxTemplate_add"
               },
-
               formData:function(data,self,func){
-
                 var data = {};
                 return data
               },
-
               postData:function(data,self){
                 var postData={
                   data:data
@@ -264,7 +165,6 @@ export default {
               }
             },
           },
-
       ],
 
 
@@ -280,8 +180,6 @@ export default {
 
       },
       optionData:{
-        areaOptions:[],
-        subjectOptions:[],
       },
       otherData:{
       },
@@ -325,14 +223,14 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
     },
 
     /**
-     * 获取文章列表
+     * 获取模板列表
      */
-    async initMainData () {
+    async initMainData() {
       const self = this;
       const postData  = {};
       postData.paginate = self.$$cloneForm(self.paginate);
@@ -344,16 +242,15 @@ export default {
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
       postData.order = {
-          create_time:'desc',
+        create_time:'desc',
       };
-      var res =  await self.$$api_thirdApp_get({data: postData});
+      var res = await self.$$api_wxTemplate_get({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
 
     },
 
     async fieldChange(val){
-      console.log('product_fieldChange',val);
       const self = this;
     },
 
@@ -394,8 +291,6 @@ export default {
       console.log(val)
     },
 
-
   },
-
 
 }

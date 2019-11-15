@@ -23,9 +23,9 @@ export default {
         {
           key: 'description',
           label: '商品描述',
-          application:['编辑','添加'],
+          application:[],
           type:'input',
-          listType:'normal'
+          listType:''
         },
         {
           key: 'price',
@@ -37,9 +37,9 @@ export default {
         {
           key: 'score',
           label: '可使用积分',
-          application:['编辑','添加'],
+          application:[],
           type:'input',
-          listType:'normal'
+          listType:''
         },
         {
           key: 'stock',
@@ -58,16 +58,16 @@ export default {
         {
           key: 'group_stock',
           label: '团购库存',
-          application:['编辑','添加'],
+          application:[],
           type:'input'
         },
         {
           key: "sku_array",
           label: 'sku',
-          application:['编辑','添加'],
+          application:[],
           type:'checkbox',
           options:'skuOptions',
-          listType:'normal',
+          listType:'',
           defaultProps: {
             label: 'id',
             value: 'title',
@@ -94,7 +94,7 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.category_id;
             }else{
               self.searchItem.category_id = value[value.length-1];
@@ -113,7 +113,7 @@ export default {
           label: '主图',
           application:['编辑','添加'],
           type:'upload',
-          limit:10,
+          limit:1,
         },
         {
           key: "bannerImg",
@@ -122,45 +122,49 @@ export default {
           type:'upload',
           limit:10,
         },
-        {
-          key: 'start_time',
-          label: '开启时间',
-          application:['编辑','添加'],
-          type:'datetime',
-          listType:'custom',
-          width:150,
-          custom:function(val,func){
-            return val.start_time?func.formatDate(new Date(parseInt(val.start_time)),'yyyy/M/d hh:mm'):''
-          }
-        },
-        {
-          key: 'end_time',
-          label: '结束时间',
-          application:['编辑','添加'],
-          type:'datetime',
-          listType:'custom',
-          width:150,
-          custom:function(val,func){
-            return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
-          }
-        },
-        {
-          key: 'limit',
-          label: '购买数量限制',
-          application:['编辑','添加'],
-          type:'input',
-        },
-        {
-          key: 'use_limit',
-          label: '使用数量限制',
-          application:['编辑','添加'],
-          type:'input',
-        },
+        // {
+        //   key: 'start_time',
+        //   label: '开启时间',
+        //   application:['编辑','添加'],
+        //   type:'datetime',
+        //   listType:'custom',
+        //   width:150,
+        //   custom:function(val,func){
+        //     return val.start_time?func.formatDate(new Date(parseInt(val.start_time)),'yyyy/M/d hh:mm'):''
+        //   }
+        // },
+        // {
+        //   key: 'end_time',
+        //   label: '结束时间',
+        //   application:['编辑','添加'],
+        //   type:'datetime',
+        //   listType:'custom',
+        //   width:150,
+        //   custom:function(val,func){
+        //     return val.end_time?func.formatDate(new Date(parseInt(val.end_time)),'yyyy/M/d hh:mm'):''
+        //   }
+        // },
+        // {
+        //   key: 'limit',
+        //   label: '购买数量限制',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        // },
+        // {
+        //   key: 'use_limit',
+        //   label: '使用数量限制',
+        //   application:['编辑','添加'],
+        //   type:'input',
+        // },
         {
           key:'duration',
           label:'有效期',
           application:['编辑','添加'],
           type:'input',
+          listType: 'timeinit',
+          timeinit:function(val){
+            return val.duration?parseInt(val.duration)/86400/10000:''
+          }
         },
         {
           key: "content",
@@ -204,26 +208,26 @@ export default {
           header_search_value:'',
           header_search_style:'width:160px;margin-right:2px;',
           changeFunc:function(value,self){
-            if(!value){ 
+            if(!value){
               delete self.searchItem.create_time;
             }else{
               self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
             };
             self.initMainData();
           },
-        }, 
+        },
         {
           label: '操作',
           listType:'deal',
           width:300
         },
-       
+
       ],
 
 
       // 按钮配置
       btn_info:[
-          
+
         {
           type:'info',
           icon:'edit',
@@ -236,11 +240,16 @@ export default {
             apiName:function(data){
               return "api_product_update"
             },
-            formData:function(data,self){
-              return data
+            formData:function(data,self,func){
+              var newFormData = func.cloneForm(data);
+              newFormData.duration = parseInt(newFormData.duration)/86400/1000;
+              return newFormData;
             },
             postData:function(data,self){
-              var postData={
+              if (data.duration){
+                data.duration = data.duration*86400*1000;
+              }
+              var postData = {
                 searchItem:{
                   id:self.btnData.id
                 },
@@ -317,11 +326,13 @@ export default {
                 sku_array:[],
 								start_time:'',
 								end_time:'',
-              }; 
+              };
               return data
             },
             postData:function(data,self){
-              var postData={
+              data.type = 1;
+              data.duration = data.duration?data.duration*86400*1000:'';
+              var postData = {
                 data:data
               };
               return postData;
@@ -360,7 +371,7 @@ export default {
         label: 'title',
         value: 'id',
       },
-      
+
     }
 
   },
@@ -386,7 +397,7 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
       this.initMenuData()
       this.initSkuData()
@@ -407,10 +418,10 @@ export default {
       try{
         var res = await self.$$api_label_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
-       
+
       if(res){
         self.optionData.categoryOptions = res.info.data;
       };
@@ -432,10 +443,10 @@ export default {
       try{
         var res = await self.$$api_label_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
-       
+
       if(res){
         self.optionData.skuOptions = res.info.data;
       };
@@ -444,12 +455,12 @@ export default {
 
 
 
-    async initMainData () {
-      
+    async initMainData() {
+
       const self = this;
       const postData  = {};
-      postData.paginate = self.$$cloneForm(self.paginate);        
-      postData.token = self.$store.getters.getToken; 
+      postData.paginate = self.$$cloneForm(self.paginate);
+      postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
         postData.searchItem = self.$$cloneForm(self.searchItem)
       };
@@ -471,15 +482,15 @@ export default {
       console.log(val)
       if(val[0]=='导出excel'){
         const postData  = {};
-        postData.paginate = self.$$cloneForm(self.paginate);        
-        postData.token = self.$store.getters.getToken; 
+        postData.paginate = self.$$cloneForm(self.paginate);
+        postData.token = self.$store.getters.getToken;
         if (self.searchItem) {
           postData.searchItem = self.$$cloneForm(self.searchItem)
         };
         if(JSON.stringify(self.getBefore) != "{}"){
           postData.getBefore = self.$$cloneForm(self.getBefore);
         };
-        postData.order = self.$$cloneForm(self.order); 
+        postData.order = self.$$cloneForm(self.order);
         postData.getAfter = {
           UserInfo:{
             tableName:'userInfo',
@@ -591,5 +602,5 @@ export default {
     },
 
   },
-  
+
 }

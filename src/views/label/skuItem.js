@@ -4,6 +4,7 @@ export default {
   data () {
     return {
       mainData: [],
+      self:this,
       searchForm:{
         status:'1'
       },
@@ -44,7 +45,6 @@ export default {
           application:['添加','编辑'],
           type:'cascader',
           options:'labelOptions',
-          
         },
         {
           key: "mainImg",
@@ -56,15 +56,18 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑'],
+          application:[],
           type:'select',
-          select_list:[{
-            text: '启用',
-            value: 1
-          }, {
-            text: '禁用',
-            value: -1
-          }],
+          options:[
+            {
+              text: '启用',
+              value: 1
+            },
+            {
+              text: '禁用',
+              value: -1
+            },
+          ],
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -92,7 +95,7 @@ export default {
             value: -1
 
           }],
-        }, 
+        },
         {
           key: 'create_time',
           label: '创建时间'
@@ -122,7 +125,7 @@ export default {
 
       // 按钮配置
       btn_info:[
-        
+
         {
           type:'info',
           icon:'edit',
@@ -143,12 +146,12 @@ export default {
                   mainImg:[],
                   description:'',
                 };
-                
+
                 return data;
             },
-            
+
             postData:function(data,self){
-              
+
               var postData={
                 data:data
               };
@@ -172,7 +175,7 @@ export default {
             },
             formData:function(data,self,func){
                 var res = self.getCheckedNodes();
-                
+
                 if(res){
                   var data = {
                     parentid: res.parentid,
@@ -220,7 +223,7 @@ export default {
             apiName:function(data){
               return "api_label_update"
             },
-                          
+
             postData:function(data,self,func){
 
               if(self.$refs.tree.getCheckedNodes().length>0){
@@ -249,7 +252,7 @@ export default {
 
           },
         }
-        
+
       ],
       paginate: {
           count: 0,
@@ -273,7 +276,7 @@ export default {
       otherData:{
         deleteApiName:'api_label_update',
       }
-      
+
 
     }
 
@@ -315,23 +318,23 @@ export default {
       try{
         var res = await self.$$api_label_get({data: postData});
       }catch(err){
-        console.log(err); 
+        console.log(err);
         notify('网络故障','error');
       };
-       
+
       if(res){
         self.mainData = res.info.data;
         self.optionData.labelOptions = res.info.data;
         console.log(self.mainData)
         //self.menudata = getArrayByTarget(res.data.info.data,'id',356);
-        
+
       };
 
-      
+
     },
 
 
-    
+
 
     async onSubmit(data){
       console.log(data)

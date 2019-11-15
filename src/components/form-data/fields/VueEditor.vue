@@ -132,9 +132,9 @@
             </select>
             </span>
             <span class="ql-formats"><button type="button" class="ql-clean"></button></span>
-            <span class="ql-formats"><button type="button" class="ql-link"></button></span>                
+            <span class="ql-formats"><button type="button" class="ql-link"></button></span>
             <span class="ql-formats"><button type="button" class="ql-video"></button></span>
-            <!--图片按钮点击事件-->  
+            <!--图片按钮点击事件-->
             <button type="button" @click="customButtonClick">img</button>
             <input type="file"  class="custom-input" @change='upload' style='display: none !important;'>
           </div>
@@ -163,7 +163,7 @@
           value: 'id',
         },
         editorOption: {
-          modules: {                    
+          modules: {
             toolbar: '#editorAb',
             imageResize: {
                displaySize: true
@@ -185,12 +185,12 @@
       content_data: {
 
         get: function () {
-          return this.submit_data[this.data.key]?this.submit_data[this.data.key].toString():''; 
+          return this.submit_data[this.data.key]?this.submit_data[this.data.key].toString():'';
         },
         set: function (newValue) {
           this.submit_data[this.data.key] = newValue;
         },
-        
+
       },
       editor: {
         get: function () {
@@ -208,25 +208,25 @@
 
       init(){
         const self = this;
-        self.image_array = self.getIdArrByHtml(self.content_data);
-        console.log('init-self.idArr',self.idArr)
+        // self.image_array = self.getIdArrByHtml(self.content_data);
+        // console.log('init-self.idArr',self.idArr)
       },
 
       onEditorChange({quill, html, text ,iamge }) {
         const self = this;
         self.content = html;
         console.log('onEditorChange-html',html);
-        var idArr = self.getIdArrByHtml(html);
-        var new_image_array = [];
-        for(var i =0;i<self.image_array.length;i++){
-          if(idArr.indexOf(self.image_array[i])==-1){
-            self.changeFileList(self.image_array[i],'del');
-          }else{
-            new_image_array.push(self.image_array[i]);
-          };
-        };
-        self.image_array = new_image_array;
-        console.log('self.image_array',self.image_array);
+        // var idArr = self.getIdArrByHtml(html);
+        // var new_image_array = [];
+        // for(var i =0;i<self.image_array.length;i++){
+        //   if(idArr.indexOf(self.image_array[i])==-1){
+        //     self.changeFileList(self.image_array[i],'del');
+        //   }else{
+        //     new_image_array.push(self.image_array[i]);
+        //   };
+        // };
+        // self.image_array = new_image_array;
+        // console.log('self.image_array',self.image_array);
         this.$emit('onChange', [this.data.key,html]);
       },
 
@@ -236,27 +236,27 @@
         var imgReg = /<img.*?(?:>|\/>)/gi;
         var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
         var imgIdReg = /id(\S*)\./i;
-        var arr = html.match(imgReg); 
+        var arr = html.match(imgReg);
         if(!arr){
           arr = [];
         };
-        var idArr = []; 
+        var idArr = [];
         for(var i=0;i<arr.length;i++){
           idArr.push(arr[i].match(imgIdReg)[1]);
         };
         return idArr;
       },
-        
+
 
       onEditorFocus(editor) {
         const self = this;
         self.editor = editor   //当content获取到焦点的时候就 存储editor
       },
-          
+
       customButtonClick(){
         const self = this;
         var range
-        if (self.editor.getSelection() != null) { 
+        if (self.editor.getSelection() != null) {
           range = self.editor.getSelection()
           self.length = range.index  //content获取到焦点，计算光标所在位置，目的为了在该位置插入img
         } else {
@@ -268,7 +268,7 @@
 
       async upload(e){
 
-        const self = this;        
+        const self = this;
         let file = e.target.files[0]
         let param = new FormData()  // 创建form对象
 
@@ -284,12 +284,12 @@
         if(res.solely_code == 100000){
 
           self.contentImg = res.info.url ;    //获取到了图片的URL
-                   
+
           //判断文件类型渲染(H5 video标签只支持H264编码的MP4)
           var videoArray = ['mp4'];
           var url = res.info.url;
-          var imgIdReg = /id(\S*)\./i;
-          var id = url.match(imgIdReg)[1];
+          // var imgIdReg = /id(\S*)\./i;
+          // var id = url.match(imgIdReg)[1];
           var obj = url.lastIndexOf(".");
           var ext = url.substr(obj+1);
           if(videoArray.indexOf(ext)!=-1){
@@ -297,11 +297,11 @@
           }else{
             self.editor.insertEmbed(self.length, 'image', self.contentImg)
           };
-          self.changeFileList(id,'add');
-          self.image_array.push(id);
-          var jqObj=self.$el.querySelector('.custom-input');  
+          // self.changeFileList(id,'add');
+          // self.image_array.push(id);
+          var jqObj=self.$el.querySelector('.custom-input');
           jqObj.value = "";
-          
+
         }
       },
 
@@ -360,9 +360,9 @@
         this.events.change && this.events.change({value: v, info: this.submit_info[this.data.key]})
       },
       onChange (val) {
-        
+
         this.$emit('onChange', [this.data.key,val[val.length-1]])
-        
+
       },
 
       /**
@@ -394,7 +394,7 @@
       defaultcontent(val) {
         console.log(val);
       },
-      
+
     },
   }]
   export default Js

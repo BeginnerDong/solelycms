@@ -63,10 +63,9 @@ export default function ({
   options[type === 'get' ? 'params' : 'data'] = data
   
   // 分发显示加载样式任务
-  store.dispatch('show_loading')
+  store.dispatch('show_loading');
   console.log('tokenFlag',tokenFlag);
   
-
   // axios内置属性均可写在这里
   if (opts && typeof opts === 'object') {
     for (var f in opts) {
@@ -75,7 +74,6 @@ export default function ({
   }
 
   //return Vue.axios(options);
-
   // console.log(options);
 
   // 发送请求
