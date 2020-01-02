@@ -60,28 +60,28 @@ export default {
       },
       mainData:[],
       isPhone:false
-      
+
     }
   },
   mounted () {
     const self = this;
     self.mainData = self.$router.options.routes;
-      
+
 
 
 
   },
   beforeDestroy() {
-   
-     
+
+
   },
   methods: {
 
     /**
      * 退出登录
      */
-    
-   
+
+
 
     checkInAuth(item){
 
@@ -93,7 +93,7 @@ export default {
       }else{
         return false;
       };
-      
+
     },
 
     logout () {
@@ -146,10 +146,8 @@ export default {
      * 修改密码
      * @param  {object} userinfo 当前修改密码的表单信息
      */
-    async updUserPass (userinfo) {
-      
-
-          var postData={
+    async updUserPass(userinfo) {
+          var postData = {
             searchItem:{
               user_no:this.$store.state.user.userinfo.user_no
             },
@@ -158,22 +156,15 @@ export default {
               password:this.dialog[userinfo].password,
             }
           };
-
           try{
             var res = await this.$$api_user_update({data: postData});
           }catch(err){
-            console.log(err); 
+            console.log(err);
             notify('网络故障','error');
           };
           if(this.$$sCallBack(res)){
             this.dialog.show_pass = false;
           };
-
-
-
-          
-          
-        
     },
 
     /**

@@ -12,7 +12,7 @@ export default {
         {
           key: 'id',
           label: '类别ID',
-          application:['添加','编辑'],
+          application:[],
           type:'input',
         },
         {

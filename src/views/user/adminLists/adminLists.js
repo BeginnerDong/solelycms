@@ -175,10 +175,10 @@ export default {
                   var postData = {
                     searchItem:{
                       id:self.btnData.info.id,
-                      user_no:self.btnData.info.user_no,
                     },
                     data:data
-                  }
+                  };
+                  postData.data.user_no=self.btnData.user_no;
                 }else if(self.btnName=='添加信息'){
                   var postData = {
                     data:data

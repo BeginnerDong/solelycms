@@ -25,7 +25,7 @@ import wechat from './wechat/'
 import coupon from './coupon/'
 import file from './file/'
 import qrcode from './qrcode/'
-import wxTemplate from './qrcode/'
+import wxTemplate from './wxTemplate/'
 
 export default [
   {

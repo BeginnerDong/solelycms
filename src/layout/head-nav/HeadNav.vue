@@ -4,19 +4,16 @@
     <header class="head-nav" id="header" >
       <el-row>
         <el-col :span="4" class='logo-container'>
-         
             <img style="display:block;margin:0 auto;margin-top:5px;" :src="this.$store.state.user.userinfo.mainImg.length>0?this.$store.state.user.userinfo.mainImg[0].url:'../../assets/logo-sm.png'" class='logo' alt="">
-          
         </el-col>
         <el-col :span="16" >
-          <el-menu 
-            style="background:#324057;color:white!important" 
+          <el-menu
+            style="background:#324057;color:white!important"
             theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
-            mode="horizontal" 
-            unique-opened 
+            mode="horizontal"
+            unique-opened
             router
           >
-            
             <el-menu-item
               v-for='(item,index) in mainData'
               :index="item.path"
@@ -50,9 +47,9 @@
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <!--<el-dropdown-item command='info'>修改信息</el-dropdown-item>-->
-                    <el-dropdown-item
+                    <!-- <el-dropdown-item
                       command='pass'
-                      >修改密码</el-dropdown-item>
+                      >修改密码</el-dropdown-item> -->
                     <!--<el-dropdown-item
                       command='set'
                       >系统设置</el-dropdown-item>-->
@@ -61,7 +58,7 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </span>
-        
+
         </el-col>
       </el-row>
     </header>
@@ -73,12 +70,12 @@
                :model="dialog.user_info"
                :rules="dialog.user_info_rules"
                ref='user_info'>
-        
+
         <el-form-item class='edit-form' label="登录名" prop='username'>
           <el-input v-model="dialog.user_info.login_name"  placeholder=''>
           </el-input>
         </el-form-item>
-        
+
         <el-form-item class='edit-form' label="新密码" prop='password'>
           <el-input
             type='password'
@@ -87,7 +84,7 @@
             v-model="dialog.user_info.password">
           </el-input>
         </el-form-item>
-        
+
       </el-form>
       <span slot="footer" class="dialog-footer">
                 <el-button @click="dialog.show_pass = false">取 消</el-button>
@@ -96,7 +93,7 @@
     </el-dialog>
 
 
-    
+
   </div>
 </template>
 
@@ -170,6 +167,6 @@
   }
 
   .el-menu.el-menu--horizontal {
-      border-bottom:none; 
+      border-bottom:none;
   }
 </style>

@@ -9,14 +9,14 @@ export default {
       fields: [
         {
           key: 'sku_no',
-          label: 'skuNo',
+          label: 'skuNO',
           application:[],
           type:'input',
           listType:''
         },
         {
           key: 'title',
-          label: '视频标题',
+          label: '名称',
           application:['编辑','添加'],
           type:'input',
           listType:'normal'
@@ -28,41 +28,41 @@ export default {
           type:'input',
           listType:'normal'
         },
-        // {
-        //   key: 'price',
-        //   label: 'sku价格',
-        //   application:['编辑','添加'],
-        //   type:'input',
-        //   listType:'normal'
-        // },
-        // {
-        //   key: 'score',
-        //   label: '可使用积分',
-        //   application:['编辑','添加'],
-        //   type:'input',
-        //   listType:'normal'
-        // },
-        // {
-        //   key: 'o_price',
-        //   label: '原价价格',
-        //   application:['编辑','添加'],
-        //   type:'input',
-        //   listType:''
-        // },
-        // {
-        //   key: 'stock',
-        //   label: 'sku库存',
-        //   application:['编辑','添加'],
-        //   type:'input',
-        //   listType:'normal'
-        // },
-        // {
-        //   key: 'sale_count',
-        //   label: '销量',
-        //   application:['编辑','添加'],
-        //   type:'input',
-        //   listType:'normal'
-        // },
+        {
+          key: 'price',
+          label: 'sku价格',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
+          key: 'score',
+          label: '可使用积分',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
+          key: 'o_price',
+          label: '原价价格',
+          application:['编辑','添加'],
+          type:'input',
+          listType:''
+        },
+        {
+          key: 'stock',
+          label: 'sku库存',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
+        {
+          key: 'sale_count',
+          label: '销量',
+          application:['编辑','添加'],
+          type:'input',
+          listType:'normal'
+        },
         {
           key: 'listorder',
           label: '排序',
@@ -71,17 +71,17 @@ export default {
         },
         {
           key: "mainImg",
-          label: '封面',
+          label: '主图',
           application:['编辑','添加'],
           type:'upload',
           limit:1,
         },
         {
           key: "bannerImg",
-          label: '视频',
+          label: '多图',
           application:['编辑','添加'],
           type:'upload',
-          limit:1,
+          limit:10,
         },
         // {
         //   key: "content",
@@ -382,7 +382,7 @@ export default {
           funcType:'func',
           func:{
             func:function(data,self,func){
-              self.$router.push('/product/product/video');
+              self.$router.push('/product/product/product');
             },
           },
         },

@@ -12,7 +12,7 @@ export default {
         {
           key: 'id',
           label: 'ID',
-          application:['添加','编辑'],
+          application:[],
           type:'input',
         },
         {
@@ -399,7 +399,6 @@ export default {
      * 初始化
      */
     init() {
-      console.log('init')
       this.onUpdateParams()
       this.initMainData()
 

@@ -248,7 +248,10 @@ export default {
             postData:function(data,self){
               if (data.duration){
                 data.duration = data.duration*86400*1000;
-              }
+              };
+              if(data.category_id==0){
+                return false;
+              };
               var postData = {
                 searchItem:{
                   id:self.btnData.id
