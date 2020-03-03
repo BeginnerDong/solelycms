@@ -3,20 +3,13 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import cart from './cart/'
-import user from './user/'
-import global from './global/'
-import leftmenu from './leftmenu/'
-import router from './router/'
-import tabs from './tabs/'
+import user from './modules/user.js'
+import tabs from './modules/tabs.js'
+
 
 export default new Vuex.Store({
   modules: {
-    cart,
     user,
-    global,
-    router,
-    leftmenu,
     tabs
   }
 })

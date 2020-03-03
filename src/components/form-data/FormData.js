@@ -1,8 +1,8 @@
-import Fields from './fields/'
+import Fields from '../fields/'
 
 export default {
   components: Fields,
-  name: 'form-data',
+  name: 'form',
   data () {
     return {
       setting: this.Setting,
@@ -30,7 +30,7 @@ export default {
         editor: 'SlsEditor',
         upload: 'upload',
         vueEditor: 'VueEditor',
-				baiduMap: 'baiduMap',
+        baiduMap: 'baiduMap',
       },
       cur_component: '',
       temp_field_obj: {},
@@ -43,24 +43,21 @@ export default {
     }
   },
   created(){
-    
+
   },
   methods: {
 
-    
+
 
     onChange(val){
-      
+
       const self = this;
-      console.log('onChange',val)
-      self.submitData[val[0]] = val[1];
+			self.$set(self.submitData,val[0],val[1]);
       if(val[0]=='img_array'){
         self.$set(self.FormData,'img_array',val[1]);
-        console.log('63259632',self.FormData)
       };
-      console.log('FormData--222',self.FormData)
       this.$emit('fieldChange', val);
-      
+
     },
 
 
@@ -74,19 +71,20 @@ export default {
         data: this.defaultValue,
         info: this.submit_info
       }
+
       if (this.rules) {
         this.$refs[ref].validate((valid) => {
           if (valid) {
-            this.$emit('onSubmit', this.submitData)
+            this.$emit('onSubmit', [this.submitData,this.FormData])
           }
         })
       } else {
-        this.$emit('onSubmit', this.submitData)
+        this.$emit('onSubmit', [this.submitData,this.FormData])
       }
     }
   },
   created () {
-    console.log('formDataJs',this.formData)
+    console.log('fields',this.fields)
   },
   mounted () {
   },

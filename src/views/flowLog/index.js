@@ -1,13 +1,10 @@
-/**
- * Created by sailengsi on 2017/5/10.
- */
 
+import Pay from './pay.vue'
 import Balance from './balance.vue'
 import Score from './score.vue'
-import pay from './pay.vue'
 
 export default {
+  Pay,
   Balance,
   Score,
-  pay
 }

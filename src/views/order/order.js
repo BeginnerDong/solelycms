@@ -5,218 +5,157 @@ export default {
     return {
       mainData: [],
       self:this,
+
+      table_arguments:{
+        height:'70%',
+        loading:true,
+        row_key:'id',
+        tree_props:{
+          children: 'child',
+          child: 'child',
+          hasChildren:'child'
+        },
+        default_expand_all:false,
+        expand:false,
+        selection:true,
+        cell_style:{},
+
+      },
       fields: [
         {
           key: 'id',
-          label: '订单ID',
+          label: 'ID',
           application:[],
-          type:'input',
-          listType:'normal'
+          componentName:'sls-input',
+          listType:'normal',
+          width:50
+        },
+        {
+          key: 'order_no',
+          label: '订单NO',
+          application:[],
+          componentName:'sls-input',
+          listType:'normal',
+          width:50,
+          header_search:{
+            componentName:'sls-input',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请输入订单NO',
+            clearable:true,
+            defaultValue:'',
+            optionsName:'',
+            changeFunc:function(val,self){
+              if(val){
+                self.searchItem.order_no = val;
+              }else{
+                delete self.searchItem.order_no;
+              };
+              self.initMainData(true);
+            },
+          },
         },
         {
           key: 'price',
-          label: '金额',
-          application:['编辑','添加'],
-          type:'input',
-          listType:'normal'
+          label: '订单金额',
+          application:[],
+          componentName:'sls-input',
+          listType:'normal',
         },
         {
           key: "pay_status",
           label: '支付状态',
-          application:['编辑','添加'],
+          application:[],
           type:'select',
-          options:[
-            {
-              text: '未支付',
-              value: 0
-            },
-            {
-              text: '已支付',
-              value: 1
-            },
-            {
-              text: '已退款',
-              value: 2
-            },
-          ],
+          listType:'normal',
+          formatter:function(val,tests){
+            return ['否','是','已退款'][val.pay_status];
+          },
+          customSlot:'type',
+          componentName:'sls-select',
+          optionsName:'payOptions',
+          filter_multiple: false,
+          listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',
           },
-
-          formatter:function(val,tests){
-            return ['未支付','已支付','已退款'][val.pay_status];
-          },
-          filter_multiple: false,
-          listType:'normal',
         },
         {
           key: "transport_status",
           label: '运输状态',
           application:[],
           type:'select',
-          options:[
-            {
-              text: '未发货',
-              value: 0
-            },
-            {
-              text: '配送中',
-              value: 1
-            },
-            {
-              text: '已收货',
-              value: 2
-            },
-          ],
+          listType:'normal',
+          formatter:function(val,tests){
+            return ['未发货','配送中','已收货'][val.transport_status];
+          },
+          customSlot:'type',
+          componentName:'sls-select',
+          optionsName:'transportOptions',
+          filter_multiple: false,
+          listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',
           },
-          formatter:function(val,tests){
-            var arr = ['未发货','配送中','已收货'];
-            return arr[val.transport_status]?arr[val.transport_status]:'';
-          },
-          filter_multiple: false,
-          listType:'normal',
         },
         {
           key: "order_step",
           label: '订单状态',
           application:[],
           type:'select',
-          options:[
-            {
-              text: '正常下单',
-              value: 0
-            },
-            {
-              text: '申请撤单',
-              value: 1
-            },
-            {
-              text: '已撤单',
-              value: 2
-            },
-            {
-              text: '完结',
-              value: 3
-            },
-            {
-              text: '未成团',
-              value: 4
-            },
-            {
-              text: '成团',
-              value: 5
-            },
-          ],
+          listType:'normal',
+          formatter:function(val,tests){
+            return ['正常下单','申请撤单','已撤单','完结'][val.order_step];
+          },
+          customSlot:'type',
+          componentName:'sls-select',
+          optionsName:'stepOptions',
+          filter_multiple: false,
+          listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',
-          },
-          formatter:function(val,tests){
-            var arr = ['正常下单','申请撤单','已撤单','完结','未成团','成团'];
-            return arr[val.order_step]?arr[val.order_step]:'';
-          },
-          filter_multiple: false,
-          listType:'normal',
-          placeholder:'请选择订单状态',
-          header_search:true,
-          header_search_type:'select',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(value,self){
-            if(value||value===0){
-              self.searchItem.order_step = value;
-            }else{
-              delete self.searchItem.order_step;
-            };
-            self.initMainData();
           },
         },
         {
           key: 'user_no',
           label: '用户NO',
-          application:['编辑','添加'],
-          type:'input',
+          application:[],
+          componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入用户No',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.searchItem.user_no = e.target._value;
-            }else{
-              delete self.searchItem.user_no;
-            };
-            self.initMainData();
-          },
         },
         {
           key: 'name',
           label: '用户姓名',
           application:[],
-          type:'input',
+          componentName:'sls-input',
           listType:'normal',
           formatter:function(val,tests){
             return val.UserInfo.name?val.UserInfo.name:'';
-          },
-          placeholder:'请输入用户姓名',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.UserInfo.searchItem.name = ['LIKE',['%'+e.target._value+'%']]
-            }else{
-              delete self.UserInfo.searchItem.name
-            };
-            self.beforeSearch('UserInfo');
           },
         },
         {
           key: 'phone',
           label: '用户电话',
           application:[],
-          type:'input',
+          componentName:'sls-input',
           listType:'normal',
           formatter:function(val,tests){
             return val.UserInfo.phone?val.UserInfo.phone:'';
-          },
-          placeholder:'请输入用户电话',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.UserInfo.searchItem.phone = ['LIKE',['%'+e.target._value+'%']]
-            }else{
-              delete self.UserInfo.searchItem.phone
-            };
-            self.beforeSearch('UserInfo');
           },
         },
         {
           key: "status",
           label: '状态',
           application:[],
-          type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          componentName:'sls-select',
+          optionsName:'statusOptions',
           defaultProps: {
             label: 'text',
             value: 'value',
           },
-          formatter:function(val,tests){
+          formatter:function(val){
             if(val.status==1){
               return '启用';
             }else{
@@ -229,168 +168,179 @@ export default {
           label: '创建时间',
           listType:'normal',
           placeholder:'请选择创建时间',
-          header_search:true,
-          header_search_type:'datePicker',
-          header_search_value:'',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(value,self){
-            if(!value){
-              delete self.searchItem.create_time;
-            }else{
-              self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
-            };
-            self.initMainData();
+          header_search:{
+            componentName:'sls-datetime',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请选择创建时间',
+            changeFunc:function(value,self){
+              if(!value){
+                delete self.searchItem.create_time;
+              }else{
+                self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
+              };
+              self.initMainData(true);
+            },
           },
         },
         {
           label: '操作',
           listType:'deal',
-          width:300
+          width:200
         },
       ],
-
-
       // 按钮配置
-      btn_info:[
+      btn_info: [
 
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'list',
-          text:function(data){
-            return '编辑'
-          },
-          func:{
-            apiName:function(data){
-              return "api_order_update"
+
+          {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              return '编辑'
             },
-            formData:function(data,self){
-              return data
+            func:{
+              apiName:function(self){
+                return "api_orderUpdate"
+              },
+              formData:function(self){
+                return self.formData;
+              },
+              postData:function(self){
+                var postData = {
+                  searchItem:{
+                    id:self.formData.id,
+                  },
+                  data:self.submitData
+                };
+                return postData;
+              }
             },
-            postData:function(data,self){
-              var postData={
-                searchItem:{
-                  id:self.btnData.id,
-                  user_type:0
-                },
-                data:data
-              };
-              return postData;
-            }
           },
-        },
-        {
-          type:'danger',
-          icon:'delete',
-          size:'normal',
-          funcType:'submit',
-          position:'header',
-          text:function(data){
-            return '删除选中'
-          },
-          func:{
-            apiName:function(data){
-              return "api_order_update"
+          {
+            type:'danger',
+            icon:'delete',
+            size:'medium',
+            funcType:'submit',
+            position:'header',
+            text:function(data){
+              return '删除选中'
             },
-            postData:function(data,self){
-              var postData = {
-                searchItem:{
-                  id:['in',self.deleteArray],
-                },
-                data:{
-                  status:-1
-                }
-              };
-              return postData;
-            }
-          },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'normal',
-          position:'',
-          text:function(data){
-            return '添加'
-          },
-          func:{
-            apiName:function(data){
-              return "api_order_add"
+            func:{
+              apiName:function(self){
+                return "api_orderUpdate"
+              },
+              postData:function(self){
+                var deleteArray = [];
+                for (var i = 0; i < self.selectionArray.length; i++) {
+                  deleteArray.push(self.selectionArray[i].id);
+                };
+                var postData = {
+                  searchItem:{
+                    id:['in',deleteArray],
+                    user_type:0,
+                  },
+                  data:{
+                    status:-1
+                  }
+                };
+                return postData;
+              }
             },
-            formData:function(data,self,func){
-              return data
-            },
-            postData:function(data,self){
-              var postData={
-                data:data
-              };
-              return postData;
-            }
           },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'normal',
-          position:'header',
-          text:function(data){
-            return '导出excel'
-          },
-          funcType:'emit',
-        }
       ],
-
 
       paginate: {
-          count: 0,
-          currentPage: 1,
-          pagesize:10,
-          is_page:true,
-          page_sizes: [10, 30, 60, 90],
-          layout: 'total, sizes, prev, pager, next, jumper',
+        count: 0,
+        currentPage: 1,
+        pagesize:10,
+        is_page:true,
+        page_sizes: [10, 30, 60, 90],
+        layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
         type:1,
-        user_type:0
+        user_type:0,
+        thirdapp_id:this.$store.getters.getUserinfo.thirdapp_id
       },
       optionData:{
-        labelOptions:[]
+        statusOptions:[{
+          text: '启用',
+          value: 1
+        }, {
+          text: '禁用',
+          value: -1
+        }],
+        payOptions:[{
+          text: '未支付',
+          value: 0
+        }, {
+          text: '已支付',
+          value: 1
+        }, {
+          text: '已退款',
+          value: 2
+        }],
+        transportOptions:[{
+          text: '未发货',
+          value: 0
+        }, {
+          text: '配送中',
+          value: 1
+        }, {
+          text: '已收货',
+          value: 2
+        }],
+        stepOptions:[{
+          text: '正常下单',
+          value: 0
+        }, {
+          text: '申请撤单',
+          value: 1
+        }, {
+          text: '已撤单',
+          value: 2
+        }, {
+          text: '完结',
+          value: 2
+        }],
       },
       otherData:{
       },
-      getBefore:{},
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
-
-        },
-        fixSearchItem:{
-          status:['=',[1]]
         },
         key:'user_no',
         middleKey:'user_no',
         condition:'in',
       },
-      defaultProps: {
-        children: 'child',
-        label: 'title',
-        value: 'id',
+      dialog:{
+        formLabelWidth:'auto',
+        dialogFormVisible:false,
+        title:'用户'
       },
+      getBefore:{},
+      formLabelWidth:'auto',
+      btnName:'',
+      formData:{},
+      btnNow:{},
+      submitData:{},
+      orginFormData:{},
+      selectionArray:[]
+
     }
 
   },
+
   mounted () {
     this.init()
   },
   computed: {
     token: function () {
       return this.$store.getters.getToken
-    },
-    labelOptions:function(){
-      return this.optionData.labelOptions
     }
-
   },
   watch: {
     $route (to, from) {
@@ -406,15 +356,22 @@ export default {
     /**
      * 初始化
      */
-    init () {
-      this.initMainData()
+    init() {
+      this.initMainData();
     },
 
 
-    async initMainData() {
+    /**
+     * 列表主函数
+     */
+    async initMainData(isNew) {
 
       const self = this;
+      self.table_arguments.loading = true;
       const postData  = {};
+      if(isNew){
+        self.paginate.currentPage = 1;
+      };
       postData.paginate = self.$$cloneForm(self.paginate);
       postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
@@ -422,9 +379,6 @@ export default {
       };
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
-      };
-      postData.order ={
-        create_time:'desc'
       };
       postData.getAfter = {
         UserInfo:{
@@ -438,39 +392,33 @@ export default {
           info:['name','phone'],
         },
       };
-      console.log('postData',postData)
-      var res =  await self.$$api_order_get({data: postData});
+
+      var res = await self.$$api_orderGet({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
+      self.table_arguments.loading = false;
 
     },
 
-    async fieldChange(val){
-      const self = this;
-    },
 
     beforeSearch(TableName){
 
       const self = this;
       if(JSON.stringify(self.getBefore) == "{}"&&JSON.stringify(self[TableName]['searchItem']) != "{}"){
-        var newArray = self.$$cloneForm(self[TableName]);
-        Object.assign(newArray['searchItem'], newArray['fixSearchItem']);
-        delete newArray['fixSearchItem'];
         self.getBefore = {
-          [TableName]:newArray,
+          [TableName]:self[TableName],
         };
       }else{
         if(JSON.stringify(self[TableName]['searchItem']) == "{}"){
           self.getBefore = {};
         }else{
-          var newArray = self.$$cloneForm(self[TableName]);
-          Object.assign(newArray['searchItem'], newArray['fixSearchItem']);
-          delete newArray['fixSearchItem'];
-          self.getBefore[TableName] = newArray;
+          self.getBefore[TableName] = self[TableName];
         };
       };
       self.initMainData();
+
     },
+
 
     filtersChange(params){
       const self = this;
@@ -482,86 +430,102 @@ export default {
       self.initMainData();
     },
 
+    async header_search_fieldChange(Object){
+      const self = this;
+      if(Object.func){
+        var res = await Object.func(Object.value,self);
+        if(Object.callbak){
+          Object.callbak(res);
+        };
+      }else{
+        Object.field.header_search['changeFunc'](Object.value,self);
+      };
+    },
+
     pageChange(val){
-      console.log(val);
+      console.log('pageChange',val);
       const self = this;
       self.paginate[val[0]] = val[1];
       self.initMainData();
     },
 
-    async onClickBtn(val){
+    onClickBtn(val){
 
       const self = this;
-      console.log(val)
-      if(val[0]=='导出excel'){
-        const postData  = {};
-        postData.token = self.$store.getters.getToken;
-        if (self.searchItem) {
-          postData.searchItem = self.$$cloneForm(self.searchItem)
-        };
-        if(JSON.stringify(self.getBefore) != "{}"){
-          postData.getBefore = self.$$cloneForm(self.getBefore);
-        };
-        postData.order = {create_time:'desc'};
-        postData.getAfter = {
-          UserInfo:{
-            tableName:'userInfo',
-            middleKey:'user_no',
-            key:'user_no',
-            condition:'=',
-            searchItem:{
-              status:1
-            },
-          },
-        };
+      self.submitData = {};
+      self.formData = val[1];
+      self.btnName = val[0];
+      self.formData = val[2].func.formData?self.$$cloneForm(val[2].func.formData(self)):{};
+      self.orginFormData = val[1];
 
-        postData.excelOutput = {
-          expTitle:'test',
-          height:100,
-          expCellName:[
-            {
-              title:'订单号',
-              key:['order_no'],
-              type:'string',
-            },
-            {
-              title:'金额',
-              key:['price'],
-              type:'string',
+      self.btnNow = val[2];
+      if(!val[2].funcType){
+        self.dialog.dialogFormVisible = true;
+      }else if(val[2].funcType=='func'){
+        val[2].func.func(this);
+      }else if(val[2].funcType=='submit'){
+        self.submit();
+      };
+    },
 
-            },
-            {
-              title:'下单人',
-              key:['UserInfo',0,'name'],
-              type:'string',
-            },
-            {
-              title:'测试图片',
-              key:['products',0,'snap_product','mainImg',0,'url'],
-              type:'image',
-              image_width:80,
-              image_height:80,
-              url_intercepte_start:32
-            },
-          ],
-          fileName:'test'
+    async dialog_fieldChange(Object){
+      const self = this;
+      console.log('Object',Object);
+      self.formData[Object.field.key] = Object.value;
+      self.submitData[Object.field.key] = Object.value;
+
+      if(Object.func){
+        var res = await Object.func(Object.value,self);
+        if(Object.callbak){
+          Object.callbak(res);
         };
 
-        window.open('https://api.solelycloud.com/api/public/index.php/api/v1/Common/Order/get?token='
-        +postData.token
-        +'&searchItem='
-        +JSON.stringify(postData.searchItem)
-        +'&excelOutput='
-        +JSON.stringify(postData.excelOutput))
-        /*var res =  await self.$$api_order_get({data: postData});
-
-        var a = document.createElement("a");
-        a.href = res.info;
-        a.download ="订单.xls";
-        a.click();*/
-      }
+      };
 
     },
 
+    async submit(){
+      const self = this;
+
+      this.$confirm('是否确定此操作?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+      	var postData = self.$$cloneForm(self.btnNow.func.postData(self));
+        if(!postData){
+
+          return;
+        };
+        console.log('postData',postData)
+
+        var res = await self['$$'+self.btnNow.func.apiName(self)]({data: postData});
+        if(res){
+          if(self.$$sCallBack(res)){
+            self.dialog.dialogFormVisible = false;
+            if(self.btnNow.func.callback){
+              self.btnNow.func.callback(self);
+            }else{
+              self.initMainData();
+            };
+          };
+        };
+      }).catch((e) => {
+        console.log(e)
+        self.$message({
+          type: 'info',
+          message: '操作失败'
+        });
+      });
+    },
+
+    onSelectionChange(val){
+      const self = this;
+      self.selectionArray = self.$$cloneForm(val);
+      console.log('self.selectionArray',self.selectionArray);
+    }
+
   },
+
+
 }

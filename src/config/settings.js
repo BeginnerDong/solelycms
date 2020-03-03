@@ -1,7 +1,7 @@
 var gbs = {
   //host: '/slsAdminApi', // 接口根地址。本地代理到slsadmin.api.sls.com,线上使用的是Nginx代理
-  host: 'https://zhiyanshipan.com/api/public/index.php/api/v1/',
-  db_prefix: 'sls_admin_', // 本地存储的key
+  host: 'http://www.solelytech.com/api/public/index.php/api/v1/',
+  db_prefix: 'solely', // 本地存储的key
   // 状态码字段
   api_status_key_field: 'solely_code',
   // 状态码value
@@ -19,7 +19,213 @@ var gbs = {
         })
       })
     }
-  }
+  },
+  menu:[
+    {
+      id:'0',
+      name:'控制面板',
+      router:'/home/dashboard',
+      button:['添加','添加任务','编辑任务'],
+      hasButton:[],
+      isShow:true
+    },
+    {
+      id:'1',
+      name:'用户管理',
+      icon: 'inbox',
+      isShow:true,
+      children:[
+        {
+          id:'10',
+          name:'管理员列表',
+          router:'/home/adminLists',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑账号','管理权限','添加账号','删除选中','编辑信息','添加信息'],
+          hasButton:[]
+        },
+        {
+          id:'11',
+          name:'权限管理',
+          router:'/home/access',
+          icon: 'reorder',
+          isShow:false,
+          button:['返回','权限全选','更新权限'],
+          hasButton:[]
+        },
+        {
+          id:'12',
+          name:'员工管理',
+          router:'/home/staff',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑账号','管理权限','添加账号','删除选中','编辑信息','添加信息'],
+          hasButton:[]
+        },
+        {
+          id:'13',
+          name:'配置列表',
+          router:'/home/thirdApp',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','添加','删除选中'],
+          hasButton:[]
+        },
+        {
+          id:'14',
+          name:'角色列表',
+          router:'/home/role',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','添加','删除选中','管理权限'],
+          hasButton:[]
+        },
+      ]
+    },
+    {
+      id:'2',
+      name:'内容管理',
+      icon: 'inbox',
+      isShow:true,
+      children:[
+        {
+          id:'21',
+          name:'文章菜单管理',
+          router:'/home/articleLabel',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+        {
+          id:'22',
+          name:'文章管理',
+          router:'/home/article',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+        {
+          id:'23',
+          name:'消息管理',
+          router:'/home/message',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        }
+      ]
+    },
+
+    {
+      id:'3',
+      name:'商品管理',
+      icon: 'inbox',
+      isShow:true,
+      children:[
+        {
+          id:'31',
+          name:'商品类别',
+          router:'/home/productLabel',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+        {
+          id:'32',
+          name:'商品管理',
+          router:'/home/product',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加','SKU管理'],
+          hasButton:[]
+        },
+        {
+          id:'33',
+          name:'SKU类别',
+          router:'/home/skuLabel',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+        {
+          id:'34',
+          name:'SKU管理',
+          router:'/home/sku',
+          icon: 'reorder',
+          isShow:false,
+          button:['编辑','删除选中','添加','返回'],
+          hasButton:[]
+        },
+        {
+          id:'35',
+          name:'优惠券管理',
+          router:'/home/coupon',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+      ]
+    },
+
+    {
+      id:'4',
+      name:'订单管理',
+      icon: 'inbox',
+      isShow:true,
+      children:[
+        {
+          id:'41',
+          name:'商品订单',
+          router:'/home/order',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+      ]
+    },
+
+    {
+      id:'5',
+      name:'流水管理',
+      icon: 'inbox',
+      isShow:true,
+      children:[
+        {
+          id:'51',
+          name:'支付流水',
+          router:'/home/pay',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+        {
+          id:'52',
+          name:'余额流水',
+          router:'/home/balance',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+        {
+          id:'53',
+          name:'积分流水',
+          router:'/home/score',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑','删除选中','添加'],
+          hasButton:[]
+        },
+      ]
+    }
+  ]
 }
 
 var cbs = {

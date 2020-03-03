@@ -1,13 +1,37 @@
-import Echarts from './echarts/'
-import ListData from './list-data/'
-import FormData from './form-data/'
-import DialogInfo from './dialog-info/'
-import TreeData from './tree-data/'
+import SolelyTable from './solely-table/'
+import SolelyCard from './solely-card/'
+import {
+  SlsInput,
+  SlsTextarea,
+  SlsSelect,
+  upload,
+  VueEditor,
+  SlsCheckbox,
+  SlsDatetime,
+  SlsCascader,
+  SlsDateTimeRange,
+  BaiduMap,
+  TinymceEditor
 
-export {
-  Echarts,
-  ListData,
-  FormData,
-  DialogInfo,
-  TreeData
+ } from './solely-fields/index.js'
+
+ 
+import solelyEcharts from './echarts/solely-echarts.vue'
+
+
+export default{
+  SolelyTable,
+  SlsInput,
+  SlsTextarea,
+  SlsSelect,
+  upload,
+  VueEditor,
+  SlsCheckbox,
+  SlsDatetime,
+  SlsCascader,
+  SlsDateTimeRange,
+  BaiduMap,
+  SolelyCard,
+  TinymceEditor,
+  solelyEcharts
 }

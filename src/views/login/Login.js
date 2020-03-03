@@ -1,147 +1,126 @@
 /**
- * Created by sailengsi on 2017/5/11.
+ * Created by wjm on 2019/11/6.
  */
+import {gbs} from '../../config/index.js';
 export default {
   name: 'login',
   data () {
     return {
-      winSize: {
-        width: '',
-        height: ''
-      },
 
-      formOffset: {
-        position: 'absolute',
-        left: '',
-        top: ''
-      },
-
-      remumber: this.$store.state.user.remumber,
-
+      isLoading:false,
       register: false,
-
+      data: {
+        login_name: '',
+        password: '',
+        repassword:''
+      },
+      rule:{
+        login_name: {
+          tips:'请输入登录名',
+          regx:''
+        },
+        password:{
+          tips:'请输入密码',
+          regx:''
+        },
+        repassword:{
+          tips:'请重复输入密码',
+          regx:''
+        },
+      },
+      formStyle: {},
+      remumber_login_info: this.$store.state.user.remumber_login_info,
       login_actions: {
         disabled: false
       },
-
-      data: {
-        login_name: '',
-        password: ''
-      },
-
-      rule_data: {
-        login_name: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请输入用户名'))
-            } else {
-              callback()
-              /*if (/^[a-zA-Z0-9_-]{1,16}$/.test(value)) {
-                callback()
-              } else {
-                callback(new Error('用户名至少6位,由大小写字母和数字,-,_组成'))
-              }*/
-            }
-          },
-          trigger: 'blur'
-        }],
-        password: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请输入密码'))
-            } else {
-              if (!(/^[a-zA-Z0-9_-]{6,16}$/.test(value))) {
-                callback(new Error('密码至少6位,由大小写字母和数字,-,_组成'))
-              } else {
-                if (this.register === true) {
-                  if (this.data.repassword !== '') {
-                    this.$refs.data.validateField('repassword')
-                  }
-                }
-                callback()
-              }
-            }
-          },
-          trigger: 'blur'
-        }],
-        repassword: [{
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('请再次输入密码'))
-            } else if (value !== this.data.password) {
-              callback(new Error('两次输入密码不一致!'))
-            } else {
-              callback()
-            }
-          },
-          trigger: 'blur'
-        }]
-      }
+      isRemeber:false,
+      router_auth:[],
+      router_to:''
     }
   },
+  created () {
+  },
+  mounted () {
+    if (this.remumber_login_info.length>0) {
+      this.data.login_name = this.remumber_login_info[this.remumber_login_info.length-1]['login_name'];
+      this.data.password = this.remumber_login_info[this.remumber_login_info.length-1]['password'];
+      this.$set(this.data);
+      this.isRemeber = true;
+    };
+  },
   methods: {
-    setSize () {
-      this.winSize.width = this.$$lib_$(window).width() + 'px'
-      this.winSize.height = this.$$lib_$(window).height() + 'px'
-      this.formOffset.left = (parseInt(this.winSize.width) / 2 - 175) + 'px'
-      this.formOffset.top = (parseInt(this.winSize.height) / 2 - 178) + 'px'
+
+    checkRule(keyArray){
+      const self = this;
+      for(var i=0;i<keyArray.length;i++){
+        if(!self.data[keyArray[i]]){
+          this.$message.error(self.rule[keyArray[i]]['tips']);
+          return false;
+        };
+      };
+      return true;
     },
 
-    async onLogin (ref, type) {
+    updateLoginInfo(){
+      const self = this;
+      for(var i=0;i<self.remumber_login_info.length;i++){
+        if(self.remumber_login_info[i]['login_name']==self.data.login_name){
+          self.remumber_login_info.splice(i, 1);
+        };
+      };
+      if(self.isRemeber){
+        self.remumber_login_info.push(self.data);
+      };
+      self.$store.commit('UPDATE_REMUMBER', {
+        remumber_login_info:self.remumber_login_info
+      });
+    },
 
-      
-      if (type && this.register === true) {
-        this.$message.error('请输入确认密码');
+
+    async onLogin () {
+      const self = this;
+      console.log('window.screen.width',window.screen.width)
+      if(window.screen.width<900){
+        this.$message.error('请使用正确设备');
         return;
       };
-      this.$refs[ref].validate(async (valid) => {
-        if (valid) {
-          this.login_actions.disabled = true;
-          console.log(this[ref]);
-          var res =  await this.$$api_user_login({
-            data: this[ref]});
-          if(res&&this.$$sCallBack(res)){
-            
-            console.log(res.info.default_web_routers)
-            if (this.remumber.remumber_flag === true) {
-              this.$store.dispatch('update_remumber', {
-                remumber_flag: this.remumber.remumber_flag,
-                remumber_login_info: {
-                  login_name: this[ref].login_name,
-                  password: this[ref].password
-                }
-              });
-            } else {
-              this.$store.dispatch('remove_remumber');
-            };
-            this.$store.dispatch('update_userinfo', {
-              userinfo:res.info,
-              token:res.token
-            }).then(() => {
-              this.login_actions.disabled = false;
-              //this.$router.push('/function')
-              if (res.info.default_web_routers) {
-                console.log('nb'+res.info.default_web_routers);
-                //this.$router.push(res.info.default_web_routers)
-              } else {
 
-                var routes = this.$router.options.routes
+      if (self.register) {
+        if(!self.checkRule(['login_name','password','repassword'])) return;
+      }else{
+        if(!self.checkRule(['login_name','password'])) return;
+      };
 
-                for (var i = 0; i < routes.length; i++) {
-                  if (this.$store.state.user.userinfo.auth.indexOf(routes[i].id)>=0) {
-                    this.$router.push(routes[i].path);
-                    console.log(99809)
-                    return;
-                  };
-                };
-                this.$$notify('无权限','error');
-                
-              }
-            });
-          };
-          this.login_actions.disabled = false;
-        }
-      })
+      var res =  await self.$$api_login({data: self.data});
+      if(self.$$sCallBack(res)){
+        self.updateLoginInfo();
+        self.updateMenu(res.info);
+        console.log('self.menu',self.menu);
+
+        self.$store.commit('UPDATE_USERINFO', {
+          userinfo:res.info,
+          token:res.token,
+          menu:self.menu,
+          router_auth:self.router_auth,
+          router_to:self.router_to
+        });
+        self.$store.commit('CLEAR_TABS', {
+          currentItem:self.currentItem,
+        });
+        console.log('router_auth',self.router_auth);
+        console.log('router_to',self.router_to);
+
+        if(self.router_to){
+
+          self.$router.push(self.router_to);
+        }else{
+          console.log('self.router_auth[0]',self.router_auth[0])
+          self.$router.push(self.router_auth[0]);
+        };
+
+      };
+
+
     },
 
     onRegister (ref) {
@@ -152,7 +131,7 @@ export default {
             data: this[ref],
             fn: data => {
               this.login_actions.disabled = false;
-              this.$message.success('注册成功，请登录。');
+              this.$message.success('注册成功，请登录');
               this.toggleStatus(false);
             },
             errFn: () => {
@@ -169,37 +148,89 @@ export default {
       //this.$refs[ref].resetFields()
     },
 
-    toggleStatus (type) {
-      this.register = type
+    toggleStatus () {
+      const self = this;
+      self.register = !self.register;
       if (this.register === true) {
         this.$set(this.data, 'repassword', '')
       } else {
         this.$delete(this.data, 'repassword')
       }
-    }
+    },
+
+
+    updateMenu(userInfo){
+      const self =this;
+      var results = [];
+      var router = [];
+      var data = self.$$cloneForm(gbs.menu);
+      if(userInfo.primary_scope==90){
+        var checkData = 'All';
+      }else{
+        var checkData = userInfo.auth;
+      };
+
+      pushItemsExclude(data,results,router);
+      self.menu = results;
+      self.router_auth = router;
+      return;
+
+      function pushItemsExclude(data,results,router){
+
+        for (var i = 0; i < data.length; i++) {
+          var childItem = {};
+
+          if(checkData!='All'&&checkData.indexOf(data[i].id)>=0){
+            childItem = data[i];
+            if(data[i].router){
+              router.push(data[i]['router']);
+            };
+
+            if(checkData.indexOf('first_'+data[i].router)>-1){
+              self.router_to = childItem.router;
+            };
+          }else if(checkData=='All'){
+            childItem = data[i];
+            if(data[i].router){
+              router.push(data[i]['router']);
+            };
+            if(checkData.indexOf('first_'+data[i].router)>-1){
+              self.router_to = childItem.router;
+            };
+          };
+
+          if(JSON.stringify(childItem)!='{}'&&data[i].button&&data[i].button.length>0){
+
+            var newChildItem = [];
+
+            for(var j=0;j<data[i].button.length;j++){
+
+              if(checkData=='All'||checkData.indexOf(data[i].id+'_'+data[i].button[j])!=-1){
+                newChildItem.push(data[i].button[j])
+              };
+            };
+            childItem.hasButton = newChildItem;
+          };
+
+          if(JSON.stringify(childItem)!='{}'&&data[i].children&&data[i].children.length>0){
+            var newArray = self.$$cloneForm(data[i].children);
+            childItem.children = [];
+            pushItemsExclude(newArray,childItem.children,router);
+          };
+
+          if(JSON.stringify(childItem)!='{}'){
+            results.push(childItem);
+          };
+
+
+        };
+
+      };
+
+    },
 
   },
 
-  created () {
 
-    this.setSize()
-    this.$$lib_$(window).resize(() => {
-      this.setSize()
-    })
-
-  },
-
-  mounted () {
-
-    // this.toggleStatus(true);
-    // console.log(this.remumber);
-    // 如果上次登录选择的是记住密码并登录成功，则会保存状态，用户名以及token
-    if (this.remumber.remumber_flag === true) {
-      this.data.login_name = this.remumber.remumber_login_info.login_name
-      this.data.password = this.remumber.remumber_login_info.password
-      this.$set(this.data)
-    }
-
-  }
 
 }

@@ -2,7 +2,7 @@
 import FormData from '../form-data/'
 import _ from 'underscore'
 import plugins from '../../register/plugin.js'
-import func from '../../register/func.js'
+import func from '../../utils/func/func.js'
 //import ElementUI from 'element-ui'
 //import store from 'store/'
 
@@ -43,7 +43,7 @@ export default {
       filterText: '',
       token:0,
 
-      
+
     }
   },
   methods: {
@@ -59,7 +59,7 @@ export default {
       const data = this.$refs.tree.getCheckedNodes();
       if(data.length > 1){
           notify('请只选择一个菜单','warning');
-          this.resetChecked(); 
+          this.resetChecked();
       };
       if(data.length == 1){
          return data[0];
@@ -165,7 +165,7 @@ export default {
      * @param opts
      */
     onBtnEvent (opts) {
-      
+
       this.token = Date.parse(new Date())+Math.random()*10;
       this.btn = opts.btn;
       this.btnName = opts.btn.text({data:opts.data},this);
@@ -183,10 +183,10 @@ export default {
         this.onSubmit();
         return ;
       };
-      
+
       this.formData = {};
       this.formData = func.cloneForm(opts.btn.func.formData(opts.data,this,func));
-     
+
       if(this.formData.error){
         func.notify(this.formData.error,'warning');
         return ;
@@ -198,13 +198,13 @@ export default {
           this.form_fields.push(this.fields[i])
         };
       };
-      
+
       if (opts.btn.fn) {
         opts.btn.fn(opts)
       } else {
         this.$emit('onClickBtn', opts)
       };
-      
+
       if(this.btn.submitAlone){
         this.onSubmit();
       }else{
@@ -220,7 +220,7 @@ export default {
       const data = this.$refs.tree.getCheckedNodes();
       if(data.length > 1){
           func.notify('请只选择一个菜单','warning');
-          this.resetChecked(); 
+          this.resetChecked();
       };
       if(data.length == 1){
          return data[0];
@@ -268,9 +268,17 @@ export default {
     async onSubmit(val){
       const self = this;
       console.log(val);
-      const postData = func.cloneForm(self.btn.func.postData(val,self));
+      if(val&&val!='undefined'){
+      	var postData = func.cloneForm(self.btn.func.postData(val[0],self,val[1]));
+      }else{
+      	var postData = func.cloneForm(self.btn.func.postData(val,self,func));
+      };
       if(!postData){
         func.notify('数据故障','fail');
+        return;
+      };
+      if(postData.error){
+        func.notify(postData.error,'fail');
         return;
       };
       var res = await plugins[this.apiName]({data: postData});
@@ -280,15 +288,14 @@ export default {
           this.$emit('initMainData', )
         };
       };
-
     },
 
 
-    fieldChange(val){   
+    fieldChange(val){
       console.log('ListData_fieldChange',this.formData);
       this.$emit('fieldChange', [val,this])
     },
-    
+
   },
 
   mounted () {
@@ -323,9 +330,9 @@ export default {
       required: true
     },
     BtnInfo: {
-      type: Array,
+      type: Object,
       default () {
-        return []
+        return {}
       }
     },
     Selection: {

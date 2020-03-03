@@ -134,11 +134,27 @@ export default {
           },
         },
         {
+          key: "passage1",
+          label: '职务',
+          application:['添加信息','编辑信息'],
+          type:'input',
+          listType:'normal',
+          formatter:function(val,tests){
+            return val.info&&val.info.passage1?val.info.passage1:'';
+          },
+        },
+        {
           key: "mainImg",
           label: '头像',
           application:['编辑账号'],
           type:'upload',
           limit:1,
+        },
+        {
+          key: "name",
+          label: '内容',
+          application:[],
+          type:'vueEditor',
         },
         {
           key: "status",
@@ -213,21 +229,25 @@ export default {
               apiName:function(data){
                 return JSON.stringify(data.info) != "[]" ?"api_userInfo_update":"api_userInfo_add"
               },
+
               formData:function(data,self,func){
+
                 var newData = data.info;
                 return newData
               },
+
               postData:function(data,self){
                 if(self.btnName=='编辑信息'){
-                  var postData = {
+                  var postData={
                     searchItem:{
-                      id:self.btnData.info.id,
-                      user_no:self.btnData.info.user_no,
+                      id:self.btnData.info.id
                     },
                     data:data
                   }
+                  postData.data.user_no=self.btnData.user_no;
+
                 }else if(self.btnName=='添加信息'){
-                  var postData = {
+                  var postData={
                     data:data
                   };
                   postData.data.user_no=self.btnData.user_no;
@@ -252,13 +272,13 @@ export default {
                 return data
               },
               postData:function(data,self){
-                var postData = {
+                var postData={
                   searchItem:{
-                    id:self.btnData.id,
-                    user_no:self.btnData.user_no,
+                    id:self.btnData.id
                   },
                   data:data
                 }
+                postData.data.user_no = self.btnData.user_no;
                 return postData;
               }
             },
@@ -285,14 +305,14 @@ export default {
                   path:'/user/adminLists/access',
                   name:'权限管理',
                   params:{
-                    defaultChecked:data.auth,
+                    defaultChecked:data.passage_array,
                     user_no:data.user_no,
-                    origin:'userOne',
                   }
                 });
+
               },
               postData:function(data,self){
-                var postData = {
+                var postData={
                   searchItem:{
                     id:self.btnData.id,
                   },
@@ -312,9 +332,11 @@ export default {
               return '删除选中'
             },
             func:{
+
               apiName:function(data){
                 return "api_user_update"
               },
+
               postData:function(data,self){
                 var postData = {
                   searchItem:{
@@ -327,6 +349,7 @@ export default {
                 };
                 return postData;
               }
+
             },
           },
           {
@@ -341,13 +364,16 @@ export default {
               apiName:function(data){
                 return "api_user_add"
               },
+
               formData:function(data,self,func){
+
                 var data = {
                   login_name:'',
                   password:'',
                 };
                 return data
               },
+
               postData:function(data,self){
                 data.user_type = 1;
                 var postData={
@@ -373,7 +399,7 @@ export default {
                 return data
               },
               postData:function(data,self){
-                var postData = {
+                var postData={
                   searchItem:{
                     id:self.btnData.id
                   },
@@ -385,7 +411,6 @@ export default {
             },
           },
       ],
-
       paginate: {
         count: 0,
         currentPage: 1,
@@ -441,14 +466,14 @@ export default {
     /**
      * 初始化
      */
-    init() {
+    init () {
       this.initMainData()
     },
 
     /**
      * 列表主函数
      */
-    async initMainData() {
+    async initMainData () {
 
       const self = this;
       const postData  = {};
@@ -461,7 +486,9 @@ export default {
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
       var res =  await self.$$api_user_get({data: postData});
+      
       self.mainData = res.info.data;
+      console.log('self.mainData',self.mainData)
       self.paginate.count = res.info.total;
 
     },
@@ -497,6 +524,7 @@ export default {
     },
 
     async fieldChange(val){
+      console.log('product_fieldChange',val);
       const self = this;
     },
 

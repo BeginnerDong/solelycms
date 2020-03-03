@@ -1,11 +1,12 @@
 <template>
  
   <el-form style=""
-           label-width="100px"
+           label-width="200px"
            ref='form-data'
            :inline="setting.inline"
            :rules='rules'
            :model='FormData'>
+					
     <el-form-item
       class='edit-form'
       v-for='(field,index) in fields'
@@ -37,7 +38,7 @@
   export default FormDataJs
 </script>
 
-<style scoped lang='less'>
+<style>
   .demo-form-inline {
     display: inline-block;
     float: right;

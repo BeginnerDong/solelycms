@@ -1,59 +1,6 @@
 <template>
   <div class="list">
-    <el-header>
-      <template v-for="item in fields">
-        <el-input v-if="item.header_search&&item.header_search_type=='input'" :style="item.header_search_style"  @blur="(e)=>{item.changeFunc(e,self)}" :placeholder="item.placeholder" clearable>
-        </el-input>
-        <el-select 
-          v-if="item.header_search&&item.header_search_type=='select'"
-          :style="item.header_search_style"
-          v-model="item.value"  
-          @change="(value) => {
-            item.changeFunc(value,self)
-          }" 
-          :placeholder="item.placeholder"
-          clearable
-        >
-          <template v-if="typeof item.options === 'function'">
-            <el-option v-for="option_item in item.options(self)" :value="option_item[item.defaultProps.value]" :label="option_item[item.defaultProps.label]"></el-option>
-          </template>
-          <template v-if="typeof item.options === 'string'">
-            <el-option v-for="option_item in optionData[item.options]" :value="option_item[item.defaultProps.value]" :label="option_item[item.defaultProps.label]"></el-option>
-          </template>
-          <template v-if="typeof item.options === 'object'">
-            <el-option v-for="option_item in item.options" :value="option_item[item.defaultProps['value']]" :label="option_item[item.defaultProps['label']]"></el-option>
-          </template>
-        </el-select>
-        <el-cascader
-          v-if="item.header_search&&item.header_search_type=='cascader'"
-          :options="typeof item.options === 'function'?item.options(self):item.options"
-          :props="item.defaultProps"
-          :placeholder="item.placeholder"
-          @change="(value) => {
-            item.changeFunc(value,self)
-          }" 
-          change-on-select
-          clearable
-        >
-        </el-cascader>
-        <el-date-picker
-          v-if="item.header_search&&item.header_search_type=='datePicker'"
-          is-range
-          v-model="item.header_search_value"
-          type="datetimerange"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始"
-          end-placeholder="结束"
-          :placeholder="item.placeholder"
-          @change="(value) => {
-            item.changeFunc(value,self)
-          }" 
-        >
-        </el-date-picker>
-
-      </template>
-    </el-header>
+    
     <el-main>
       <list-data
         ref='list-data'
@@ -81,7 +28,7 @@
   import userJs from './user.js'
   export default userJs
 </script>
-<style scoped lang='less'>
+<style>
 
   .demo-form-inline {
     display: inline-block;

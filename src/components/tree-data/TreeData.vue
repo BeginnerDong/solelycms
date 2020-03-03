@@ -29,14 +29,14 @@
       :data="treeData_mainData"
       :props="treeData_defaultProps"
       :default-checked-keys="treeData_defaultChecked"
-      
+
       show-checkbox
       accordion
       check-strictly
       :filter-node-method="filterNode"
       ref="tree">
     </el-tree>
-    
+
   </el-main>
   <el-footer style="padding-top:10px;border-bottom: 1px solid #e4e7ed;height:50px">
     <el-button
@@ -66,7 +66,7 @@
           :Token="token"
           @onSubmit='onSubmit'>
         </form-data>
-    </div>            
+    </div>
   </el-dialog>
 
 
@@ -94,7 +94,7 @@
 
   export default TreeDataJs
 </script>
-<style scoped lang='less'>
+<style>
   .demo-form-inline {
     display: inline-block;
     float: right;
@@ -115,15 +115,13 @@
 
   .list {
 
-    table {
 
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-
-    }
     border: 1px solid #e4e7ed;
 
+  }
+
+  .list table img {
+      max-width: 100%;
+      height: auto;
   }
 </style>

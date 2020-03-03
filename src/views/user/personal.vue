@@ -75,7 +75,7 @@
   import personalJs from './personal.js'
   export default personalJs
 </script>
-<style scoped lang='less'>
+<style>
 
   .demo-form-inline {
     display: inline-block;

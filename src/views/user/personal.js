@@ -1,5 +1,5 @@
 export default {
-  name: 'personal',
+  name: 'userOne',
   components: {},
   data () {
     return {
@@ -59,6 +59,12 @@ export default {
           application:['编辑账号'],
           type:'upload',
           limit:1,
+        },
+        {
+          key: "name",
+          label: '内容',
+          application:[],
+          type:'vueEditor',
         },
         {
           key: "status",
