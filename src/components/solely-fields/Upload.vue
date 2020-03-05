@@ -290,7 +290,7 @@
                        });
                     };
                     console.log('self.uploadImg',self.uploadImg)
-                    var jqObj = self.$refs.imgInput;
+                    var jqObj = self.$refs[self.randomId];
                     console.log('jqObj',jqObj)
                     jqObj.value = "";
                     self.$emit('onChange',{field:self.field,value:self.uploadImg});

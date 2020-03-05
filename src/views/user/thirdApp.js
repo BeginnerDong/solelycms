@@ -141,10 +141,9 @@ export default {
                 return self.formData
               },
               postData:function(self){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:self.formData.id,
-                    user_no:self.formData.user_no,
                   },
                   data:submitData
                 }
@@ -163,11 +162,9 @@ export default {
               return '删除选中'
             },
             func:{
-
               apiName:function(self){
                 return "api_thirdAppUpdate"
               },
-
               postData:function(self){
                 var deleteArray = [];
                 for (var i = 0; i < self.selectionArray.length; i++) {
@@ -183,7 +180,6 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
           {
@@ -370,16 +366,16 @@ export default {
       console.log('field',Object);
       Object.field.header_search['changeFunc'](Object.value,self);
     },
-    
+
     pageChange(val){
       console.log('pageChange',val);
       const self = this;
       self.paginate[val[0]] = val[1];
       self.initMainData();
     },
-    
+
     onClickBtn(val){
-    
+
       const self = this;
       self.submitData = {};
       self.formData = val[1];
@@ -395,13 +391,13 @@ export default {
         self.submit();
       };
     },
-    
+
     async dialog_fieldChange(Object){
       const self = this;
       self.formData[Object.field.key] = Object.value;
       self.submitData[Object.field.key] = Object.value;
       console.log('field',Object);
-    
+
     },
 
     async submit(){

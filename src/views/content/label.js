@@ -178,10 +178,9 @@ export default {
                 return self.formData
               },
               postData:function(self){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:self.formData.id,
-                    user_type:2
                   },
                   data:self.submitData
                 };
@@ -191,11 +190,9 @@ export default {
                 }else{
                   return postData;
                 };
-
               }
             },
           },
-
           {
             type:'danger',
             icon:'delete',
@@ -206,11 +203,9 @@ export default {
               return '删除选中'
             },
             func:{
-
               apiName:function(self){
                 return "api_labelUpdate"
               },
-
               postData:function(self){
                 var deleteArray = [];
                 for (var i = 0; i < self.selectionArray.length; i++) {
@@ -218,10 +213,7 @@ export default {
                 };
                 var postData = {
                   searchItem:{
-
-                    user_type:2,
                     id:['IN',deleteArray],
-
                   },
                   data:{
                     status:-1
@@ -229,10 +221,8 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
-
           {
             type:'info',
             icon:'edit',
@@ -264,6 +254,7 @@ export default {
           },
 
       ],
+
       paginate: {
         count: 0,
         currentPage: 1,
@@ -285,33 +276,12 @@ export default {
           text: '禁用',
           value: -1
         }],
-        behaviorOptions:[
-          {
-            text: '开发',
-            value: 1
-          },
-          {
-            text: '销售',
-            value: 2
-          },
-          {
-            text: '运营',
-            value: 3
-          },
-          {
-            text: '人事/行政',
-            value: 4
-          },
-        ],
       },
       otherData:{
       },
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
-        },
-        fixSearchItem:{
-          status:1
         },
         key:'user_no',
         middleKey:'user_no',
@@ -357,17 +327,17 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
     },
 
     /**
      * 列表主函数
      */
-    async initMainData (isNew) {
+    async initMainData(isNew) {
 
       const self = this;
-      const postData  = {};
+      const postData = {};
 
       postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
@@ -376,7 +346,7 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res =  await self.$$api_labelGet({data: postData});
+      var res = await self.$$api_labelGet({data: postData});
       self.mainData = res.info.data;
       self.optionData.labelOptions = res.info.data;
 
