@@ -52,6 +52,11 @@ export default [
         component: User.Staff
       },
       {
+        path: 'user',
+        name: '用户管理',
+        component: User.User
+      },
+      {
         path: 'thirdApp',
         name: '配置列表',
         component: User.ThirdApp

@@ -145,13 +145,12 @@ export default {
                   searchItem:{
                     id:self.formData.id,
                   },
-                  data:submitData
+                  data:self.submitData
                 }
                 return postData;
               }
             },
           },
-
           {
             type:'danger',
             icon:'delete',
@@ -202,7 +201,7 @@ export default {
                 return data
               },
               postData:function(self){
-                var postData={
+                var postData = {
                   data:self.submitData
                 };
                 return postData;
@@ -210,6 +209,7 @@ export default {
             },
           },
       ],
+
       paginate: {
         count: 0,
         currentPage: 1,
@@ -223,29 +223,14 @@ export default {
       },
       optionData:{
         labelOptions:[],
-        statusOptions:[{
-          text: '启用',
-          value: 1
-        }, {
-          text: '禁用',
-          value: -1
-        }],
-        behaviorOptions:[
+        statusOptions:[
           {
-            text: '开发',
+            text: '启用',
             value: 1
           },
           {
-            text: '销售',
-            value: 2
-          },
-          {
-            text: '运营',
-            value: 3
-          },
-          {
-            text: '人事/行政',
-            value: 4
+            text: '禁用',
+            value: -1
           },
         ],
       },
@@ -254,9 +239,6 @@ export default {
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
-        },
-        fixSearchItem:{
-          status:1
         },
         key:'user_no',
         middleKey:'user_no',
@@ -302,17 +284,17 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
     },
 
     /**
      * 列表主函数
      */
-    async initMainData (isNew) {
+    async initMainData(isNew) {
 
       const self = this;
-      const postData  = {};
+      const postData = {};
       if(isNew){
         self.paginate.currentPage = 1;
       };
@@ -324,9 +306,9 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
+
       var res =  await self.$$api_thirdAppGet({data: postData});
       self.mainData = res.info.data;
-      console.log('self.mainData',self.mainData);
       self.paginate.count = res.info.total;
 
     },

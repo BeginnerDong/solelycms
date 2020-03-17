@@ -1,237 +1,141 @@
 export default {
-  name: 'student',
+  name: 'user',
   components: {},
   data () {
     return {
       mainData: [],
       self:this,
+
+      table_arguments:{
+        height:'70%',
+        row_key:'id',
+        tree_props:'',
+        default_expand_all:false,
+        expand:false,
+        selection:true,
+        cell_style:{}
+      },
       fields: [
         {
           key: 'id',
-          label: '用户ID',
+          label: 'ID',
           application:[],
-          type:'input',
-          listType:'normal'
+          componentName:'sls-input',
+          listType:'normal',
+          width:50
         },
         {
           key: 'user_no',
           label: '用户NO',
           application:[],
-          type:'input',
+          componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入用户No',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.searchItem.user_no = e.target._value;
-            }else{
-              delete self.searchItem.user_no;
-            };
-            self.initMainData();
+          header_search:{
+            componentName:'sls-input',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请输入用户NO',
+            clearable:true,
+            defaultValue:'',
+            optionDataName:'',
+            changeFunc:function(val,self){
+              if(val){
+                self.searchItem.user_no = val;
+              }else{
+                delete self.searchItem.user_no;
+              };
+              self.initMainData();
+            },
           },
         },
-		{
-		  key: 'login_name',
-		  label: '用户登录名',
-		  application:['编辑账号','添加账号'],
-		  type:'input',
-		  listType:'normal',
-		  placeholder:'请输入用户登录名',
-		  header_search:true,
-		  header_search_type:'input',
-		  header_search_style:'width:160px;margin-right:2px;',
-		  changeFunc:function(e,self){
-		    if(e.target._value){
-		      self.searchItem.login_name = ['LIKE',['%'+e.target._value+'%']];
-		    }else{
-		      delete self.searchItem.login_name;
-		    };
-		    self.initMainData();
-		  },
-		},
-		{
-		  key: 'password',
-		  label: '用户密码',
-		  application:['编辑账号','添加账号'],
-		  type:'input',
-
-		},
-        // {
-        //   key: 'latitude',
-        //   label: '地址',
-        //   application:['编辑','添加'],
-        //   type:'baiduMap',
-        //   listType:''
-        // },
-        // {
-        //   key: 'parent_no',
-        //   label: '父级NO',
-        //   application:[],
-        //   type:'input',
-        //   listType:'normal',
-        //   placeholder:'请输入父级No',
-        //   header_search:true,
-        //   header_search_type:'input',
-        //   header_search_style:'width:160px;margin-right:2px;',
-        //   changeFunc:function(e,self){
-        //     if(e.target._value){
-        //       self.DistriChild.searchItem.parent_no = ['LIKE',['%'+e.target._value+'%']]
-        //     }else{
-        //       delete self.DistriChild.searchItem.parent_no
-        //     };
-        //     self.beforeSearch('DistriChild');
-        //   },
-        // },
-        // {
-        //   key: 'parent_no.name',
-        //   label: '父级姓名',
-        //   application:[],
-        //   type:'input',
-        //   listType:'normal',
-        //   formatter:function(val){
-        //     return val.parentInfo.name
-        //   }
-        // },
         {
-          key: "headImgUrl",
-          label: '用户头像',
-          application:[],
-          type:'input',
-          listType:'headImgUrl',
+          key: 'nickname',
+          label: '昵称',
+          application:['编辑账号','添加账号'],
+          componentName:'sls-input',
+          listType:'normal',
+          placeholder:'请输入昵称',
+          header_search:{
+            componentName:'sls-input',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请输入昵称',
+            changeFunc:function(e,self){
+              if(e.target._value){
+                self.searchItem.nickname = ['LIKE',['%'+e.target._value+'%']];
+              }else{
+                delete self.searchItem.nickname;
+              };
+              self.initMainData();
+            },
+          }
         },
         {
-          key: "nickname",
-          label: '用户昵称',
-          application:[],
-          type:'input',
+          key: 'mainImg',
+          label: '头像',
+          application:['编辑账号','添加账号'],
+          dialogStyle:'width:100%;',
+          customSlot:'mainImg',
+          componentName:'upload',
           listType:'normal',
+          limit:1,
         },
         {
           key: "name",
-          label: '用户真实姓名',
+          label: '用户姓名',
           application:['添加信息','编辑信息'],
-          type:'input',
+          componentName:'sls-input',
           listType:'normal',
           formatter:function(val){
             return val.info.name
           },
-          placeholder:'请输入用户姓名',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.UserInfo.searchItem.name = ['LIKE',['%'+e.target._value+'%']]
-            }else{
-              delete self.UserInfo.searchItem.name
-            };
-            self.beforeSearch('UserInfo');
+          placeholder:'请输入向欧盟和，',
+          header_search:{
+            componentName:'sls-input',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请输入向欧盟和，',
+            changeFunc:function(e,self){
+              if(e.target._value){
+                self.UserInfo.searchItem.name = ['LIKE',['%'+e.target._value+'%']]
+              }else{
+                delete self.UserInfo.searchItem.name
+              };
+              self.beforeSearch('UserInfo');
+            },
           },
         },
         {
           key: "phone",
-          label: '用户电话',
+          label: '电话',
           application:['添加信息','编辑信息'],
-          type:'input',
+          componentName:'sls-input',
           listType:'normal',
           formatter:function(val){
             return val.info.phone
           },
-          placeholder:'请输入用户电话',
-          header_search:true,
-          header_search_type:'input',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(e,self){
-            if(e.target._value){
-              self.UserInfo.searchItem.phone = ['LIKE',['%'+e.target._value+'%']]
-            }else{
-              delete self.UserInfo.searchItem.phone
-            };
-            self.beforeSearch('UserInfo');
-          },
-        },
-        {
-          key: "balance",
-          label: '佣金',
-          application:[],
-          type:'input',
-          listType:'normal',
-          formatter:function(val){
-            return val.info.balance
-          }
-        },
-        // {
-        //   key: "file",
-        //   label: '用户二维码',
-        //   application:['添加信息','编辑信息'],
-        //   type:'input',
-        //   listType:'qrImg',
-        //   formatter:function(val){
-        //     return val.info.qrImg
-        //   }
-        // },
-        {
-          key: "primary_scope",
-          label: '用户身份',
-          application:['编辑账号'],
-          type:'select',
-          options:[
-            {
-              text: '用户',
-              value: 10
+          header_search:{
+            componentName:'sls-input',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请输入电话',
+            changeFunc:function(e,self){
+              if(e.target._value){
+                self.UserInfo.searchItem.phone = ['LIKE',['%'+e.target._value+'%']]
+              }else{
+                delete self.UserInfo.searchItem.phone
+              };
+              self.beforeSearch('UserInfo');
             },
-            {
-              text: '客户',
-              value: 30
-            }
-          ],
-          defaultProps: {
-            label: 'text',
-            value: 'value',
-          },
-          formatter:function(val,tests){
-            if(val.primary_scope==10){
-              return '用户';
-            }else{
-              return '客户';
-            };
-          },
-          listType:'normal',
-          placeholder:'请选择用户身份',
-          header_search:true,
-          header_search_type:'select',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(value,self){
-            if(!value){
-              delete self.searchItem.primary_scope
-            }else{
-              self.searchItem.primary_scope = value
-            };
-            self.initMainData();
           },
         },
         {
           key: "status",
           label: '状态',
-          application:['编辑账号'],
-          type:'select',
-          options:[
-            {
-              text: '启用',
-              value: 1
-            },
-            {
-              text: '禁用',
-              value: -1
-            }
-          ],
+          application:[''],
+          componentName:'sls-select',
+          optionsName:'statusOptions',
           defaultProps: {
             label: 'text',
             value: 'value',
           },
-          formatter:function(val,tests){
+          formatter:function(val){
             if(val.status==1){
               return '启用';
             }else{
@@ -244,174 +148,117 @@ export default {
           label: '创建时间',
           listType:'normal',
           placeholder:'请选择创建时间',
-          header_search:true,
-          header_search_type:'datePicker',
-          header_search_value:'',
-          header_search_style:'width:160px;margin-right:2px;',
-          changeFunc:function(value,self){
-            if(!value){
-              delete self.searchItem.create_time;
-            }else{
-              self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
-            };
-            self.initMainData();
+          header_search:{
+            componentName:'sls-datetime',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请选择创建时间',
+            changeFunc:function(value,self){
+              if(!value){
+                delete self.searchItem.create_time;
+              }else{
+                self.searchItem.create_time = ['between',value = value.map(function(e){return e/1000;})]
+              };
+              self.initMainData();
+            },
           },
-        },
-        {
-          key: "count",
-          label: '佣金金额',
-          application:['管理佣金'],
-          type:'input',
-          width:'50px',
-          height:'50px',
-        },
-        {
-          key: "trade_info",
-          label: '流水备注',
-          application:['管理佣金'],
-          type:'input',
-          width:'50px',
-          height:'50px',
         },
         {
           label: '操作',
           listType:'deal',
-          width:300
+          width:200
         },
       ],
-
       // 按钮配置
       btn_info: [
 
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'list',
-          text:function(data){
-            console.log(data);
-            console.log(JSON.stringify(data.data.info))
-            return JSON.stringify(data.data.info)!= '[]'?'编辑信息':'添加信息'
-          },
-          func:{
-            apiName:function(data){
-              return JSON.stringify(data.info) != "[]" ?"api_userInfo_update":"api_userInfo_add"
+          {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              if(data){
+                return JSON.stringify(data.info)!= '[]'?'编辑信息':'添加信息'
+              }else{
+                return ['编辑信息','添加信息'];
+              }
             },
-
-            formData:function(data,self,func){
-              console.log(data)
-              if(self.btnName=='编辑信息'){
-                var data = data.info;
-              }else if(self.btnName=='添加信息'){
-                var data = {}
-              };
-              return data
-            },
-
-            postData:function(data,self){
-              if(self.btnName=='编辑信息'){
-                var postData={
-                  searchItem:{
-                    id:self.btnData.info.id,
-                    user_no:self.btnData.user_no,
-                    user_type:0
-                  },
-                  data:data
-                }
-              }else if(self.btnName=='添加信息'){
-                var postData={
-                  data:data
+            func:{
+              apiName:function(self){
+                return JSON.stringify(self.formData.info) != "[]" ?"api_userInfoUpdate":"api_userInfoAdd"
+              },
+              formData:function(self){
+                var data = self.formData.info;
+                return data
+              },
+              postData:function(self){
+                if(self.btnName=='编辑信息'){
+                  var postData={
+                    searchItem:{
+                      id:self.orginFormData.info.id,
+                      user_no:self.orginFormData.info.user_no
+                    },
+                    data:self.submitData
+                  }
+                }else if(self.btnName=='添加信息'){
+                  var postData={
+                    data:self.submitData
+                  };
                 };
-                postData.data.user_no=self.btnData.user_no;
-              };
-
-              return postData;
-            }
-          },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'list',
-          text:function(data){
-            return '编辑账号'
-          },
-          func:{
-
-            apiName:function(data){
-              return "api_user_update"
+                postData.data.user_no=self.orginFormData.user_no;
+                return postData;
+              }
             },
-            formData:function(data,self){
-              return data
-            },
-            postData:function(data,self){
-              var postData={
-                searchItem:{
-                  id:self.btnData.id,
-                  user_no:self.btnData.user_no,
-                  user_type:0
-                },
-                data:data
-              };
-              return postData;
-            }
           },
-        },
-        {
-          type:'info',
-          icon:'edit',
-          size:'mini',
-          position:'list',
-          text:function(data){
-            return '管理佣金'
-          },
-          func:{
-            apiName:function(data){
-              return "api_flowLog_add"
+          {
+            type:'info',
+            icon:'edit',
+            size:'mini',
+            position:'list',
+            text:function(data){
+              return '编辑账号'
             },
-            formData:function(data,self){
-              var obj = {
-                count:'',
-                trade_info:'',
-                user_no:data.user_no
-              };
-              return obj;
+            func:{
+              apiName:function(self){
+                return "api_userUpdate"
+              },
+              formData:function(self){
+                return self.formData
+              },
+              postData:function(self){
+                var postData = {
+                  searchItem:{
+                    id:self.formData.id,
+                    user_no:self.formData.user_no,
+                  },
+                  data:self.submitData
+                }
+                return postData;
+              }
             },
-            postData:function(data,self){
-              var postData={
-                searchItem:{
-                  id:self.btnData.id,
-                  user_type:0
-                },
-                data:data
-              };
-              postData.data.type = 2;
-              postData.data.user_no = self.formData.user_no;
-              return postData;
-            }
           },
-        },
-        {
+          {
             type:'danger',
             icon:'delete',
-            size:'normal',
+            size:'medium',
             funcType:'submit',
             position:'header',
             text:function(data){
               return '删除选中'
             },
             func:{
-
-              apiName:function(data){
-                return "api_user_update"
+              apiName:function(self){
+                return "api_userUpdate"
               },
-
-              postData:function(data,self){
+              postData:function(self){
+                var deleteArray = [];
+                for (var i = 0; i < self.selectionArray.length; i++) {
+                  deleteArray.push(self.selectionArray[i].id);
+                };
                 var postData = {
                   searchItem:{
-                    id:['in',self.deleteArray],
-
+                    id:['in',deleteArray],
+                    user_type:0
                   },
                   data:{
                     status:-1
@@ -419,96 +266,90 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
           {
             type:'info',
             icon:'edit',
-            size:'normal',
+            size:'medium',
             position:'header',
             text:function(data){
               return '添加账号'
             },
             func:{
-              apiName:function(data){
-                return "api_user_add"
+              apiName:function(self){
+                return "api_userAdd"
               },
-
-              formData:function(data,self,func){
-
+              formData:function(self){
                 var data = {
                   login_name:'',
                   password:'',
                 };
                 return data
               },
-
-              postData:function(data,self){
-                data.user_type = 0;
+              postData:function(self){
+                self.submitData.user_type = 0;
                 var postData={
-                  data:data
+                  data:self.submitData
                 };
                 return postData;
               }
             },
           },
       ],
-      DistriChild:{
-        tableName:'Distribution',
-        searchItem:{
-        },
-        fixSearchItem:{
-          status:1
-        },
-        key:'child_no',
-        middleKey:'user_no',
-        condition:'in',
-      },
-      DistriParent:{
-        tableName:'Distribution',
-        searchItem:{
 
-        },
-        fixSearchItem:{
-          status:1
-        },
-        key:'parent_no',
-        middleKey:'user_no',
-        condition:'in',
-      },
-      UserInfo:{
-        tableName:'UserInfo',
-        searchItem:{
-        },
-        fixSearchItem:{
-          status:1
-        },
-        key:'user_no',
-        middleKey:'user_no',
-        condition:'in',
-      },
       paginate: {
-          count: 0,
-          currentPage: 1,
-          pagesize:10,
-          is_page:true,
-          page_sizes: [10, 30, 60, 90],
-          layout: 'total, sizes, prev, pager, next, jumper',
+        count: 0,
+        currentPage: 1,
+        pagesize:10,
+        is_page:true,
+        page_sizes: [10, 30, 60, 90],
+        layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
         user_type:0
       },
       optionData:{
-        labelOptions:[]
+        labelOptions:[],
+        statusOptions:[
+          {
+            text: '启用',
+            value: 1
+          },
+          {
+            text: '禁用',
+            value: -1
+          },
+        ],
       },
       otherData:{
       },
+      UserInfo:{
+        tableName:'UserInfo',
+        searchItem:{
+        },
+        key:'user_no',
+        middleKey:'user_no',
+        condition:'in',
+      },
+      dialog:{
+        formLabelWidth:'auto',
+        dialogFormVisible:false,
+        title:'用户'
+      },
       getBefore:{},
+      formLabelWidth:'auto',
+      btnName:'',
+      formData:{},
+      btnNow:{},
+      submitData:{},
+      orginFormData:{},
+      selectionArray:[]
 
     }
 
   },
+
   mounted () {
     this.init()
   },
@@ -531,22 +372,17 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData()
     },
 
-
-
-
-
-
     /**
-     * 获取文章列表
+     * 列表主函数
      */
-    async initMainData () {
+    async initMainData() {
 
       const self = this;
-      const postData  = {};
+      const postData = {};
       postData.paginate = self.$$cloneForm(self.paginate);
       postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
@@ -555,44 +391,11 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      postData.getAfter = {
-        file:{
-          tableName:'File',
-          middleKey:'user_no',
-          key:'user_no',
-          condition:'=',
-          searchItem:{
-            status:1,
-            type:1,
-            behavior:2
-          },
-          info:['path'],
-        },
-        parentInfo:{
-          tableName:'UserInfo',
-          middleKey:'parent_no',
-          key:'user_no',
-          condition:'=',
-          searchItem:{
-            status:1,
-          },
-          info:['name'],
-        },
+      var res =  await self.$$api_userGet({data: postData});
 
-      };
-      var res =  await self.$$api_user_get({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
 
-    },
-
-    async fieldChange(val){
-      console.log('product_fieldChange',val);
-      const self = this;
-    },
-
-    onClickBtn(val){
-      console.log(val)
     },
 
 
@@ -611,8 +414,8 @@ export default {
         };
       };
       self.initMainData();
-    },
 
+    },
 
 
     filtersChange(params){
@@ -625,16 +428,88 @@ export default {
       self.initMainData();
     },
 
+    async header_search_fieldChange(Object){
+      const self = this;
+      if(Object.func){
+        var res = await Object.func(Object.value,self);
+        if(Object.callbak){
+          Object.callbak(res);
+        };
+      }else{
+        Object.field.header_search['changeFunc'](Object.value,self);
+      };
+    },
+
     pageChange(val){
-      console.log(val);
       const self = this;
       self.paginate[val[0]] = val[1];
       self.initMainData();
     },
 
+    onClickBtn(val){
+
+      const self = this;
+      self.submitData = {};
+      self.formData = val[1];
+      self.btnName = val[0];
+      self.formData = val[2].func.formData?self.$$cloneForm(val[2].func.formData(self)):{};
+      self.orginFormData = val[1];
+      self.btnNow = val[2];
+      if(!val[2].funcType){
+        self.dialog.dialogFormVisible = true;
+      }else if(val[2].funcType=='func'){
+        val[2].func.func(this);
+      }else if(val[2].funcType=='submit'){
+        self.submit();
+      };
+    },
+
+    async dialog_fieldChange(Object){
+      const self = this;
+      self.formData[Object.field.key] = Object.value;
+      self.submitData[Object.field.key] = Object.value;
+    },
+
+    async submit(){
+      const self = this;
+
+      this.$confirm('是否确定此操作?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+      	var postData = self.$$cloneForm(self.btnNow.func.postData(self));
+        if(!postData){
+          self.$$notify('数据故障','fail');
+          return;
+        };
 
 
+        var res = await self['$$'+self.btnNow.func.apiName(self)]({data: postData});
+        if(res){
+          if(self.$$sCallBack(res)){
+            self.dialog.dialogFormVisible = false;
+            if(self.btnNow.func.callback){
+              self.btnNow.func.callback(self);
+            }else{
+              self.initMainData();
+            };
+          };
+        };
+      }).catch((e) => {
+        console.log(e)
+        self.$message({
+          type: 'info',
+          message: '故障'
+        });
+      });
+    },
 
+    onSelectionChange(val){
+      const self = this;
+      self.selectionArray = self.$$cloneForm(val);
+      console.log('self.selectionArray',self.selectionArray);
+    }
 
   },
 

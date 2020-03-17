@@ -1,6 +1,6 @@
 var gbs = {
   //host: '/slsAdminApi', // 接口根地址。本地代理到slsadmin.api.sls.com,线上使用的是Nginx代理
-  host: 'http://www.solelytech.com/api/public/index.php/api/v1/',
+  host: 'http://106.12.155.217/api/public/index.php/api/v1/',
   db_prefix: 'solely', // 本地存储的key
   // 状态码字段
   api_status_key_field: 'solely_code',
@@ -78,6 +78,15 @@ var gbs = {
           icon: 'reorder',
           isShow:true,
           button:['编辑','添加','删除选中','管理权限'],
+          hasButton:[]
+        },
+        {
+          id:'15',
+          name:'用户列表',
+          router:'/home/role',
+          icon: 'reorder',
+          isShow:true,
+          button:['编辑账号','添加账号','删除选中','编辑信息','添加信息'],
           hasButton:[]
         },
       ]

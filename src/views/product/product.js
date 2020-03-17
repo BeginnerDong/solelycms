@@ -161,10 +161,7 @@ export default {
           label:'有效期',
           application:['编辑','添加'],
           componentName:'sls-input',
-          listType: 'timeinit',
-          timeinit:function(val){
-            return val.duration?parseInt(val.duration)/86400/10000:''
-          }
+          listType: 'normal',
         },
         {
           key: 'sku_array',
@@ -300,14 +297,9 @@ export default {
                 return "api_productUpdate"
               },
               formData:function(self){
-                var newFormData = func.cloneForm(self.formData);
-                newFormData.duration = parseInt(newFormData.duration)/86400/1000;
-                return newFormData;
+                return self.formData;
               },
               postData:function(self){
-                if(self.submitData.duration){
-                  self.submitData.duration = self.submitData.duration*86400*1000;
-                };
                 if(self.submitData.category_id==0){
                   return false;
                 };
@@ -378,7 +370,6 @@ export default {
               },
               postData:function(self){
                 self.submitData.type = 1;
-                self.submitData.duration = self.submitData.duration?self.submitData.duration*86400*1000:'';
                 var postData = {
                   data:self.submitData
                 };
@@ -516,6 +507,7 @@ export default {
 
     },
 
+
     //获取SKU信息
     async initSkuData(){
       const self = this;
@@ -541,6 +533,7 @@ export default {
 
     },
 
+
     /**
      * 列表主函数
      */
@@ -548,7 +541,7 @@ export default {
 
       const self = this;
       self.table_arguments.loading = true;
-      const postData  = {};
+      const postData = {};
       if(isNew){
         self.paginate.currentPage = 1;
       };
