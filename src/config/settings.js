@@ -83,7 +83,7 @@ var gbs = {
         {
           id:'15',
           name:'用户列表',
-          router:'/home/role',
+          router:'/home/user',
           icon: 'reorder',
           isShow:true,
           button:['编辑账号','添加账号','删除选中','编辑信息','添加信息'],

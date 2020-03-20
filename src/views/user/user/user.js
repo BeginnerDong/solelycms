@@ -87,11 +87,11 @@ export default {
           formatter:function(val){
             return val.info.name
           },
-          placeholder:'请输入向欧盟和，',
+          placeholder:'请输入用户姓名',
           header_search:{
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
-            placeholder:'请输入向欧盟和，',
+            placeholder:'请输入用户姓名',
             changeFunc:function(e,self){
               if(e.target._value){
                 self.UserInfo.searchItem.name = ['LIKE',['%'+e.target._value+'%']]

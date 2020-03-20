@@ -93,7 +93,6 @@ export default {
           componentName:'sls-select',
           optionsName:'transportOptions',
           filter_multiple: false,
-          listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -112,7 +111,6 @@ export default {
           componentName:'sls-select',
           optionsName:'stepOptions',
           filter_multiple: false,
-          listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -188,6 +186,7 @@ export default {
           width:200
         },
       ],
+
       // 按钮配置
       btn_info: [
 
