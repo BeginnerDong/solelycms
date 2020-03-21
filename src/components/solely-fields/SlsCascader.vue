@@ -5,7 +5,6 @@
       v-model="cascader_defaultValue"
       :placeholder="field.placeholder"
       @change="onChangeCustom"
-      @active-item-change="onActiveItemChange"
       :options="optionData"
       :props="field.defaultProps"
       change-on-select

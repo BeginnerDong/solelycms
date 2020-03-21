@@ -8,9 +8,6 @@ import { Notification } from 'element-ui';
  * 混合了消息弹出框的函数
  */
 
-
-
-
 function iNotify (title,type,msg) {
     Notification({
       title: title,
@@ -18,6 +15,8 @@ function iNotify (title,type,msg) {
       type: type
     });
 };
+
+
 
 const sCallBack = (res) => {
 
@@ -31,6 +30,8 @@ const sCallBack = (res) => {
 
 };
 
+
+
 const notify = (title,type,msg) => {
 
     Notification({
@@ -41,12 +42,16 @@ const notify = (title,type,msg) => {
 
 };
 
+
+
 const cloneForm = (form) => {
 
     var res =  JSON.parse(JSON.stringify(form));
     return res;
 
 };
+
+
 
 const imgchange = (self,data,formName,attrName) => {
 
@@ -76,7 +81,6 @@ const imgchange = (self,data,formName,attrName) => {
 
 
 
-
 const resetForm = (formName) => {
   self.$refs[formName].resetFields();
   console.log('restform');
@@ -86,9 +90,11 @@ const resetForm = (formName) => {
 };
 
 
+
 function padLeftZero (str) {
     return ('00' + str).substr(str.length);
 };
+
 
 
 const formatDate =  (date, fmt) =>{
@@ -115,8 +121,6 @@ const formatDate =  (date, fmt) =>{
     }
     return fmt;
 };
-
-
 
 
 
@@ -157,11 +161,6 @@ const getParentNames = (array,id,childName,results) => {
     };
   };
 };
-
-
-
-
-
 
 
 
@@ -220,7 +219,6 @@ const getArrayByTargetTwo = (array,targetName,target) => {
 
 
 
-
 const isArrayFn = (value)=>{
 
   if (typeof Array.isArray === "function") {
@@ -231,10 +229,54 @@ const isArrayFn = (value)=>{
 
 };
 
+
+
 const isTest = (value)=>{
 
   return value
 
+};
+
+
+
+const getChildNames = (array,key,childName,id,results) => {
+
+  if(!childName){
+    var childName = 'children';
+  };
+
+  if(!results){
+    var results = [];
+  };
+  var child_array = [];
+  getChildrenArray(array,key);
+
+  if(child_array.length>0){
+    getChildId(child_array,key)
+  };
+
+  return results;
+
+  function getChildrenArray(array,key){
+    for(var i=0;i<array.length;i++){
+      if(array[i][key]==id){
+        if(array[i][childName]&&array[i][childName].length>0){
+          child_array = array[i][childName];
+        }
+      }else if(array[i][childName]&&array[i][childName].length>0){
+        getChildrenArray(array[i][childName],key);
+      };
+    };
+  };
+
+  function getChildId(child_array,key){
+    for(var i=0;i<child_array.length;i++){
+      results.push(child_array[i][key]);
+      if(child_array[i][childName]&&child_array[i][childName].length>0){
+        getChildId(child_array[i][childName],key);
+      };
+    };
+  };
 };
 
 
@@ -251,5 +293,6 @@ export default {
   sCallBack,
   notify,
   formatDate,
-  getArrayByTargetTwo
+  getArrayByTargetTwo,
+  getChildNames,
 }

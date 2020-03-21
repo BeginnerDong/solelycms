@@ -1,5 +1,5 @@
 export default {
-  name: 'articleLists',
+  name: 'withdraw',
   components: {},
   data () {
     return {
@@ -8,7 +8,6 @@ export default {
 
       table_arguments:{
         height:'70%',
-        loading:true,
         row_key:'id',
         tree_props:{
           children: 'child',
@@ -18,123 +17,89 @@ export default {
         default_expand_all:false,
         expand:false,
         selection:true,
-        cell_style:{},
-
+        cell_style:{}
       },
       fields: [
         {
           key: 'id',
-          label: '文章ID',
+          label: 'ID',
           application:[],
           componentName:'sls-input',
           listType:'normal',
           width:50
         },
         {
-          key: 'title',
-          label: '文章名称',
+          key: 'count',
+          label: '金额',
+          application:[],
+          componentName:'sls-input',
+          listType:'normal',
+        },
+        {
+          key: 'trade_info',
+          label: '说明',
+          application:[],
+          componentName:'sls-input',
+          listType:'normal',
+        },
+        {
+          key: "withdraw_status",
+          label: '提现状态',
           application:['编辑','添加'],
+          listType:'normal',
+          formatter:function(val,tests){
+            return ['拒绝','待审核','同意'][val.withdraw_status+1];
+          },
+          componentName:'sls-select',
+          optionsName:'withdrawOptions',
+          filter_multiple: false,
+          defaultProps: {
+            label: 'text',
+            value: 'value',
+          },
+        },
+        {
+          key: 'user_no',
+          label: '用户NO',
+          application:[],
           componentName:'sls-input',
           listType:'normal',
           header_search:{
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
-            placeholder:'请输入文章名称',
+            placeholder:'请输入用户NO',
             clearable:true,
             defaultValue:'',
             optionsName:'',
             changeFunc:function(val,self){
               if(val){
-                self.searchItem.title = val;
+                self.searchItem.user_no = val;
               }else{
-                delete self.searchItem.title;
+                delete self.searchItem.user_no;
               };
               self.initMainData(true);
             },
           },
         },
         {
-          key: 'description',
-          label: '文章描述',
-          application:['编辑','添加'],
-          componentName:'sls-textarea',
-          listType:'normal',
-          placeholder:'请输入文章描述',
-          header_search:{
-            componentName:'sls-textarea',
-            style:'width:160px;margin-right:2px;',
-            placeholder:'请输入文章描述',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
-              }else{
-                delete self.searchItem.description;
-              };
-              self.initMainData(true);
-            },
-          }
-        },
-        {
-          key: 'small_title',
-          label: '副标题',
-          application:['编辑','添加'],
+          key: 'name',
+          label: '用户姓名',
+          application:[],
           componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入文章描述',
-        },
-        {
-          key: 'passage1',
-          label: '外链',
-          application:['编辑','添加'],
-          componentName:'sls-input',
-          listType:'normal',
-          placeholder:'请输入文章描述',
-        },
-        {
-          key: 'menu_id',
-          label: '文章菜单',
-          application:['编辑','添加'],
           formatter:function(val,tests){
-            return  val.label[val.menu_id]['title'];
+            return val.UserInfo.name?val.UserInfo.name:'';
           },
-          componentName:'sls-cascader',
-          optionsName:'labelOptions',
-          listType:'normal',
-          limit:10,
-          defaultProps: {
-            children: 'children',
-            label: 'title',
-            value: 'id',
-          },
-          placeholder:'请选择菜单',
-          header_search:{
-            componentName:'sls-cascader',
-            optionsName:'labelOptions',
-            style:'width:160px;margin-right:2px;',
-            placeholder:'请选择菜单',
-            changeFunc:function(val,self){
-              var arr = self.$$getChildNames(self.optionData.labelOptions,'id','children',val,[]);
-              if(val){
-                if(arr.length>0){
-                  self.searchItem.menu_id = ['in',arr];
-                }else{
-                  self.searchItem.menu_id = val;
-                }
-              }else{
-                delete self.searchItem.menu_id;
-              };
-              self.initMainData(true);
-            },
-          }
         },
         {
-          key: 'content',
-          label: '文章内容',
-          application:['编辑','添加'],
-          componentName:'tinymce-editor',
-          listType:'',
-          dialogStyle:'width:100%;',
-
+          key: 'phone',
+          label: '用户电话',
+          application:[],
+          componentName:'sls-input',
+          listType:'normal',
+          formatter:function(val,tests){
+            return val.UserInfo.phone?val.UserInfo.phone:'';
+          },
         },
         {
           key: "status",
@@ -174,115 +139,84 @@ export default {
           },
         },
         {
-          key: 'mainImg',
-          label: '图片',
-          customSlot:'mainImg',
-          application:['编辑','添加'],
-          componentName:'upload',
-          listType:'normal',
-          limit:10,
-          dialogStyle:'width:90%',
-          width:200
-        },
-        {
           label: '操作',
           listType:'deal',
           width:200
         },
       ],
-
       // 按钮配置
       btn_info: [
+
 
           {
             type:'info',
             icon:'edit',
             size:'mini',
+            funcType:'submit',
             position:'list',
             text:function(data){
-              return '编辑'
+              return '同意'
+            },
+            styleFunc:function(data){
+              if(data.withdraw_status==0){
+                return 'background-color: #029A15'
+              }else{
+                return 'display: none'
+              }
             },
             func:{
               apiName:function(self){
-                return "api_articleUpdate"
+                return "api_flowLogUpdate"
               },
               formData:function(self){
                 return self.formData
               },
               postData:function(self){
-                var postData={
-                  searchItem:{
-                    id:self.formData.id,
-                  },
-                  data:self.submitData
-                };
-                if(self.submitData.parentid&&self.submitData.parentid==self.formData.id){
-                  self.$$notify('父级ID和子级ID重叠','fail');
-                  return false;
-                }else{
-                  return postData;
-                };
-
-              }
-            },
-          },
-
-          {
-            type:'danger',
-            icon:'delete',
-            size:'medium',
-            funcType:'submit',
-            position:'header',
-            text:function(data){
-              return '删除选中'
-            },
-            func:{
-              apiName:function(self){
-                return "api_articleUpdate"
-              },
-              postData:function(self){
-                var deleteArray = [];
-                for (var i = 0; i < self.selectionArray.length; i++) {
-                  deleteArray.push(self.selectionArray[i].id);
-                };
                 var postData = {
                   searchItem:{
-                    id:['in',deleteArray],
+                    id:self.formData.id,
+                    user_type:0,
                   },
                   data:{
-                    status:-1
+                    withdraw_status:1,
                   }
                 };
                 return postData;
               }
-
             },
           },
-
           {
             type:'info',
             icon:'edit',
-            size:'medium',
-            position:'header',
+            size:'mini',
+            funcType:'submit',
+            position:'list',
             text:function(data){
-              return '添加'
+              return '拒绝'
+            },
+            styleFunc:function(data){
+              if(data.withdraw_status==0){
+                return 'background-color: #F56C6C'
+              }else{
+                return 'display: none'
+              }
             },
             func:{
               apiName:function(self){
-                return "api_articleAdd"
+                return "api_flowLogUpdate"
               },
               formData:function(self){
-                var data = {
-                  title:'',
-                  description:'',
-                  mainImg:[],
-                };
-                return data
+                return self.formData
               },
               postData:function(self){
-                self.submitData.type = 1;
-                var postData={
-                  data:self.submitData
+                var postData = {
+                  searchItem:{
+                    id:self.formData.id,
+                    user_type:0,
+                  },
+                  data:{
+                    withdraw_status:-1,
+                  }
                 };
                 return postData;
               }
@@ -290,6 +224,7 @@ export default {
           },
 
       ],
+
       paginate: {
         count: 0,
         currentPage: 1,
@@ -299,10 +234,12 @@ export default {
         layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
-        thirdapp_id:this.$store.getters.getUserinfo.thirdapp_id
+        type:2,
+        user_type:0,
+        withdraw:1,
+        status:['in',[1,-1]],
       },
       optionData:{
-        labelOptions:[],
         statusOptions:[{
           text: '启用',
           value: 1
@@ -310,15 +247,26 @@ export default {
           text: '禁用',
           value: -1
         }],
+        withdrawOptions:[
+          {
+            text: '拒绝',
+            value: -1
+          },
+          {
+            text: '待审核',
+            value: 0
+          },
+          {
+            text: '同意',
+            value: 1
+          },
+        ],
       },
       otherData:{
       },
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
-        },
-        fixSearchItem:{
-          status:1
         },
         key:'user_no',
         middleKey:'user_no',
@@ -364,45 +312,19 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData();
-      this.initMenuData();
     },
 
 
-    async initMenuData(){
-      const self =this;
-      const postData = {};
-      postData.searchItem ={
-        type:1,
-      };
-      postData.token = self.$store.getters.getToken;
-      postData.order ={
-        listorder:'desc'
-      };
-
-      try{
-        var res = await self.$$api_labelGet({data: postData});
-      }catch(err){
-        console.log(err);
-        self.$notify('网络故障','error');
-      };
-
-      if(res){
-        self.optionData.labelOptions = res.info.data;
-      };
-      console.log('self.optionData',self.optionData)
-
-    },
 
     /**
      * 列表主函数
      */
-    async initMainData (isNew) {
+    async initMainData(isNew) {
 
       const self = this;
-      self.table_arguments.loading = true;
-      const postData  = {};
+      const postData = {};
       if(isNew){
         self.paginate.currentPage = 1;
       };
@@ -414,10 +336,22 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res =  await self.$$api_articleGet({data: postData});
+      postData.getAfter = {
+        UserInfo:{
+          tableName:'UserInfo',
+          middleKey:'user_no',
+          key:'user_no',
+          condition:'=',
+          searchItem:{
+            status:1
+          },
+          info:['name','phone'],
+        },
+      };
+
+      var res = await self.$$api_flowLogGet({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
-      self.table_arguments.loading = false;
 
     },
 
@@ -451,6 +385,7 @@ export default {
       self.initMainData();
     },
 
+
     async header_search_fieldChange(Object){
       const self = this;
       if(Object.func){
@@ -463,12 +398,14 @@ export default {
       };
     },
 
+
     pageChange(val){
       console.log('pageChange',val);
       const self = this;
       self.paginate[val[0]] = val[1];
       self.initMainData();
     },
+
 
     onClickBtn(val){
 
@@ -489,6 +426,7 @@ export default {
       };
     },
 
+
     async dialog_fieldChange(Object){
       const self = this;
       console.log('Object',Object);
@@ -505,6 +443,7 @@ export default {
 
     },
 
+
     async submit(){
       const self = this;
 
@@ -515,10 +454,15 @@ export default {
       }).then(async () => {
       	var postData = self.$$cloneForm(self.btnNow.func.postData(self));
         if(!postData){
-
           return;
         };
-        console.log('postData',postData)
+        if(self.btnNow.func.formData(self).withdraw_status!=0){
+            self.$message({
+              type: 'info',
+              message: '该笔提现已审核'
+            });
+            return;
+        };
 
         var res = await self['$$'+self.btnNow.func.apiName(self)]({data: postData});
         if(res){

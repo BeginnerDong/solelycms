@@ -118,9 +118,6 @@ export default {
                   path:'/home/access',
                   name:'权限管理',
                   params:{
-                    // defaultChecked:self.orginFormData.auth,
-                    // user_no:self.orginFormData.user_no,
-                    // primary_scope:self.orginFormData.primary_scope,
                     role:self.orginFormData.id,
                     path:'/home/role',
                   }

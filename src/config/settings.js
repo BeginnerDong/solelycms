@@ -232,6 +232,15 @@ var gbs = {
           button:['编辑','删除选中','添加'],
           hasButton:[]
         },
+        {
+          id:'54',
+          name:'提现管理',
+          router:'/home/withdraw',
+          icon: 'reorder',
+          isShow:true,
+          button:['同意','拒绝'],
+          hasButton:[]
+        },
       ]
     }
   ]

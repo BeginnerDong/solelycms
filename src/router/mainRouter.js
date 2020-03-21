@@ -121,6 +121,11 @@ export default [
         name: '积分流水',
         component: FlowLog.Score
       },
+      {
+        path: 'withdraw',
+        name: '提现管理',
+        component: FlowLog.Withdraw
+      },
 
     ]
   }

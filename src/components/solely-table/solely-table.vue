@@ -94,7 +94,7 @@
                 <el-button
 
                   v-if="btn.position=='list'"
-                  style="background-color: #4b5d79"
+                  :style="btn.styleFunc?btn.styleFunc(scope.row):'background-color: #4b5d79'"
                   :key='index'
                   :type="btn.type || 'info'"
                   :icon="btn.icon || 'view'"
