@@ -2,17 +2,15 @@
 <template>
   <div>
 
-    <div >
+    <div>
 
       <el-button size="mini" type="primary" @click="customButtonClick">上传<i class="el-icon-upload el-icon--right"></i></el-button>
-
       <input :ref="randomId" type="file"  class="custom-input" @change='upload($event,0)' style='display: none !important;'>
       <span  style="float: right;width: 260px;margin-left: 30px;font-size: 12px;">
         <el-progress :percentage="progress" :color="colors" :width="80"></el-progress>
         剩余时间：{{progress==100?0:resttime}}&nbsp;&nbsp;&nbsp;
         速度：{{progress==100?0:speedUnits}}
       </span>
-
     </div>
     <div style="margin-top: 10px;">
 
@@ -21,23 +19,18 @@
       </el-input>
 
 
-
-
     </div>
     <div style="width:100%;height:30px;"></div>
     <div style="width:100%;">
       <template v-for="(item, index) in uploadImg" >
         <div :key="index" v-if="item.type=='image'" style="margin-bottom:10px;width:150px;height:110px;word-wrap: break-word;word-break: normal;float:left;border-bottom:1px solid gray;position:relative;margin-right:10px;">
-
           <div style="width:150px;height:80px;object-fit: contain;">
             <img  style="object-fit: contain;width: 100%;height: 100%;" :src="item.url"></img>
           </div>
           <div style="width:150px;height:20px;padding-top: 5px;padding-left: 3px;">
             <i class="el-icon-delete" :data-index="index" @click="removeImg" ></i>
             <a style="font-size: 12px;color:el-icon-document-copy" @click="copyLink(item.url,item.id)" :class="item.id + 'tag'">显示链接</a>
-
           </div>
-
         </div>
         <div :key="index" v-if="item.type=='vedio'" style="margin-bottom:10px;width:150px;height:110px;word-wrap: break-word;word-break: normal;float:left;border-bottom:1px solid gray;position:relative;margin-right:10px;">
           <div style="width:150px;height:80px;">
@@ -48,7 +41,6 @@
           <div style="width:150px;height:20px;padding-top: 5px;padding-left: 3px;">
             <i class="el-icon-delete" :data-index="index" @click="removeImg" ></i>
             <a style="font-size: 12px;color:el-icon-document-copy" @click="copyLink(item.url,item.id)" :class="item.id + 'tag'">显示链接</a>
-
           </div>
         </div>
         <div :key="index" v-if="item.type=='doc'" style="margin-bottom:10px;width:150px;height:110px;word-wrap: break-word;word-break: normal;float:left;border-bottom:1px solid gray;position:relative;margin-right:10px;">
@@ -58,7 +50,6 @@
           <div style="width:150px;height:20px;padding-top: 5px;padding-left: 3px;">
             <i class="el-icon-delete" :data-index="index" @click="removeImg" ></i>
             <a style="font-size: 12px;color:el-icon-document-copy" @click="copyLink(item.url,item.id)" :class="item.id + 'tag'">显示链接</a>
-
           </div>
         </div>
         <div :key="index" v-if="!item.type" style="margin-bottom:10px;width:150px;height:110px;word-wrap: break-word;word-break: normal;float:left;border-bottom:1px solid gray;position:relative;margin-right:10px;">
@@ -75,10 +66,6 @@
 
 
 
-
-
-
-
   </div>
 </template>
 <script>
@@ -88,6 +75,7 @@
   import spark  from '../../utils/sparkmd5.js'
   import func from '../../utils/func/func.js'
   import Clipboard from 'clipboard'
+  import { gbs } from 'config/'
   var Js = Common('upload')
   Js.mixins = [{
     data () {
@@ -248,7 +236,7 @@
           param.append('originName',self.orginName);
           // POST表单数据
           let xhr = new XMLHttpRequest();
-          xhr.open('post', 'http://www.solelytech.com/api/public/index.php/api/v1/Base/FtpFile/upload', true);
+          xhr.open('post', gbs.host+'Base/FtpFile/upload', true);
           xhr.onload = function() {
               if (this.readyState == 4 && this.status == 200) {
                   // 上传一块完成后修改进度条信息，然后上传下一块

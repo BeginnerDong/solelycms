@@ -34,6 +34,7 @@
   import 'tinymce/plugins/textcolor'
   import 'tinymce/plugins/contextmenu'
   import store from 'store/'
+  import { gbs } from 'config/'
 
   var Js = Common('tinymce-editor');
   Js.mixins = [{
@@ -51,6 +52,7 @@
             'alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote',
             'undo redo | link unlink  code | removeformat media'
           ],
+          convert_urls: false,
           branding: false,
           media_live_embeds: true,
           images_upload_handler: function (blobInfo, succFun, failFun) {
@@ -59,7 +61,7 @@
             var file = blobInfo.blob();//转化为易于理解的file对象
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
-            xhr.open('POST','http://www.solelytech.com/api/public/index.php/api/v1/Base/FtpFile/upload',true);
+            xhr.open('POST',gbs.host+'Base/FtpFile/upload',true);
             xhr.onload = function() {
                 var json;
                 if (xhr.status != 200) {
