@@ -8,8 +8,8 @@
       v-model="checkbox_defaultValue">
 
       <el-checkbox
-        v-if="optionsData&&JSON.stringify(optionsData)!='[]'"
-        v-for='(item,index) in optionsData'
+        v-if="optionData&&JSON.stringify(optionData)!='[]'"
+        v-for='(item,index) in optionData'
         :key='index'
         :value="item[field.defaultProps.value]"
         :label="item[field.defaultProps.label]">

@@ -1,81 +1,93 @@
 <template>
   <div class="list">
-    <el-header>
-      <template v-for="item in fields">
-        <el-input v-if="item.header_search&&item.header_search_type=='input'" :style="item.header_search_style"  @blur="(e)=>{item.changeFunc(e,self)}" :placeholder="item.placeholder" clearable>
-        </el-input>
-        <el-select 
-          v-if="item.header_search&&item.header_search_type=='select'"
-          :style="item.header_search_style"
-          v-model="item.value"  
-          @change="(value) => {
-            item.changeFunc(value,self)
-          }" 
-          :placeholder="item.placeholder"
-          clearable
+    <div style="width: 100%;position: relative;margin: 0 auto;height: 15%;overflow: scroll;">
+      <div class='field_item' v-for='(field,index) in fields'  v-if="field.header_search&&String(field.header_search)!='{}'">
+        <component
+          :field="field"
+          :optionData="field.header_search.optionDataName?optionData[field.header_search.optionDataName]:''"
+          :defaultValue="field.header_search.defaultValue?field.header_search.defaultValue:''"
+          :is="field.header_search.componentName"
+          :fieldArguments="field.header_search?field.header_search:'{}'"
+          @onChange="header_search_fieldChange"
         >
-          <template v-for="option_item in item.options">
-            <el-option  :value="option_item.value" :label="option_item.label"></el-option>
-          </template>
-        </el-select>
-        <el-cascader
-          v-if="item.header_search&&item.header_search_type=='cascader'"
-          :options="typeof item.options === 'function'?item.options(self):item.options"
-          :props="item.defaultProps"
-          :placeholder="item.placeholder"
-          @change="(value) => {
-            item.changeFunc(value,self)
-          }" 
-          change-on-select
-          clearable
-        >
-        </el-cascader>
-        <el-date-picker
-          v-if="item.header_search&&item.header_search_type=='datePicker'"
-          is-range
-          v-model="item.header_search_value"
-          type="datetimerange"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始"
-          end-placeholder="结束"
-          :placeholder="item.placeholder"
-          @change="(value) => {
-            item.changeFunc(value,self)
-          }" 
-        >
-        </el-date-picker>
+        </component>
+      </div>
+      <div style="clear:both"></div>
+    </div>
 
-      </template>
-    </el-header>
-    <el-main>
-      <list-data
-        ref='list-data'
+    <div style="height: 90%;">
+      <solely-table
+        ref='solely-table'
         @onClickBtn="onClickBtn"
         @pageChange="pageChange"
         @filtersChange="filtersChange"
+        @onSelectionChange="onSelectionChange"
         @initMainData="initMainData"
-        @fieldChange="fieldChange"
         :mainData='mainData'
         :Pagination="paginate"
         :BtnInfo="btn_info"
         :FieldList='fields'
-        :pagination='paginate'
         :optionData='optionData'
         :otherData='otherData'
+        :BasicArguments="table_arguments"
       >
-        <template slot="expand" slot-scope="slotProps">
+        <!-- <template v-slot:expand="expand">
+            {{expand.data}}
+        </template> -->
+        <template v-slot:mainImg="mainImg">
+          <img style="width: 30px;" :src="mainImg.data.mainImg[0]?mainImg.data.mainImg[0]['url']:'../../../assets/logo.png'" />
         </template>
-      </list-data>
-    </el-main>
+        <template v-slot:behavior="behavior">
+          
+          {{['开发','销售','运营','人事/行政','财务'][behavior.data.info.behavior-1]}}
+        </template>
+      </solely-table>
+    </div>
+
+    <el-dialog
+    :title="btnNow.text&&btnNow.text(orginFormData)?btnNow.text(orginFormData):''"
+    :visible.sync="dialog.dialogFormVisible"
+    :close-on-click-modal = 'false'
+    >
+      <div style="overflow:hidden;zoom:1;text-align: left;padding: 2%;">
+
+        <template v-for='(field,index) in fields'>
+           <div
+             v-if="btnName&&field.application&& field.application.indexOf(btnName)>-1"
+             style="float: left;margin-right: 2%;margin-bottom:5%;padding-left: 1%;"
+             :style="field.dialogStyle?field.dialogStyle:'width:47%'"
+             :label-width="formLabelWidth"
+           >
+             <div style="display: inline-block;width: 100px;text-align: left;font-weight: bold;">{{field.label}}：</div>
+             <div style="display: inline-block;">
+               <component
+                 :field="field"
+                 :optionData="optionData[field.optionsName]"
+                 :defaultValue="formData[field.key]?formData[field.key]:''"
+                 :is="field.componentName || 'sls-input'"
+                 :fieldArguments="field.dialog?field.dialog:'{}'"
+                 @onChange="dialog_fieldChange"
+               >
+               </component>
+             </div>
+           </div>
+        </template>
+
+      </div>
+      <div slot="footer" class="dialog-footer" style="text-align: center;">
+        <el-button @click="dialog.dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submit">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
+
 
 <script>
   import userOneJs from './userOne.js'
   export default userOneJs
 </script>
-<style >
+<style>
 
   .demo-form-inline {
     display: inline-block;
@@ -90,6 +102,10 @@
   }
   .pagination {
     display: inline-block;
+  }
+  .field_item {
+    float: left;
+    padding: 15px;
   }
 
 </style>

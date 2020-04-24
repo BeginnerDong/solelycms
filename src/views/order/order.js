@@ -16,7 +16,7 @@ export default {
           hasChildren:'child'
         },
         default_expand_all:false,
-        expand:false,
+        expand:true,
         selection:true,
         cell_style:{},
 
@@ -70,7 +70,6 @@ export default {
           formatter:function(val,tests){
             return ['否','是','已退款'][val.pay_status];
           },
-          customSlot:'type',
           componentName:'sls-select',
           optionsName:'payOptions',
           filter_multiple: false,
@@ -89,7 +88,6 @@ export default {
           formatter:function(val,tests){
             return ['未发货','配送中','已收货'][val.transport_status];
           },
-          customSlot:'type',
           componentName:'sls-select',
           optionsName:'transportOptions',
           filter_multiple: false,
@@ -107,7 +105,6 @@ export default {
           formatter:function(val,tests){
             return ['正常下单','申请撤单','已撤单','完结'][val.order_step];
           },
-          customSlot:'type',
           componentName:'sls-select',
           optionsName:'stepOptions',
           filter_multiple: false,
@@ -167,9 +164,10 @@ export default {
           listType:'normal',
           placeholder:'请选择创建时间',
           header_search:{
-            componentName:'sls-datetime',
+            componentName:'sls-date-time-range',
             style:'width:160px;margin-right:2px;',
-            placeholder:'请选择创建时间',
+            start_placeholder:'创建开始时间',
+            end_placeholder:'创建结束时间',
             changeFunc:function(value,self){
               if(!value){
                 delete self.searchItem.create_time;
@@ -179,6 +177,7 @@ export default {
               self.initMainData(true);
             },
           },
+          width:200,
         },
         {
           label: '操作',
@@ -210,6 +209,7 @@ export default {
                 var postData = {
                   searchItem:{
                     id:self.formData.id,
+                    user_type:0,
                   },
                   data:self.submitData
                 };

@@ -34,6 +34,17 @@
         <template v-slot:mainImg="mainImg">
           <img style="width: 30px;float: left;" v-for="(item,index) in mainImg.data.mainImg" :key="index" :src="item['url']" />
         </template>
+        <template v-slot:expand="expand">
+          <div v-for="(item,index) in expand.data.child" :key="index">
+            <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="订单详情:">
+                  <div>产品名称：{{ item.title }}</div>
+                  <div>产品单价：{{ item.unit_price }}</div>
+                  <div>购买数量：{{ item.count }}</div>
+                </el-form-item>
+            </el-form>
+          </div>
+        </template>
 
       </solely-table>
     </div>
