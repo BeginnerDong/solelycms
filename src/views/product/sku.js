@@ -36,7 +36,7 @@ export default {
           application:[],
           componentName:'sls-input',
           listType:'normal',
-          width:50
+          width:150
         },
         {
           key: 'title',
@@ -168,10 +168,7 @@ export default {
           label:'有效期',
           application:['编辑','添加'],
           componentName:'sls-input',
-          listType: 'timeinit',
-          timeinit:function(val){
-            return val.duration?parseInt(val.duration)/86400/10000:''
-          }
+          listType: 'normal',
         },
         {
           key: "status",
@@ -353,7 +350,6 @@ export default {
                     delete self.submitData[self.optionData.sku_item[i].title]
                   };
                 };
-                self.submitData.duration = self.submitData.duration?self.submitData.duration*86400*1000:'';
                 var postData = {
                   data:self.submitData
                 };
@@ -458,6 +454,7 @@ export default {
     init() {
       const self = this;
       self.product_no = this.$route.params.product_no;
+      self.path = this.$route.params.path;
       this.initProductData()
       this.initMainData();
     },
@@ -513,18 +510,21 @@ export default {
         for(var key in self.sku){
           console.log('item',self.sku[key])
           if(self.sku[key].type=='5'){
+            self.optionData[self.sku[key].id+'Options'] = self.sku[key].children||[];
             self.fields.push({
               key: self.sku[key].title,
               label: self.sku[key].title,
               application:['添加','编辑'],
-              type:'select',
-              options:self.sku[key].child||[],
+              componentName:'sls-select',
+              optionsName:self.sku[key].id+'Options',
+              listType:'',
               defaultProps: {
                 label: 'title',
                 value: 'id',
               },
             });
             self.optionData.sku_item.push(self.sku[key]);
+            console.log('optionData',self.optionData)
           };
         };
       };

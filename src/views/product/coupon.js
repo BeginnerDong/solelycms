@@ -184,10 +184,7 @@ export default {
           label:'有效期',
           application:['编辑','添加'],
           componentName:'sls-input',
-          listType: 'timeinit',
-          timeinit:function(val){
-            return val.valid_time?parseInt(val.valid_time)/86400/10000:''
-          }
+          listType: 'normal',
         },
         {
           key: 'content',
@@ -281,14 +278,9 @@ export default {
                 return "api_couponUpdate"
               },
               formData:function(self){
-                var newFormData = func.cloneForm(self.formData);
-                newFormData.valid_time = parseInt(newFormData.valid_time)/86400/1000;
-                return newFormData;
+                return self.formData;
               },
               postData:function(self){
-                if(self.submitData.valid_time){
-                  self.submitData.valid_time = self.submitData.valid_time*86400*1000;
-                };
                 if(self.submitData.category_id==0){
                   return false;
                 };

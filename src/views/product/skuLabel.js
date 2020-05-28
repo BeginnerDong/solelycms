@@ -181,7 +181,6 @@ export default {
                 var postData = {
                   searchItem:{
                     id:self.formData.id,
-                    user_type:2
                   },
                   data:self.submitData
                 };
@@ -215,7 +214,6 @@ export default {
                 };
                 var postData = {
                   searchItem:{
-                    user_type:2,
                     id:['IN',deleteArray],
                   },
                   data:{

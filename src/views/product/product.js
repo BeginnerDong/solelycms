@@ -36,7 +36,7 @@ export default {
           application:[],
           componentName:'sls-input',
           listType:'normal',
-          width:50
+          width:100
         },
         {
           key: 'title',

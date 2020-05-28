@@ -80,7 +80,6 @@ export default {
           application:['编辑','添加'],
           componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入文章描述',
         },
         {
           key: 'passage1',
@@ -88,7 +87,6 @@ export default {
           application:['编辑','添加'],
           componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入文章描述',
         },
         {
           key: 'menu_id',
@@ -134,7 +132,6 @@ export default {
           componentName:'tinymce-editor',
           listType:'',
           dialogStyle:'width:100%;',
-
         },
         {
           key: "status",
@@ -224,11 +221,9 @@ export default {
                 }else{
                   return postData;
                 };
-
               }
             },
           },
-
           {
             type:'danger',
             icon:'delete',
@@ -257,10 +252,8 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
-
           {
             type:'info',
             icon:'edit',
@@ -318,9 +311,6 @@ export default {
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
-        },
-        fixSearchItem:{
-          status:1
         },
         key:'user_no',
         middleKey:'user_no',

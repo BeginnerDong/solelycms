@@ -193,7 +193,7 @@ var gbs = {
           router:'/home/order',
           icon: 'reorder',
           isShow:true,
-          button:['编辑','删除选中','添加'],
+          button:['编辑','删除选中','添加','导出'],
           hasButton:[]
         },
       ]

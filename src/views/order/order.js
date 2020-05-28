@@ -36,7 +36,7 @@ export default {
           application:[],
           componentName:'sls-input',
           listType:'normal',
-          width:50,
+          width:150,
           header_search:{
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
@@ -78,6 +78,22 @@ export default {
             label: 'text',
             value: 'value',
           },
+          placeholder:'请选择是否支付',
+          width:50,
+          header_search:{
+            componentName:'sls-select',
+            optionsName:'payOptions',
+            style:'width:160px;margin-right:2px;',
+            placeholder:'请选择是否支付',
+            changeFunc:function(val,self){
+              if(val||val===0){
+                self.searchItem.pay_status = val;
+              }else{
+                delete self.searchItem.pay_status;
+              };
+              self.initMainData(true);
+            },
+          }
         },
         {
           key: "transport_status",
@@ -248,6 +264,21 @@ export default {
               }
             },
           },
+          {
+            type:'info',
+            icon:'edit',
+            size:'normal',
+            position:'header',
+            func:{
+              func:function(self){
+                self.excelOutput(self);
+              },
+            },
+            text:function(data){
+              return '导出'
+            },
+            funcType:'func',
+          },
       ],
 
       paginate: {
@@ -259,7 +290,7 @@ export default {
         layout: 'total, sizes, prev, pager, next, jumper',
       },
       searchItem:{
-        type:1,
+        level:1,
         user_type:0,
         thirdapp_id:this.$store.getters.getUserinfo.thirdapp_id
       },
@@ -302,7 +333,7 @@ export default {
           value: 2
         }, {
           text: '完结',
-          value: 2
+          value: 3
         }],
       },
       otherData:{
@@ -466,6 +497,48 @@ export default {
         self.submit();
       };
     },
+
+
+    async excelOutput(self){
+
+      if(self.btnName=='导出'){
+        const postData  = {};
+        postData.token = self.$store.getters.getToken;
+        if (self.searchItem) {
+          postData.searchItem = self.$$cloneForm(self.searchItem)
+        };
+        postData.excelOutput = {
+          expTitle:'test',
+          expCellName:[
+            {
+              title:'店铺名称',
+              key:['shop_name'],
+              type:'string',
+            },
+            {
+              title:'商品名称',
+              key:['title'],
+              type:'string',
+            },
+            {
+              title:'数量',
+              key:['count'],
+              type:'string',
+            },
+          ],
+          fileName:'test'
+        };
+
+        window.open('http://106.12.155.217/wyz/public/index.php/api/v1/Project/Solely/getSales?token='
+        +postData.token
+        +'&searchItem='
+        +JSON.stringify(postData.searchItem)
+        +'&excelOutput='
+        +JSON.stringify(postData.excelOutput))
+      }
+
+    },
+
 
     async dialog_fieldChange(Object){
       const self = this;

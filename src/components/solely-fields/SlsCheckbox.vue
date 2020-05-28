@@ -1,6 +1,5 @@
 <template>
   <div>
-  666666
     <!-- 普通CheckBox -->
     <el-checkbox-group
       @change="onChange"
@@ -11,8 +10,8 @@
         v-if="optionData&&JSON.stringify(optionData)!='[]'"
         v-for='(item,index) in optionData'
         :key='index'
-        :value="item[field.defaultProps.value]"
         :label="item[field.defaultProps.label]">
+        {{item[field.defaultProps.value]}}
       </el-checkbox>
 
     </el-checkbox-group>
@@ -28,6 +27,9 @@
       return {
         checkbox_defaultValue:[]
       }
+    },
+    mounted () {
+      this.checkbox_defaultValue = this.defaultValue;
     },
     computed: {
       checkbox_group_attrs () {

@@ -218,6 +218,7 @@ export default {
                   },
                   data:{
                     withdraw_status:-1,
+                    status:-1,
                   }
                 };
                 return postData;

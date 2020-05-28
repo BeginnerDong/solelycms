@@ -1,13 +1,13 @@
 <template>
   <div class="list">
     <div style="width: 100%;position: relative;margin: 0 auto;height: 15%;overflow: scroll;">
-      <div class='field_item' v-for='(field,index) in fields'  v-if="field.header_search&&String(field.header_search)!='{}'">
+      <div class='field_item' v-for='(field,index) in fields' :key="index"  v-if="field.header_search&&String(field.header_search)!='{}'">
         <component
           :field="field"
-          :optionData="field.header_search.optionDataName?optionData[field.header_search.optionDataName]:''"
-          :defaultValue="field.header_search.defaultValue?field.header_search.defaultValue:''"
+          :optionData="field.header_search.optionsName?optionData[field.header_search.optionsName]:''"
+          :defaultValue="field.header_search.defaultValue||field.header_search.defaultValue==0?field.header_search.defaultValue:''"
           :is="field.header_search.componentName"
-          :fieldArguments="field.header_search?field.header_search:'{}'"
+          :fieldArguments="field.header_search?field.header_search:{}"
           @onChange="header_search_fieldChange"
         >
         </component>
@@ -31,12 +31,24 @@
         :otherData='otherData'
         :BasicArguments="table_arguments"
       >
-        <!-- <template v-slot:expand="expand">
-            {{expand.data}}
-        </template> -->
         <template v-slot:mainImg="mainImg">
-          <img style="width: 30px;" :src="mainImg.data.mainImg[0]?mainImg.data.mainImg[0]['url']:'../../../assets/logo.png'" />
+          <img style="width: 30px;float: left;" v-for="(item,index) in mainImg.data.mainImg" :key="index" :src="item['url']" />
         </template>
+        <template v-slot:headImgUrl="headImgUrl">
+          <img style="width: 30px;" :src="headImgUrl.data.headImgUrl" />
+        </template>
+        <template v-slot:expand="expand">
+          <div v-for="(item,index) in expand.data.child" :key="index">
+            <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="订单详情:">
+                  <div>产品名称：{{ item.title }}</div>
+                  <div>产品单价：{{ item.unit_price }}</div>
+                  <div>购买数量：{{ item.count }}</div>
+                </el-form-item>
+            </el-form>
+          </div>
+        </template>
+
       </solely-table>
     </div>
 
@@ -50,18 +62,19 @@
         <template v-for='(field,index) in fields'>
            <div
              v-if="btnName&&field.application&& field.application.indexOf(btnName)>-1"
+             :key="index"
              style="float: left;margin-right: 2%;margin-bottom:5%;padding-left: 1%;"
              :style="field.dialogStyle?field.dialogStyle:'width:47%'"
              :label-width="formLabelWidth"
            >
              <div style="display: inline-block;width: 100px;text-align: left;font-weight: bold;">{{field.label}}：</div>
-             <div style="display: inline-block;">
+             <div style="display: inline-block;min-width: 225px;min-height: 50px;">
                <component
                  :field="field"
                  :optionData="optionData[field.optionsName]"
-                 :defaultValue="formData[field.key]?formData[field.key]:''"
+                 :defaultValue="formData[field.key]||formData[field.key]==0?formData[field.key]:''"
                  :is="field.componentName || 'sls-input'"
-                 :fieldArguments="field.dialog?field.dialog:'{}'"
+                 :fieldArguments="field.dialog?field.dialog:{}"
                  @onChange="dialog_fieldChange"
                >
                </component>

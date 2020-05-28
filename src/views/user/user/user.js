@@ -58,25 +58,23 @@ export default {
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入昵称',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.nickname = ['LIKE',['%'+e.target._value+'%']];
+            changeFunc:function(val,self){
+              if(val){
+                self.searchItem.nickname = ['LIKE',['%'+val+'%']];
               }else{
                 delete self.searchItem.nickname;
               };
-              self.initMainData();
+              self.initMainData(true);
             },
           }
         },
         {
-          key: 'mainImg',
+          key: 'headImgUrl',
           label: '头像',
-          application:['编辑账号','添加账号'],
+          application:[],
           dialogStyle:'width:100%;',
-          customSlot:'mainImg',
-          componentName:'upload',
+          customSlot:'headImgUrl',
           listType:'normal',
-          limit:1,
         },
         {
           key: "name",
@@ -393,7 +391,7 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res =  await self.$$api_userGet({data: postData});
+      var res = await self.$$api_userGet({data: postData});
 
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;

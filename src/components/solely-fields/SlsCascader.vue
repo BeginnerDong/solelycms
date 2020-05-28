@@ -46,7 +46,7 @@
       self.cascader_defaultValue = func.getParentNames(self.optionData,self.defaultValue,self.field.defaultProps['children']).reverse();
     },
     mounted () {
-
+      this.cascader_defaultValue = this.defaultValue;
     },
     methods: {
 

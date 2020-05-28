@@ -154,7 +154,7 @@ export default {
         {
           key: "status",
           label: '状态',
-          application:['编辑账号'],
+          application:[],
           componentName:'sls-select',
           optionsName:'statusOptions',
           defaultProps: {
@@ -257,7 +257,7 @@ export default {
                 return self.formData
               },
               postData:function(self){
-                var postData={
+                var postData = {
                   searchItem:{
                     id:self.formData.id,
                     user_no:self.formData.user_no,

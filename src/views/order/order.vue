@@ -35,6 +35,13 @@
           <img style="width: 30px;float: left;" v-for="(item,index) in mainImg.data.mainImg" :key="index" :src="item['url']" />
         </template>
         <template v-slot:expand="expand">
+          <div v-if="expand.data.snap_address">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="收货地址信息:">
+                <div>{{ expand.data.snap_address.name }}-{{ expand.data.snap_address.phone }}-{{ expand.data.snap_address.city }}-{{ expand.data.snap_address.detail }}</div>
+              </el-form-item>
+            </el-form>
+          </div>
           <div v-for="(item,index) in expand.data.child" :key="index">
             <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="订单详情:">
