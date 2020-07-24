@@ -53,7 +53,7 @@ export default {
             optionsName:'',
             changeFunc:function(val,self){
               if(val){
-                self.searchItem.title = val;
+                self.searchItem.title = ['LIKE',['%'+val+'%']];
               }else{
                 delete self.searchItem.title;
               };
@@ -72,9 +72,9 @@ export default {
             componentName:'sls-textarea',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入描述',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
+            changeFunc:function(val,self){
+              if(val){
+                self.searchItem.description = ['LIKE',['%'+val+'%']];
               }else{
                 delete self.searchItem.description;
               };

@@ -65,7 +65,6 @@ export default {
           key: "pay_status",
           label: '支付状态',
           application:[],
-          type:'select',
           listType:'normal',
           formatter:function(val,tests){
             return ['否','是','已退款'][val.pay_status];
@@ -73,7 +72,6 @@ export default {
           componentName:'sls-select',
           optionsName:'payOptions',
           filter_multiple: false,
-          listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',

@@ -72,9 +72,9 @@ export default {
             componentName:'sls-textarea',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入商品描述',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
+            changeFunc:function(val,self){
+              if(val){
+                self.searchItem.description = ['LIKE',['%'+val+'%']];
               }else{
                 delete self.searchItem.description;
               };
@@ -159,9 +159,27 @@ export default {
         {
           key:'duration',
           label:'有效期',
-          application:['编辑','添加'],
+          application:[],
           componentName:'sls-input',
-          listType: 'normal',
+          listType: '',
+        },
+        {
+          key: "on_shelf",
+          label: '是否上架',
+          application:[],
+          type:'select',
+          listType:'normal',
+          formatter:function(val,tests){
+            return ['下架','未设置','上架'][val.on_shelf+1];
+          },
+          componentName:'sls-select',
+          optionsName:'shelfOptions',
+          filter_multiple: false,
+          listType:'normal',
+          defaultProps: {
+            label: 'text',
+            value: 'value',
+          },
         },
         {
           key: 'sku_array',
@@ -418,13 +436,26 @@ export default {
       optionData:{
         labelOptions:[],
         skuOptions:[],
-        statusOptions:[{
-          text: '启用',
-          value: 1
-        }, {
-          text: '禁用',
-          value: -1
-        }],
+        statusOptions:[
+          {
+            text: '启用',
+            value: 1
+          },
+          {
+            text: '禁用',
+            value: -1
+          },
+        ],
+        shelfOptions:[
+          {
+            text: '上架',
+            value: 1
+          },
+          {
+            text: '下架',
+            value: -1
+          },
+        ],
       },
       otherData:{
       },

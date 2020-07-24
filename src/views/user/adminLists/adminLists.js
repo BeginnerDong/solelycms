@@ -21,7 +21,7 @@ export default {
           label: '管理员ID',
           application:[],
           componentName:'sls-input',
-          listType:'normal'
+          listType:''
         },
         {
           key: 'user_no',

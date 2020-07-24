@@ -4,7 +4,7 @@
       <div class='field_item' v-for='(field,index) in fields' :key="index"  v-if="field.header_search&&String(field.header_search)!='{}'">
         <component
           :field="field"
-          :optionData="field.header_search.optionDataName?optionData[field.header_search.optionDataName]:''"
+          :optionData="field.header_search.optionsName?optionData[field.header_search.optionsName]:''"
           :defaultValue="field.header_search.defaultValue||field.header_search.defaultValue==0?field.header_search.defaultValue:''"
           :is="field.header_search.componentName"
           :fieldArguments="field.header_search?field.header_search:{}"

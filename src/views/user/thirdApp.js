@@ -21,7 +21,7 @@ export default {
           label: '项目ID',
           application:[],
           componentName:'sls-input',
-          listType:'normal',
+          listType:'',
           width:50
         },
         {

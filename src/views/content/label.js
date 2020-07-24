@@ -51,27 +51,27 @@ export default {
             },
           },
         },
-        {
-          key: 'description',
-          label: '菜单描述',
-          application:['编辑','添加'],
-          componentName:'sls-input',
-          listType:'normal',
-          placeholder:'请输入菜单描述',
-          header_search:{
-            componentName:'sls-input',
-            style:'width:160px;margin-right:2px;',
-            placeholder:'请输入菜单描述',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
-              }else{
-                delete self.searchItem.description;
-              };
-              self.initMainData(true);
-            },
-          }
-        },
+        // {
+        //   key: 'description',
+        //   label: '菜单描述',
+        //   application:['编辑','添加'],
+        //   componentName:'sls-input',
+        //   listType:'normal',
+        //   placeholder:'请输入菜单描述',
+        //   header_search:{
+        //     componentName:'sls-input',
+        //     style:'width:160px;margin-right:2px;',
+        //     placeholder:'请输入菜单描述',
+        //     changeFunc:function(e,self){
+        //       if(e.target._value){
+        //         self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
+        //       }else{
+        //         delete self.searchItem.description;
+        //       };
+        //       self.initMainData(true);
+        //     },
+        //   }
+        // },
         {
           key: 'listorder',
           label: '排序',
@@ -80,15 +80,14 @@ export default {
           listType:'normal',
           placeholder:'请输入排序数字',
         },
-        {
-          key: 'url',
-          label: '跳转链接',
-          application:['编辑','添加'],
-          componentName:'sls-input',
-          listType:'normal',
-          placeholder:'请输入排序数字',
-
-        },
+        // {
+        //   key: 'url',
+        //   label: '跳转链接',
+        //   application:['编辑','添加'],
+        //   componentName:'sls-input',
+        //   listType:'normal',
+        //   placeholder:'请输入排序数字',
+        // },
         {
           key: 'parentid',
           label: '上级菜单',

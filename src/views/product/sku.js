@@ -53,7 +53,7 @@ export default {
             optionsName:'',
             changeFunc:function(val,self){
               if(val){
-                self.searchItem.title = val;
+                self.searchItem.title = ['LIKE',['%'+val+'%']];
               }else{
                 delete self.searchItem.title;
               };

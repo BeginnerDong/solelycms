@@ -80,7 +80,6 @@ export default {
           application:['编辑','添加'],
           componentName:'sls-textarea',
           listType:'normal',
-
         },
         {
           key: "status",
@@ -101,18 +100,18 @@ export default {
           }
         },
         {
-          key: "type",
-          label: '状态',
+          key: "behavior",
+          label: '处理状态',
           application:['编辑'],
           componentName:'sls-select',
-          optionsName:'typeOptions',
+          optionsName:'behaviorOptions',
           listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',
           },
           formatter:function(val){
-            if(val.type==1){
+            if(val.behavior==1){
               return '已处理';
             }else{
               return '未处理';
@@ -146,9 +145,9 @@ export default {
           width:200
         },
       ],
+
       // 按钮配置
       btn_info: [
-
 
           {
             type:'info',
@@ -178,11 +177,9 @@ export default {
                 }else{
                   return postData;
                 };
-
               }
             },
           },
-
           {
             type:'danger',
             icon:'delete',
@@ -193,11 +190,9 @@ export default {
               return '删除选中'
             },
             func:{
-
               apiName:function(self){
                 return "api_messageUpdate"
               },
-
               postData:function(self){
                 var deleteArray = [];
                 for (var i = 0; i < self.selectionArray.length; i++) {
@@ -213,10 +208,8 @@ export default {
                 };
                 return postData;
               }
-
             },
           },
-
           {
             type:'info',
             icon:'edit',
@@ -246,8 +239,8 @@ export default {
               }
             },
           },
-
       ],
+
       paginate: {
         count: 0,
         currentPage: 1,
@@ -267,7 +260,7 @@ export default {
           text: '禁用',
           value: -1
         }],
-        typeOptions:[{
+        behaviorOptions:[{
           text: '未处理',
           value: 0
         }, {
@@ -280,9 +273,6 @@ export default {
       UserInfo:{
         tableName:'UserInfo',
         searchItem:{
-        },
-        fixSearchItem:{
-          status:1
         },
         key:'user_no',
         middleKey:'user_no',
@@ -328,7 +318,7 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData();
     },
 
@@ -338,7 +328,7 @@ export default {
     /**
      * 列表主函数
      */
-    async initMainData (isNew) {
+    async initMainData(isNew) {
 
       const self = this;
       const postData  = {};
@@ -353,7 +343,7 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res =  await self.$$api_messageGet({data: postData});
+      var res = await self.$$api_messageGet({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
 

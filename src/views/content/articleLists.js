@@ -53,41 +53,41 @@ export default {
             },
           },
         },
-        {
-          key: 'description',
-          label: '文章描述',
-          application:['编辑','添加'],
-          componentName:'sls-textarea',
-          listType:'normal',
-          placeholder:'请输入文章描述',
-          header_search:{
-            componentName:'sls-textarea',
-            style:'width:160px;margin-right:2px;',
-            placeholder:'请输入文章描述',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
-              }else{
-                delete self.searchItem.description;
-              };
-              self.initMainData(true);
-            },
-          }
-        },
-        {
-          key: 'small_title',
-          label: '副标题',
-          application:['编辑','添加'],
-          componentName:'sls-input',
-          listType:'normal',
-        },
-        {
-          key: 'passage1',
-          label: '外链',
-          application:['编辑','添加'],
-          componentName:'sls-input',
-          listType:'normal',
-        },
+        // {
+        //   key: 'description',
+        //   label: '文章描述',
+        //   application:['编辑','添加'],
+        //   componentName:'sls-textarea',
+        //   listType:'normal',
+        //   placeholder:'请输入文章描述',
+        //   header_search:{
+        //     componentName:'sls-textarea',
+        //     style:'width:160px;margin-right:2px;',
+        //     placeholder:'请输入文章描述',
+        //     changeFunc:function(e,self){
+        //       if(e.target._value){
+        //         self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
+        //       }else{
+        //         delete self.searchItem.description;
+        //       };
+        //       self.initMainData(true);
+        //     },
+        //   }
+        // },
+        // {
+        //   key: 'small_title',
+        //   label: '副标题',
+        //   application:['编辑','添加'],
+        //   componentName:'sls-input',
+        //   listType:'normal',
+        // },
+        // {
+        //   key: 'passage1',
+        //   label: '外链',
+        //   application:['编辑','添加'],
+        //   componentName:'sls-input',
+        //   listType:'normal',
+        // },
         {
           key: 'menu_id',
           label: '文章菜单',
