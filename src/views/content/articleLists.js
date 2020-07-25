@@ -356,7 +356,7 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
       this.initMainData();
       this.initMenuData();
     },
@@ -390,7 +390,7 @@ export default {
     /**
      * 列表主函数
      */
-    async initMainData (isNew) {
+    async initMainData(isNew) {
 
       const self = this;
       self.table_arguments.loading = true;
@@ -406,8 +406,16 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res =  await self.$$api_articleGet({data: postData});
+
+      var res = await self.$$api_articleGet({data: postData});
       self.mainData = res.info.data;
+      for(var i=0;i<self.mainData.length;i++){
+        var mainImgList = [];
+        for(var j=0;j<self.mainData[i]['mainImg'].length;j++){
+          mainImgList.push(self.mainData[i]['mainImg'][j].url)
+        };
+        self.mainData[i].mainImgList = mainImgList;
+      };
       self.paginate.count = res.info.total;
       self.table_arguments.loading = false;
 

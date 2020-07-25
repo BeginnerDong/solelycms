@@ -32,7 +32,13 @@
         :BasicArguments="table_arguments"
       >
         <template v-slot:mainImg="mainImg">
-          <img style="width: 30px;float: left;" v-for="(item,index) in mainImg.data.mainImg" :key="index" :src="item['url']" />
+          <div style="float: left;margin-right: 5px;" v-for="(item,index) in mainImg.data.mainImg" :key="index">
+            <el-image
+                style="width: 80px; height: 100px"
+                :src="item.url"
+                :preview-src-list="mainImg.data.mainImgList">
+              </el-image>
+          </div>
         </template>
 
       </solely-table>

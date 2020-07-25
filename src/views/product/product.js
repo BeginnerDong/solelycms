@@ -589,6 +589,13 @@ export default {
 
       var res = await self.$$api_productGet({data: postData});
       self.mainData = res.info.data;
+      for(var i=0;i<self.mainData.length;i++){
+        var mainImgList = [];
+        for(var j=0;j<self.mainData[i]['mainImg'].length;j++){
+          mainImgList.push(self.mainData[i]['mainImg'][j].url)
+        };
+        self.mainData[i].mainImgList = mainImgList;
+      };
       self.paginate.count = res.info.total;
       self.table_arguments.loading = false;
 
