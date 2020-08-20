@@ -127,9 +127,10 @@ export default {
           listType:'normal',
           placeholder:'请选择创建时间',
           header_search:{
-            componentName:'sls-datetime',
+            componentName:'sls-date-time-range',
             style:'width:160px;margin-right:2px;',
-            placeholder:'请选择创建时间',
+            start_placeholder:'创建开始时间',
+            end_placeholder:'创建结束时间',
             changeFunc:function(value,self){
               if(!value){
                 delete self.searchItem.create_time;

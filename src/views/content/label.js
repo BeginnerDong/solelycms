@@ -78,7 +78,6 @@ export default {
           application:['编辑','添加'],
           componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入排序数字',
         },
         // {
         //   key: 'url',
@@ -86,7 +85,6 @@ export default {
         //   application:['编辑','添加'],
         //   componentName:'sls-input',
         //   listType:'normal',
-        //   placeholder:'请输入排序数字',
         // },
         {
           key: 'parentid',

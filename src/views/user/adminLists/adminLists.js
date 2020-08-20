@@ -99,12 +99,6 @@ export default {
           },
         },
         {
-          key: 'thirdapp_id',
-          label: 'thirdapp_id',
-          application:[''],
-          componentName:'sls-input',
-        },
-        {
           key: "name",
           label: '管理员姓名',
           application:['添加信息','编辑信息'],

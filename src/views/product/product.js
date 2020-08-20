@@ -168,7 +168,6 @@ export default {
           label: '是否上架',
           application:[],
           type:'select',
-          listType:'normal',
           formatter:function(val,tests){
             return ['下架','未设置','上架'][val.on_shelf+1];
           },

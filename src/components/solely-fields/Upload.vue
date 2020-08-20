@@ -214,7 +214,7 @@
 
 
         // 上传完成
-        if (start >= fileObj.size) {
+        if(start >= fileObj.size){
             return;
         }
         // 获取文件块的终止字节
@@ -223,6 +223,17 @@
         self.start = start;
         self.totalSize = fileObj.size;
         console.log('self.totalSize',self.totalSize)
+        
+        //判断文件类型渲染(H5 video标签只支持H264编码的MP4)
+        var videoArray = ['mp4'];
+        var imageArray = ['image','jpeg','png','PNG','JPEG','jpg','JPG'];
+        var docArray = ['doc','xlsx','xls','csv','pdf','txt','ppt'];
+        var image_limit = 1024 * 1024;//限制图片大小
+        if(imageArray.indexOf(self.ext)!=-1&&fileObj.size>image_limit){
+          func.notify('图片不得大于1M','warning');
+          return;
+        };
+        
         const callback = function(){
           var param = new FormData()  // 创建form对象
 
@@ -249,11 +260,6 @@
                   if(json.solely_code == 100000){
 
                     var url = json.info.url ;    //获取到了图片的URL
-
-                    //判断文件类型渲染(H5 video标签只支持H264编码的MP4)
-                    var videoArray = ['mp4'];
-                    var imageArray = ['image','jpeg','png','PNG','JPEG','jpg','JPG'];
-                    var docArray = ['doc','xlsx','xls','csv','pdf','txt','ppt'];
 
                     if(videoArray.indexOf(self.ext)!=-1){
                       self.uploadImg.push({

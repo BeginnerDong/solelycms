@@ -92,7 +92,7 @@ export default {
                 return "api_roleUpdate"
               },
               formData:function(self){
-                return data
+                return self.formData
               },
               postData:function(self){
                 var postData = {

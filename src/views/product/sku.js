@@ -475,7 +475,9 @@ export default {
 
       if(res.info.data.length>0){
         self.productInfo = res.info.data[0];
-        self.initSkuData(self.productInfo.sku_array);
+        if(self.productInfo.sku_array.length>0){
+          self.initSkuData(self.productInfo.sku_array);
+        };
       }else{
         notify('制定商品不存在','error');
       };

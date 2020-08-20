@@ -50,6 +50,11 @@
         this.events.change && this.events.change({value: v, info: this.submit_info[this.data.key]});*/
         this.$emit('onChange', [this.data.key,v]);
       }
+    },
+    watch: {
+      defaultValue () {
+        this.checkbox_defaultValue = this.defaultValue
+      },
     }
   }]
   export default Js

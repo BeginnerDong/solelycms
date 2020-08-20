@@ -363,7 +363,7 @@ export default {
 
 
     async initMenuData(){
-      const self =this;
+      const self = this;
       const postData = {};
       postData.searchItem ={
         type:1,

@@ -5,9 +5,9 @@
         <component
           :field="field"
           :optionData="field.header_search.optionDataName?optionData[field.header_search.optionDataName]:''"
-          :defaultValue="field.header_search.defaultValue||field.header_search.defaultValue==0?field.header_search.defaultValue:''"
-          :is="field.componentName || 'sls-input'"
-          :fieldArguments="field.header_search?field.header_search:{}"
+          :defaultValue="field.header_search.defaultValue?field.header_search.defaultValue:''"
+          :is="field.header_search.componentName"
+          :fieldArguments="field.header_search?field.header_search:'{}'"
           @onChange="header_search_fieldChange"
         >
         </component>
