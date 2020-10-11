@@ -37,6 +37,14 @@
         <template v-slot:headImgUrl="headImgUrl">
           <img style="width: 30px;" :src="headImgUrl.data.headImgUrl" />
         </template>
+        <template v-slot:deadline="deadline">
+          <span v-if="deadline.data.info.behavior==1">
+            {{self.$$formatDate( new Date(parseInt(deadline.data.info.deadline)*1000) ,'yyyy-MM-dd')}}
+          </span>
+          <span v-else>
+            非会员
+          </span>
+        </template>
         <template v-slot:expand="expand">
           <div v-for="(item,index) in expand.data.child" :key="index">
             <el-form label-position="left" inline class="demo-table-expand">

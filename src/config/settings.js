@@ -21,6 +21,7 @@ var gbs = {
     }
   },
   menu:[
+    
     {
       id:'0',
       name:'控制面板',
@@ -29,6 +30,7 @@ var gbs = {
       hasButton:[],
       isShow:true
     },
+    
     {
       id:'1',
       name:'用户管理',
@@ -41,7 +43,7 @@ var gbs = {
           router:'/home/adminLists',
           icon: 'reorder',
           isShow:true,
-          button:['编辑账号','管理权限','添加账号','删除选中','编辑信息','添加信息'],
+          button:['编辑账号','添加账号','删除选中','编辑信息','添加信息'],
           hasButton:[]
         },
         {
@@ -59,7 +61,7 @@ var gbs = {
           router:'/home/staff',
           icon: 'reorder',
           isShow:true,
-          button:['编辑账号','管理权限','添加账号','删除选中','编辑信息','添加信息'],
+          button:['编辑账号','添加账号','删除选中','编辑信息','添加信息'],
           hasButton:[]
         },
         {
@@ -91,6 +93,7 @@ var gbs = {
         },
       ]
     },
+    
     {
       id:'2',
       name:'内容管理',

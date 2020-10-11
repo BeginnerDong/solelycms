@@ -61,27 +61,27 @@ export default {
             },
           },
         },
-        {
-          key: 'description',
-          label: '商品描述',
-          application:['编辑','添加'],
-          componentName:'sls-textarea',
-          listType:'normal',
-          placeholder:'请输入商品描述',
-          header_search:{
-            componentName:'sls-textarea',
-            style:'width:160px;margin-right:2px;',
-            placeholder:'请输入商品描述',
-            changeFunc:function(val,self){
-              if(val){
-                self.searchItem.description = ['LIKE',['%'+val+'%']];
-              }else{
-                delete self.searchItem.description;
-              };
-              self.initMainData(true);
-            },
-          }
-        },
+        // {
+        //   key: 'description',
+        //   label: '商品描述',
+        //   application:['编辑','添加'],
+        //   componentName:'sls-textarea',
+        //   listType:'normal',
+        //   placeholder:'请输入商品描述',
+        //   header_search:{
+        //     componentName:'sls-textarea',
+        //     style:'width:160px;margin-right:2px;',
+        //     placeholder:'请输入商品描述',
+        //     changeFunc:function(val,self){
+        //       if(val){
+        //         self.searchItem.description = ['LIKE',['%'+val+'%']];
+        //       }else{
+        //         delete self.searchItem.description;
+        //       };
+        //       self.initMainData(true);
+        //     },
+        //   }
+        // },
         {
           key: 'price',
           label: '商品价格',
@@ -278,7 +278,7 @@ export default {
           application:['编辑','添加'],
           componentName:'upload',
           listType:'normal',
-          limit:10,
+          limit:1,
           dialogStyle:'width:90%',
           width:200
         },

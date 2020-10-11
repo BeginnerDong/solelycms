@@ -755,7 +755,7 @@ export default {
     /**
      * 初始化
      */
-    init () {
+    init() {
 
       this.initMainData();
       this.initUserData();
@@ -773,12 +773,10 @@ export default {
 
 
 
-
-
     /**
      *
      */
-    async initUserData (isNew) {
+    async initUserData(isNew) {
 
       const self = this;
       const postData  = {};
@@ -876,11 +874,11 @@ export default {
     /**
      * 列表主函数
      */
-    async initMainData (isNew) {
+    async initMainData(isNew) {
 
       const self = this;
       self.table_arguments.loading = true;
-      const postData  = {};
+      const postData = {};
       if(isNew){
         self.paginate.currentPage = 1;
       };

@@ -114,13 +114,11 @@ export default {
           key: "type",
           label: '优惠券类型',
           application:['编辑','添加'],
-          type:'select',
           listType:'normal',
           customSlot:'type',
           componentName:'sls-select',
           optionsName:'typeOptions',
           filter_multiple: false,
-          listType:'normal',
           defaultProps: {
             label: 'text',
             value: 'value',
@@ -347,7 +345,6 @@ export default {
                 return data
               },
               postData:function(self){
-                self.submitData.valid_time = self.submitData.valid_time?self.submitData.valid_time*86400*1000:'';
                 var postData = {
                   data:self.submitData
                 };

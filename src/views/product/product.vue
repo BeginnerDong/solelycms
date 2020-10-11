@@ -40,6 +40,16 @@
               </el-image>
           </div>
         </template>
+        <template v-slot:start_time="start_time">
+          <span>
+            {{self.$$formatDate( new Date(parseInt(start_time.data.start_time)) ,'yyyy-MM-dd')}}
+          </span>
+        </template>
+        <template v-slot:end_time="end_time">
+          <span>
+            {{self.$$formatDate( new Date(parseInt(end_time.data.end_time)) ,'yyyy-MM-dd')}}
+          </span>
+        </template>
 
       </solely-table>
     </div>

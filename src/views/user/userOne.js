@@ -135,24 +135,12 @@ export default {
           },
         },
         {
-          key: "longitude",
-          label: '门店经度',
+          key: "location",
+          label: '经纬度',
           application:['添加信息','编辑信息'],
-          componentName:'sls-input',
+          componentName:'baidu-map',
           listType:'',
-          formatter:function(val){
-            return val.info.longitude
-          },
-        },
-        {
-          key: "latitude",
-          label: '门店纬度',
-          application:['添加信息','编辑信息'],
-          componentName:'sls-input',
-          listType:'',
-          formatter:function(val){
-            return val.info.latitude
-          },
+          dialogStyle:'width:100%'
         },
         {
           key: 'mainImg',
@@ -235,6 +223,11 @@ export default {
               },
               postData:function(self){
                 if(self.btnName=='编辑信息'){
+                  if(self.submitData.location){
+                    self.submitData.longitude = self.submitData.location.lng;
+                    self.submitData.latitude = self.submitData.location.lat;
+                    delete self.submitData.location;
+                  };
                   var postData = {
                     searchItem:{
                       id:self.orginFormData.info.id,

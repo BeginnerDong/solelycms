@@ -57,9 +57,9 @@ export default {
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入管理员登录名',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.login_name = ['LIKE',['%'+e.target._value+'%']];
+            changeFunc:function(val,self){
+              if(val){
+                self.searchItem.login_name = ['LIKE',['%'+val+'%']];
               }else{
                 delete self.searchItem.login_name;
               };
@@ -112,9 +112,9 @@ export default {
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入管理员姓名',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.UserInfo.searchItem.name = ['LIKE',['%'+e.target._value+'%']]
+            changeFunc:function(val,self){
+              if(val){
+                self.UserInfo.searchItem.name = ['LIKE',['%'+val+'%']]
               }else{
                 delete self.UserInfo.searchItem.name
               };
@@ -135,9 +135,9 @@ export default {
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入管理员电话',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.UserInfo.searchItem.phone = ['LIKE',['%'+e.target._value+'%']]
+            changeFunc:function(val,self){
+              if(val){
+                self.UserInfo.searchItem.phone = ['LIKE',['%'+val+'%']]
               }else{
                 delete self.UserInfo.searchItem.phone
               };

@@ -90,9 +90,9 @@ export default {
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入用户姓名',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.UserInfo.searchItem.name = ['LIKE',['%'+e.target._value+'%']]
+            changeFunc:function(val,self){
+              if(val){
+                self.UserInfo.searchItem.name = ['LIKE',['%'+val+'%']]
               }else{
                 delete self.UserInfo.searchItem.name
               };
@@ -113,15 +113,38 @@ export default {
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入电话',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.UserInfo.searchItem.phone = ['LIKE',['%'+e.target._value+'%']]
+            changeFunc:function(val,self){
+              if(val){
+                self.UserInfo.searchItem.phone = ['=',[val]]
               }else{
                 delete self.UserInfo.searchItem.phone
               };
               self.beforeSearch('UserInfo');
             },
           },
+        },
+        {
+          key: "behavior",
+          label: '会员',
+          application:[],
+          listType:'normal',
+          formatter:function(val){
+            return ['否','是'][val.info.behavior];
+          },
+          componentName:'sls-select',
+          optionsName:'behaviorOptions',
+          filter_multiple: false,
+          defaultProps: {
+            label: 'text',
+            value: 'value',
+          },
+        },
+        {
+          key: "deadline",
+          label: '会员有效期',
+          application:[],
+          customSlot:'deadline',
+          listType:'normal',
         },
         {
           key: "status",
@@ -321,6 +344,16 @@ export default {
             value: -1
           },
         ],
+        behaviorOptions:[
+          {
+            text: '是',
+            value: 1
+          },
+          {
+            text: '否',
+            value: 0
+          },
+        ],
       },
       otherData:{
       },
@@ -379,10 +412,13 @@ export default {
     /**
      * 列表主函数
      */
-    async initMainData() {
+    async initMainData(isNew) {
 
       const self = this;
       const postData = {};
+      if(isNew){
+        self.paginate.currentPage = 1;
+      };
       postData.paginate = self.$$cloneForm(self.paginate);
       postData.token = self.$store.getters.getToken;
       if (self.searchItem) {
@@ -391,8 +427,8 @@ export default {
       if(JSON.stringify(self.getBefore) != "{}"){
         postData.getBefore = self.$$cloneForm(self.getBefore);
       };
-      var res = await self.$$api_userGet({data: postData});
 
+      var res = await self.$$api_userGet({data: postData});
       self.mainData = res.info.data;
       self.paginate.count = res.info.total;
 

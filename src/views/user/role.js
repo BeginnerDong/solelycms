@@ -148,7 +148,6 @@ export default {
                 var postData = {
                   searchItem:{
                     id:['in',deleteArray],
-                    user_type:2
                   },
                   data:{
                     status:-1

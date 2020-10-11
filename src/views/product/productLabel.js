@@ -62,9 +62,9 @@ export default {
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
             placeholder:'请输入菜单描述',
-            changeFunc:function(e,self){
-              if(e.target._value){
-                self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
+            changeFunc:function(val,self){
+              if(val){
+                self.searchItem.description = ['LIKE',['%'+val+'%']];
               }else{
                 delete self.searchItem.description;
               };
@@ -78,7 +78,6 @@ export default {
           application:['编辑','添加'],
           componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入排序数字',
         },
         {
           key: 'url',
@@ -86,7 +85,6 @@ export default {
           application:['编辑','添加'],
           componentName:'sls-input',
           listType:'normal',
-          placeholder:'请输入排序数字',
         },
         {
           key: 'parentid',

@@ -197,6 +197,13 @@
 
         const self = this;
         self.chunkSize = 2* 1024 * 1024;
+        
+        //限制图片数量
+        var limit = self.field.limit;
+        if(self.uploadImg.length>=limit){
+          func.notify('上传图片超过限制数量','warning');
+          return;
+        };
 
         if(start==0){
           self.finishCount = 0;

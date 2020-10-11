@@ -45,7 +45,7 @@
           <div v-for="(item,index) in expand.data.child" :key="index">
             <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="订单详情:">
-                  <div>产品名称：{{ item.title }}</div>
+                  <div>产品名称：{{ item.product_title }}-{{item.sku_title}}</div>
                   <div>产品单价：{{ item.unit_price }}</div>
                   <div>购买数量：{{ item.count }}</div>
                 </el-form-item>

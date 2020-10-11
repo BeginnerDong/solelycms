@@ -66,8 +66,8 @@ export default {
           label: '支付状态',
           application:[],
           listType:'normal',
-          formatter:function(val,tests){
-            return ['否','是','已退款'][val.pay_status];
+          formatter:function(val){
+            return ['已退款','否','是'][val.pay_status+1];
           },
           componentName:'sls-select',
           optionsName:'payOptions',
@@ -77,7 +77,7 @@ export default {
             value: 'value',
           },
           placeholder:'请选择是否支付',
-          width:50,
+          width:100,
           header_search:{
             componentName:'sls-select',
             optionsName:'payOptions',
@@ -96,10 +96,10 @@ export default {
         {
           key: "transport_status",
           label: '运输状态',
-          application:[],
+          application:['编辑','添加'],
           type:'select',
           listType:'normal',
-          formatter:function(val,tests){
+          formatter:function(val){
             return ['未发货','配送中','已收货'][val.transport_status];
           },
           componentName:'sls-select',
@@ -116,7 +116,7 @@ export default {
           application:[],
           type:'select',
           listType:'normal',
-          formatter:function(val,tests){
+          formatter:function(val){
             return ['正常下单','申请撤单','已撤单','完结'][val.order_step];
           },
           componentName:'sls-select',
@@ -140,7 +140,7 @@ export default {
           application:[],
           componentName:'sls-input',
           listType:'normal',
-          formatter:function(val,tests){
+          formatter:function(val){
             return val.UserInfo.name?val.UserInfo.name:'';
           },
         },
@@ -150,7 +150,7 @@ export default {
           application:[],
           componentName:'sls-input',
           listType:'normal',
-          formatter:function(val,tests){
+          formatter:function(val){
             return val.UserInfo.phone?val.UserInfo.phone:'';
           },
         },
@@ -301,14 +301,14 @@ export default {
           value: -1
         }],
         payOptions:[{
+          text: '已退款',
+          value: -1
+        }, {
           text: '未支付',
           value: 0
         }, {
           text: '已支付',
           value: 1
-        }, {
-          text: '已退款',
-          value: 2
         }],
         transportOptions:[{
           text: '未发货',

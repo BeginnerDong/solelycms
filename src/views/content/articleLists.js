@@ -24,7 +24,7 @@ export default {
       fields: [
         {
           key: 'id',
-          label: '文章ID',
+          label: 'ID',
           application:[],
           componentName:'sls-input',
           listType:'normal',
@@ -32,14 +32,14 @@ export default {
         },
         {
           key: 'title',
-          label: '文章名称',
+          label: '标题',
           application:['编辑','添加'],
           componentName:'sls-input',
           listType:'normal',
           header_search:{
             componentName:'sls-input',
             style:'width:160px;margin-right:2px;',
-            placeholder:'请输入文章名称',
+            placeholder:'请输入标题',
             clearable:true,
             defaultValue:'',
             optionsName:'',
@@ -55,7 +55,7 @@ export default {
         },
         // {
         //   key: 'description',
-        //   label: '文章描述',
+        //   label: '描述',
         //   application:['编辑','添加'],
         //   componentName:'sls-textarea',
         //   listType:'normal',
@@ -64,9 +64,9 @@ export default {
         //     componentName:'sls-textarea',
         //     style:'width:160px;margin-right:2px;',
         //     placeholder:'请输入文章描述',
-        //     changeFunc:function(e,self){
-        //       if(e.target._value){
-        //         self.searchItem.description = ['LIKE',['%'+e.target._value+'%']];
+        //     changeFunc:function(val,self){
+        //       if(val){
+        //         self.searchItem.description = ['LIKE',['%'+val+'%']];
         //       }else{
         //         delete self.searchItem.description;
         //       };
@@ -90,7 +90,7 @@ export default {
         // },
         {
           key: 'menu_id',
-          label: '文章菜单',
+          label: '菜单',
           application:['编辑','添加'],
           formatter:function(val,tests){
             return  val.label[val.menu_id]['title'];
